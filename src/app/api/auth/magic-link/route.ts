@@ -3,6 +3,8 @@ import { prisma } from '@/lib/db'
 import { sendMagicLinkEmail } from '@/lib/email'
 import { generateMagicToken } from '@/lib/utils'
 
+export const dynamic = 'force-dynamic'
+
 export async function POST(request: NextRequest) {
   try {
     const { email } = await request.json()

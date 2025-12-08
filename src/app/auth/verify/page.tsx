@@ -5,6 +5,8 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 
+export const dynamic = 'force-dynamic'
+
 function VerifyContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
