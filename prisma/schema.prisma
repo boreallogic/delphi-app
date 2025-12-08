@@ -1,0 +1,297 @@
+// Delphi Method Application for GBV Indicator Framework
+// Boreal Logic Inc. / Yukon Women's Coalition
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================================================
+// STUDY CONFIGURATION
+// ============================================================================
+
+model Study {
+  id          String      @id @default(cuid())
+  name        String
+  description String?     @db.Text
+  status      StudyStatus @default(SETUP)
+  
+  // Delphi configuration
+  currentRound       Int     @default(0)
+  totalRounds        Int     @default(3)
+  consensusThreshold Float   @default(1.0)  // IQR threshold for consensus
+  allowDissentFlags  Boolean @default(true)
+  
+  // Timing
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  roundDeadlines Json?   // { "1": "2024-01-15", "2": "2024-01-30", ... }
+  
+  // Relations
+  indicators Indicator[]
+  panelists  Panelist[]
+  rounds     Round[]
+  
+  @@map("studies")
+}
+
+enum StudyStatus {
+  SETUP
+  ACTIVE
+  PAUSED
+  COMPLETE
+}
+
+// ============================================================================
+// INDICATORS (Imported from CSV)
+// ============================================================================
+
+model Indicator {
+  id                  String   @id @default(cuid())
+  externalId          String   // Original ID from CSV (e.g., "SH01")
+  category            String   // e.g., "Shelter & Housing"
+  name                String
+  definition          String   @db.Text
+  definitionSimple    String?  @db.Text  // Plain-language version for accessibility
+  unitOfMeasure       String
+  operationalization  String   @db.Text
+  collectionFrequency String
+  originalPriority    String   // HIGH, MEDIUM, LOW from source
+  notes               String?  @db.Text
+  domain              String   // e.g., "D1: Shelter Infrastructure"
+  
+  // Study relation
+  studyId String
+  study   Study  @relation(fields: [studyId], references: [id], onDelete: Cascade)
+  
+  // Responses
+  responses     Response[]
+  roundSummaries RoundSummary[]
+  
+  createdAt DateTime @default(now())
+  
+  @@unique([studyId, externalId])
+  @@map("indicators")
+}
+
+// ============================================================================
+// PANELISTS
+// ============================================================================
+
+model Panelist {
+  id        String      @id @default(cuid())
+  email     String
+  name      String?
+  roleType  PanelistRole
+  
+  // Magic link auth
+  magicToken      String?   @unique
+  magicTokenExpiry DateTime?
+  lastLoginAt     DateTime?
+  
+  // Accessibility preferences
+  preferences Json?  // { "plainLanguage": true, "highContrast": false, ... }
+  
+  // Study relation
+  studyId String
+  study   Study  @relation(fields: [studyId], references: [id], onDelete: Cascade)
+  
+  // Responses
+  responses Response[]
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@unique([studyId, email])
+  @@map("panelists")
+}
+
+enum PanelistRole {
+  EXPERT_GBV           // Domain expertise in gender-based violence
+  EXPERT_MEASUREMENT   // Expertise in indicator/composite development
+  LIVED_EXPERIENCE     // Person with lived experience of GBV/services
+  SERVICE_PROVIDER     // Frontline service delivery
+  POLICY_MAKER         // Government/policy context
+  COMMUNITY_MEMBER     // General community perspective
+}
+
+// ============================================================================
+// ROUNDS
+// ============================================================================
+
+model Round {
+  id          String      @id @default(cuid())
+  roundNumber Int
+  status      RoundStatus @default(PENDING)
+  
+  // Timing
+  opensAt     DateTime?
+  closesAt    DateTime?
+  closedAt    DateTime?   // Actual close time
+  
+  // Study relation
+  studyId String
+  study   Study  @relation(fields: [studyId], references: [id], onDelete: Cascade)
+  
+  // Summaries computed after round closes
+  summaries RoundSummary[]
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@unique([studyId, roundNumber])
+  @@map("rounds")
+}
+
+enum RoundStatus {
+  PENDING
+  OPEN
+  CLOSED
+  ANALYZED
+}
+
+// ============================================================================
+// RESPONSES (Core Delphi Data)
+// ============================================================================
+
+model Response {
+  id          String @id @default(cuid())
+  roundNumber Int
+  
+  // === RATINGS ===
+  
+  // Priority: How important is this indicator for the framework?
+  priorityRating Int?  // 1-5 scale
+  
+  // Validity: How well does the operationalization capture what we're measuring?
+  operationalizationValidity Int?  // 1-5 scale
+  
+  // Feasibility: How realistic is data collection for this indicator?
+  feasibilityRating Int?  // 1-5 scale
+  
+  // === QUALITATIVE ===
+  
+  // Threshold suggestion: What value would indicate "adequate" vs "inadequate"?
+  thresholdSuggestion String? @db.Text
+  
+  // Weight suggestion: Relative importance within domain (0-100)
+  weightSuggestion Float?
+  
+  // Reasoning: Why did you rate this way?
+  qualitativeReasoning String? @db.Text
+  
+  // === DISSENT ===
+  
+  // Dissent flag: "I understand consensus but want disagreement recorded"
+  dissentFlag Boolean @default(false)
+  dissentReason String? @db.Text
+  
+  // === REVISION TRACKING ===
+  
+  // Did panelist revise from previous round?
+  revisedFromPrevious Boolean @default(false)
+  
+  // Relations
+  panelistId  String
+  panelist    Panelist  @relation(fields: [panelistId], references: [id], onDelete: Cascade)
+  indicatorId String
+  indicator   Indicator @relation(fields: [indicatorId], references: [id], onDelete: Cascade)
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@unique([panelistId, indicatorId, roundNumber])
+  @@map("responses")
+}
+
+// ============================================================================
+// ROUND SUMMARIES (Computed Aggregates)
+// ============================================================================
+
+model RoundSummary {
+  id          String @id @default(cuid())
+  roundNumber Int
+  
+  // === PRIORITY STATS ===
+  priorityMean   Float?
+  priorityMedian Float?
+  priorityStd    Float?
+  priorityIQR    Float?
+  priorityMin    Int?
+  priorityMax    Int?
+  
+  // === VALIDITY STATS ===
+  validityMean   Float?
+  validityMedian Float?
+  validityStd    Float?
+  validityIQR    Float?
+  
+  // === FEASIBILITY STATS ===
+  feasibilityMean   Float?
+  feasibilityMedian Float?
+  feasibilityStd    Float?
+  feasibilityIQR    Float?
+  
+  // === CONSENSUS ===
+  consensusReached Boolean @default(false)
+  dissentCount     Int     @default(0)
+  responseCount    Int     @default(0)
+  
+  // === ROLE-STRATIFIED VIEWS ===
+  // JSON: { "EXPERT_GBV": { mean, median }, "LIVED_EXPERIENCE": { mean, median }, ... }
+  priorityByRole   Json?
+  validityByRole   Json?
+  
+  // === QUALITATIVE SYNTHESIS ===
+  // Anonymized summary of reasoning themes
+  reasoningSummary String? @db.Text
+  
+  // Relations
+  indicatorId String
+  indicator   Indicator @relation(fields: [indicatorId], references: [id], onDelete: Cascade)
+  roundId     String
+  round       Round     @relation(fields: [roundId], references: [id], onDelete: Cascade)
+  
+  createdAt DateTime @default(now())
+  
+  @@unique([indicatorId, roundNumber])
+  @@map("round_summaries")
+}
+
+// ============================================================================
+// FACILITATOR / ADMIN
+// ============================================================================
+
+model Facilitator {
+  id           String  @id @default(cuid())
+  email        String  @unique
+  name         String?
+  passwordHash String  // bcrypt hash
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@map("facilitators")
+}
+
+// ============================================================================
+// AUDIT LOG (For TRACE integration)
+// ============================================================================
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  action    String   // e.g., "ROUND_OPENED", "RESPONSE_SUBMITTED", "CONSENSUS_COMPUTED"
+  actorType String   // "FACILITATOR", "PANELIST", "SYSTEM"
+  actorId   String?
+  studyId   String?
+  metadata  Json?    // Additional context
+  
+  createdAt DateTime @default(now())
+  
+  @@index([studyId, createdAt])
+  @@map("audit_logs")
+}
