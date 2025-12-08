@@ -5,6 +5,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { ProgressBar } from '@/components/ui/progress'
 import { formatDate } from '@/lib/utils'
 
+export const dynamic = 'force-dynamic'
+
 export default async function AdminDashboard() {
   // In production, add proper facilitator authentication
   const studies = await prisma.study.findMany({
