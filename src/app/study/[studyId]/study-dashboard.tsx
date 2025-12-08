@@ -42,12 +42,12 @@ export function StudyDashboard({
 
   // Get response for current indicator
   const currentResponse = currentIndicator
-    ? responses.find(r => r.indicatorId === currentIndicator.id)
+    ? responses.find(r => r.indicatorId === currentIndicator.id) ?? null
     : null
 
   // Get previous summary for current indicator (for rounds > 1)
   const previousSummary = currentIndicator
-    ? previousSummaries.find(s => s.indicatorId === currentIndicator.id)
+    ? previousSummaries.find(s => s.indicatorId === currentIndicator.id) ?? null
     : null
 
   // Calculate overall progress
