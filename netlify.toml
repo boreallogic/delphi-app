@@ -20,14 +20,9 @@
   NEXT_TELEMETRY_DISABLED = "1"
 
 # Next.js Runtime Plugin
+# This plugin automatically handles API routes and server-side rendering
 [[plugins]]
   package = "@netlify/plugin-nextjs"
-
-# Redirect rules (optional - adjust as needed)
-[[redirects]]
-  from = "/api/*"
-  to = "/.netlify/functions/:splat"
-  status = 200
 
 # Headers for security (optional but recommended)
 [[headers]]
