@@ -1,18 +1,21 @@
 'use client'
 
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useMemo } from 'react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { ProgressBar, RoundStepper, DomainProgress, ConsensusBadge } from '@/components/ui/progress'
 import { IndicatorAssessment } from './indicator-assessment'
+import { PanelistPreferences, TierBadge } from '@/components/panelist-preferences'
 import { roleDisplayNames } from '@/lib/utils'
+import { DOMAINS, FRAMEWORK_SUMMARY } from '@/lib/domains'
+import { Info } from 'lucide-react'
 import type { Study, Panelist, Indicator, Response, RoundSummary, Round } from '@prisma/client'
 
 interface StudyDashboardProps {
   study: Study & { rounds: Round[] }
   panelist: Panelist
   indicators: Indicator[]
-  domains: { id: string; name: string; total: number; completed: number }[]
+  domains: { id: string; name: string; total: number; completed: number; tier1Count?: number }[]
   responses: Response[]
   previousSummaries: (RoundSummary & { indicator: Indicator })[]
   currentRound: number
@@ -27,18 +30,43 @@ export function StudyDashboard({
   previousSummaries,
   currentRound,
 }: StudyDashboardProps) {
+  // Panelist preferences from stored preferences or defaults
+  const storedPrefs = (panelist.preferences as Record<string, boolean>) || {}
+  const [preferences, setPreferences] = useState({
+    plainLanguage: storedPrefs.plainLanguage || false,
+    showTier2: storedPrefs.showTier2 || false,
+  })
+
   const [selectedDomain, setSelectedDomain] = useState<string | null>(
     domains[0]?.id || null
   )
   const [responses, setResponses] = useState<Response[]>(initialResponses)
   const [currentIndicatorIndex, setCurrentIndicatorIndex] = useState(0)
 
-  // Get indicators for selected domain
-  const domainIndicators = selectedDomain
-    ? indicators.filter(ind => ind.domain === selectedDomain)
-    : []
+  // Filter indicators based on tier preference
+  const filteredIndicators = useMemo(() => {
+    if (preferences.showTier2) {
+      return indicators
+    }
+    return indicators.filter(ind => (ind.tier || 1) === 1)
+  }, [indicators, preferences.showTier2])
 
-  const currentIndicator = domainIndicators[currentIndicatorIndex]
+  // Get indicators for selected domain (using consolidated domainCode if available)
+  const domainIndicators = useMemo(() => {
+    if (!selectedDomain) return []
+    
+    return filteredIndicators.filter(ind => {
+      // Try consolidated domain code first, fall back to original domain
+      const indDomainCode = ind.domainCode || ind.domain
+      return indDomainCode === selectedDomain || ind.domain === selectedDomain
+    })
+  }, [selectedDomain, filteredIndicators])
+
+  // Separate Tier 1 and Tier 2 indicators in current domain
+  const tier1Indicators = domainIndicators.filter(ind => (ind.tier || 1) === 1)
+  const tier2Indicators = domainIndicators.filter(ind => ind.tier === 2)
+
+  const currentIndicator = tier1Indicators[currentIndicatorIndex] || tier2Indicators[currentIndicatorIndex - tier1Indicators.length]
 
   // Get response for current indicator
   const currentResponse = currentIndicator
@@ -50,9 +78,61 @@ export function StudyDashboard({
     ? previousSummaries.find(s => s.indicatorId === currentIndicator.id) ?? null
     : null
 
-  // Calculate overall progress
-  const totalResponses = responses.filter(r => r.priorityRating !== null).length
-  const totalIndicators = indicators.length
+  // Calculate progress - only count Tier 1 for required progress
+  const tier1Total = indicators.filter(ind => (ind.tier || 1) === 1).length
+  const tier1Completed = responses.filter(r => {
+    const ind = indicators.find(i => i.id === r.indicatorId)
+    return (ind?.tier || 1) === 1 && r.priorityRating !== null
+  }).length
+
+  // Domain progress with tier awareness
+  const enhancedDomains = useMemo(() => {
+    // Group by consolidated domain code if available
+    const domainMap = new Map<string, {
+      id: string
+      name: string
+      question: string
+      total: number
+      completed: number
+      tier1Total: number
+      tier1Completed: number
+    }>()
+
+    filteredIndicators.forEach(ind => {
+      const code = ind.domainCode || ind.domain
+      const config = DOMAINS[code as keyof typeof DOMAINS]
+      
+      if (!domainMap.has(code)) {
+        domainMap.set(code, {
+          id: code,
+          name: config?.name || ind.domainName || code,
+          question: config?.question || ind.domainQuestion || '',
+          total: 0,
+          completed: 0,
+          tier1Total: 0,
+          tier1Completed: 0,
+        })
+      }
+
+      const domain = domainMap.get(code)!
+      domain.total++
+      
+      if ((ind.tier || 1) === 1) {
+        domain.tier1Total++
+        const hasResponse = responses.some(r => r.indicatorId === ind.id && r.priorityRating !== null)
+        if (hasResponse) {
+          domain.tier1Completed++
+          domain.completed++
+        }
+      } else {
+        // For tier 2, count comments as completion
+        const hasComment = responses.some(r => r.indicatorId === ind.id && r.qualitativeReasoning)
+        if (hasComment) domain.completed++
+      }
+    })
+
+    return Array.from(domainMap.values()).sort((a, b) => a.id.localeCompare(b.id))
+  }, [filteredIndicators, responses])
 
   // Handle response save
   const handleSaveResponse = useCallback(async (indicatorId: string, data: Partial<Response>) => {
@@ -88,15 +168,33 @@ export function StudyDashboard({
     }
   }, [currentRound])
 
+  // Handle preference update
+  const handlePreferencesUpdate = async (newPrefs: Record<string, boolean>) => {
+    setPreferences(prev => ({ ...prev, ...newPrefs }))
+    
+    // Persist to server
+    try {
+      await fetch('/api/panelist/preferences', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newPrefs),
+      })
+    } catch (e) {
+      console.error('Failed to save preferences:', e)
+    }
+  }
+
   // Navigation
+  const totalInDomain = tier1Indicators.length + (preferences.showTier2 ? tier2Indicators.length : 0)
+  
   const goToNext = () => {
-    if (currentIndicatorIndex < domainIndicators.length - 1) {
+    if (currentIndicatorIndex < totalInDomain - 1) {
       setCurrentIndicatorIndex(currentIndicatorIndex + 1)
     } else {
       // Move to next domain
-      const currentDomainIndex = domains.findIndex(d => d.id === selectedDomain)
-      if (currentDomainIndex < domains.length - 1) {
-        setSelectedDomain(domains[currentDomainIndex + 1].id)
+      const currentDomainIndex = enhancedDomains.findIndex(d => d.id === selectedDomain)
+      if (currentDomainIndex < enhancedDomains.length - 1) {
+        setSelectedDomain(enhancedDomains[currentDomainIndex + 1].id)
         setCurrentIndicatorIndex(0)
       }
     }
@@ -145,13 +243,19 @@ export function StudyDashboard({
                 currentRound={currentRound} 
                 totalRounds={study.totalRounds} 
               />
+              <div className="relative">
+                <PanelistPreferences
+                  preferences={preferences}
+                  onUpdate={handlePreferencesUpdate}
+                />
+              </div>
             </div>
           </div>
           <div className="mt-4">
             <ProgressBar
-              value={totalResponses}
-              max={totalIndicators}
-              label={`Round ${currentRound} Progress`}
+              value={tier1Completed}
+              max={tier1Total}
+              label={`Round ${currentRound} Progress (${tier1Completed}/${tier1Total} core indicators)`}
             />
           </div>
         </div>
@@ -165,25 +269,66 @@ export function StudyDashboard({
               <CardHeader className="pb-3">
                 <CardTitle className="text-base">Indicator Domains</CardTitle>
                 <CardDescription>
-                  Complete indicators by domain
+                  {preferences.showTier2 
+                    ? `${FRAMEWORK_SUMMARY.totalIndicators} total indicators`
+                    : `${FRAMEWORK_SUMMARY.tier1Count} core indicators to rate`
+                  }
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <DomainProgress
-                  domains={domains}
-                  currentDomain={selectedDomain || undefined}
-                  onSelectDomain={(id) => {
-                    setSelectedDomain(id)
-                    setCurrentIndicatorIndex(0)
-                  }}
-                />
+                <div className="space-y-2">
+                  {enhancedDomains.map((domain) => {
+                    const isComplete = domain.tier1Completed === domain.tier1Total
+                    const isCurrent = domain.id === selectedDomain
+                    const percentage = domain.tier1Total > 0 
+                      ? Math.round((domain.tier1Completed / domain.tier1Total) * 100) 
+                      : 0
+
+                    return (
+                      <button
+                        key={domain.id}
+                        onClick={() => {
+                          setSelectedDomain(domain.id)
+                          setCurrentIndicatorIndex(0)
+                        }}
+                        className={`
+                          w-full text-left p-3 rounded-lg border transition-colors
+                          ${isCurrent ? 'border-primary bg-primary/5' : 'border-transparent hover:bg-accent'}
+                        `}
+                      >
+                        <div className="flex items-center justify-between mb-1">
+                          <span className={`text-sm font-medium ${isComplete ? 'text-green-600' : ''}`}>
+                            {domain.name}
+                          </span>
+                          <span className="text-xs text-muted-foreground">
+                            {domain.tier1Completed}/{domain.tier1Total}
+                          </span>
+                        </div>
+                        <div className="h-1.5 bg-secondary rounded-full overflow-hidden">
+                          <div
+                            className={`h-full transition-all duration-300 ${isComplete ? 'bg-green-500' : 'bg-primary'}`}
+                            style={{ width: `${percentage}%` }}
+                          />
+                        </div>
+                        {domain.question && (
+                          <p className="text-xs text-muted-foreground mt-1 line-clamp-2">
+                            {domain.question}
+                          </p>
+                        )}
+                      </button>
+                    )
+                  })}
+                </div>
               </CardContent>
             </Card>
 
             {/* Instructions card */}
             <Card className="mt-4">
               <CardHeader className="pb-3">
-                <CardTitle className="text-base">How to Rate</CardTitle>
+                <CardTitle className="text-base flex items-center gap-2">
+                  <Info className="w-4 h-4" />
+                  How to Rate
+                </CardTitle>
               </CardHeader>
               <CardContent className="text-sm text-muted-foreground space-y-2">
                 <p>
@@ -193,13 +338,21 @@ export function StudyDashboard({
                   <strong>Validity:</strong> Does the operationalization accurately measure what we intend?
                 </p>
                 <p>
-                  <strong>Feasibility:</strong> How realistic is data collection for this indicator?
+                  <strong>Feasibility:</strong> How realistic is data collection in Yukon?
                 </p>
                 {currentRound > 1 && (
                   <p className="pt-2 border-t">
-                    You can see the group's responses from Round {currentRound - 1} and revise your ratings if you wish.
+                    You can see group responses from Round {currentRound - 1} and revise your ratings.
                   </p>
                 )}
+                <div className="pt-2 border-t">
+                  <p className="flex items-center gap-2">
+                    <TierBadge tier={1} /> Rate these (required)
+                  </p>
+                  <p className="flex items-center gap-2 mt-1">
+                    <TierBadge tier={2} /> Comment only (optional)
+                  </p>
+                </div>
               </CardContent>
             </Card>
           </aside>
@@ -217,10 +370,12 @@ export function StudyDashboard({
                 onPrevious={goToPrevious}
                 hasPrevious={currentIndicatorIndex > 0}
                 hasNext={
-                  currentIndicatorIndex < domainIndicators.length - 1 ||
-                  domains.findIndex(d => d.id === selectedDomain) < domains.length - 1
+                  currentIndicatorIndex < totalInDomain - 1 ||
+                  enhancedDomains.findIndex(d => d.id === selectedDomain) < enhancedDomains.length - 1
                 }
-                position={`${currentIndicatorIndex + 1} of ${domainIndicators.length}`}
+                position={`${currentIndicatorIndex + 1} of ${totalInDomain}`}
+                plainLanguage={preferences.plainLanguage}
+                isTier2={currentIndicator.tier === 2}
               />
             ) : (
               <Card>

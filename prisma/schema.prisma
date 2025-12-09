@@ -62,19 +62,31 @@ model Indicator {
   collectionFrequency String
   originalPriority    String   // HIGH, MEDIUM, LOW from source
   notes               String?  @db.Text
-  domain              String   // e.g., "D1: Shelter Infrastructure"
-  
+
+  // === DOMAIN (Original + Consolidated) ===
+  domain              String   // Original: e.g., "D1: Shelter Infrastructure"
+  domainCode          String   @default("A")  // Consolidated: A-H
+  domainName          String   @default("")   // Plain language: "Safe Places to Stay"
+  domainQuestion      String?  @db.Text       // Guiding question for panelists
+
+  // === TIERING ===
+  tier                Int      @default(1)    // 1 = Core (rate), 2 = Extended (comment only)
+  tierRationale       String?  @db.Text       // Why this tier assignment
+  dataReliability     String   @default("MEDIUM")  // HIGH, MEDIUM, LOW
+
   // Study relation
   studyId String
   study   Study  @relation(fields: [studyId], references: [id], onDelete: Cascade)
-  
+
   // Responses
   responses     Response[]
   roundSummaries RoundSummary[]
-  
+
   createdAt DateTime @default(now())
-  
+
   @@unique([studyId, externalId])
+  @@index([studyId, tier])
+  @@index([studyId, domainCode])
   @@map("indicators")
 }
 

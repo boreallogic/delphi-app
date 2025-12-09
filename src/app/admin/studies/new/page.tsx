@@ -12,12 +12,19 @@ interface ParsedIndicator {
   category: string
   name: string
   definition: string
+  definitionSimple?: string
   unitOfMeasure: string
   operationalization: string
   collectionFrequency: string
   originalPriority: string
   notes: string
   domain: string
+  domainCode?: string
+  domainName?: string
+  domainQuestion?: string
+  tier?: number
+  tierRationale?: string
+  dataReliability?: string
 }
 
 export default function NewStudyPage() {
@@ -46,8 +53,10 @@ export default function NewStudyPage() {
       // Map expected columns
       const columnMap: Record<string, number> = {}
       const expectedColumns = [
-        'id', 'category', 'indicator name', 'definition', 'unit of measure',
-        'operationalization', 'collection frequency', 'priority', 'notes/edge cases', 'domain'
+        'id', 'category', 'indicator name', 'definition', 'definition_plain',
+        'unit of measure', 'operationalization', 'collection frequency', 'priority',
+        'notes/edge cases', 'domain_original', 'domain_code', 'domain_name',
+        'domain_question', 'tier', 'tier_rationale', 'data_reliability'
       ]
 
       expectedColumns.forEach(col => {
@@ -87,17 +96,25 @@ export default function NewStudyPage() {
           return idx !== undefined ? values[idx] || '' : ''
         }
 
+        const tierValue = getValue('tier')
         const indicator: ParsedIndicator = {
           externalId: getValue('id'),
           category: getValue('category'),
           name: getValue('indicator name'),
           definition: getValue('definition'),
+          definitionSimple: getValue('definition_plain') || undefined,
           unitOfMeasure: getValue('unit of measure'),
           operationalization: getValue('operationalization'),
           collectionFrequency: getValue('collection frequency'),
           originalPriority: getValue('priority'),
           notes: getValue('notes/edge cases'),
-          domain: getValue('domain'),
+          domain: getValue('domain_original') || getValue('domain'), // Support both column names
+          domainCode: getValue('domain_code') || undefined,
+          domainName: getValue('domain_name') || undefined,
+          domainQuestion: getValue('domain_question') || undefined,
+          tier: tierValue ? parseInt(tierValue) : undefined,
+          tierRationale: getValue('tier_rationale') || undefined,
+          dataReliability: getValue('data_reliability') || undefined,
         }
 
         if (indicator.externalId && indicator.name) {
@@ -269,16 +286,25 @@ export default function NewStudyPage() {
                     </span>
                   </div>
 
-                  <div className="text-sm text-muted-foreground">
-                    <strong>Domains found:</strong>
-                    <ul className="mt-1 space-y-1">
-                      {domains.map(domain => (
-                        <li key={domain} className="flex items-center gap-2">
-                          <FileText className="w-3 h-3" />
-                          {domain} ({indicators.filter(i => i.domain === domain).length} indicators)
-                        </li>
-                      ))}
-                    </ul>
+                  <div className="text-sm text-muted-foreground space-y-3">
+                    <div>
+                      <strong>Tier Summary:</strong>
+                      <ul className="mt-1 space-y-1">
+                        <li>Tier 1 (Core): {indicators.filter(i => i.tier === 1).length} indicators</li>
+                        <li>Tier 2 (Extended): {indicators.filter(i => i.tier === 2).length} indicators</li>
+                      </ul>
+                    </div>
+                    <div>
+                      <strong>Domains found:</strong>
+                      <ul className="mt-1 space-y-1">
+                        {domains.map(domain => (
+                          <li key={domain} className="flex items-center gap-2">
+                            <FileText className="w-3 h-3" />
+                            {domain} ({indicators.filter(i => i.domain === domain).length} indicators)
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
                   </div>
 
                   {/* Preview first few indicators */}
@@ -290,7 +316,8 @@ export default function NewStudyPage() {
                           <tr>
                             <th className="px-2 py-1 text-left">ID</th>
                             <th className="px-2 py-1 text-left">Name</th>
-                            <th className="px-2 py-1 text-left">Priority</th>
+                            <th className="px-2 py-1 text-left">Domain</th>
+                            <th className="px-2 py-1 text-left">Tier</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -298,7 +325,8 @@ export default function NewStudyPage() {
                             <tr key={ind.externalId} className="border-t">
                               <td className="px-2 py-1 font-mono text-xs">{ind.externalId}</td>
                               <td className="px-2 py-1">{ind.name}</td>
-                              <td className="px-2 py-1">{ind.originalPriority}</td>
+                              <td className="px-2 py-1">{ind.domainCode || '-'}</td>
+                              <td className="px-2 py-1">{ind.tier || '-'}</td>
                             </tr>
                           ))}
                         </tbody>
@@ -314,8 +342,9 @@ export default function NewStudyPage() {
               )}
 
               <div className="text-xs text-muted-foreground">
-                <strong>Expected CSV columns:</strong> ID, Category, Indicator Name, Definition, 
-                Unit of Measure, Operationalization, Collection Frequency, Priority, Notes/Edge Cases, Domain
+                <strong>Expected CSV columns:</strong> ID, Category, Indicator Name, Definition, Definition_Plain,
+                Unit of Measure, Operationalization, Collection Frequency, Priority, Notes/Edge Cases,
+                Domain_Original, Domain_Code, Domain_Name, Domain_Question, Tier, Tier_Rationale, Data_Reliability
               </div>
             </CardContent>
           </Card>

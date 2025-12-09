@@ -6,9 +6,34 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Textarea, Label } from '@/components/ui/form-elements'
 import { RatingScale } from '@/components/ui/rating-scale'
 import { ConsensusBadge } from '@/components/ui/progress'
-import { priorityLabels, validityLabels, feasibilityLabels } from '@/lib/utils'
-import { ChevronLeft, ChevronRight, Save, AlertCircle } from 'lucide-react'
+import { TierBadge } from '@/components/panelist-preferences'
+import { ChevronLeft, ChevronRight, Save, AlertCircle, MessageSquare } from 'lucide-react'
 import type { Indicator, Response, RoundSummary } from '@prisma/client'
+
+// Import label configs
+const priorityLabels: Record<number, string> = {
+  1: 'Not important',
+  2: 'Slightly important',
+  3: 'Moderately important',
+  4: 'Very important',
+  5: 'Essential',
+}
+
+const validityLabels: Record<number, string> = {
+  1: 'Not valid',
+  2: 'Somewhat valid',
+  3: 'Moderately valid',
+  4: 'Very valid',
+  5: 'Highly valid',
+}
+
+const feasibilityLabels: Record<number, string> = {
+  1: 'Not feasible',
+  2: 'Difficult',
+  3: 'Moderately feasible',
+  4: 'Feasible',
+  5: 'Easily feasible',
+}
 
 interface IndicatorAssessmentProps {
   indicator: Indicator
@@ -21,6 +46,8 @@ interface IndicatorAssessmentProps {
   hasPrevious: boolean
   hasNext: boolean
   position: string
+  plainLanguage?: boolean
+  isTier2?: boolean
 }
 
 export function IndicatorAssessment({
@@ -34,6 +61,8 @@ export function IndicatorAssessment({
   hasPrevious,
   hasNext,
   position,
+  plainLanguage = false,
+  isTier2 = false,
 }: IndicatorAssessmentProps) {
   // Form state
   const [priorityRating, setPriorityRating] = useState<number | null>(response?.priorityRating || null)
@@ -79,9 +108,9 @@ export function IndicatorAssessment({
     setSaveStatus('idle')
 
     const success = await onSave(indicator.id, {
-      priorityRating,
-      operationalizationValidity: validityRating,
-      feasibilityRating,
+      priorityRating: isTier2 ? null : priorityRating,
+      operationalizationValidity: isTier2 ? null : validityRating,
+      feasibilityRating: isTier2 ? null : feasibilityRating,
       qualitativeReasoning: reasoning || null,
       thresholdSuggestion: thresholdSuggestion || null,
       dissentFlag,
@@ -99,7 +128,15 @@ export function IndicatorAssessment({
     if (hasNext) onNext()
   }
 
-  const isComplete = priorityRating !== null && validityRating !== null && feasibilityRating !== null
+  // For Tier 1, require all ratings; for Tier 2, just need some content
+  const isComplete = isTier2 
+    ? reasoning.length > 0  // Tier 2 just needs a comment
+    : priorityRating !== null && validityRating !== null && feasibilityRating !== null
+
+  // Determine which definition to show
+  const displayDefinition = plainLanguage && indicator.definitionSimple
+    ? indicator.definitionSimple
+    : indicator.definition
 
   return (
     <div className="space-y-4">
@@ -107,11 +144,28 @@ export function IndicatorAssessment({
       <Card>
         <CardHeader>
           <div className="flex items-start justify-between gap-4">
-            <div>
-              <p className="text-sm text-muted-foreground mb-1">
-                {indicator.externalId} • {indicator.category}
-              </p>
+            <div className="space-y-1">
+              <div className="flex items-center gap-2">
+                <p className="text-sm text-muted-foreground">
+                  {indicator.externalId} • {indicator.category}
+                </p>
+                <TierBadge tier={isTier2 ? 2 : 1} />
+                {indicator.dataReliability && (
+                  <span className={`text-xs px-1.5 py-0.5 rounded ${
+                    indicator.dataReliability === 'HIGH' ? 'bg-green-100 text-green-700' :
+                    indicator.dataReliability === 'MEDIUM' ? 'bg-amber-100 text-amber-700' :
+                    'bg-red-100 text-red-700'
+                  }`}>
+                    {indicator.dataReliability} reliability
+                  </span>
+                )}
+              </div>
               <CardTitle className="text-xl">{indicator.name}</CardTitle>
+              {indicator.domainName && (
+                <p className="text-sm text-primary font-medium">
+                  {indicator.domainCode}: {indicator.domainName}
+                </p>
+              )}
             </div>
             <span className="text-sm text-muted-foreground whitespace-nowrap">
               {position}
@@ -120,8 +174,15 @@ export function IndicatorAssessment({
         </CardHeader>
         <CardContent className="space-y-4">
           <div>
-            <h4 className="text-sm font-medium mb-1">Definition</h4>
-            <p className="text-muted-foreground">{indicator.definition}</p>
+            <div className="flex items-center gap-2 mb-1">
+              <h4 className="text-sm font-medium">Definition</h4>
+              {plainLanguage && indicator.definitionSimple && (
+                <span className="text-xs bg-blue-100 text-blue-700 px-1.5 py-0.5 rounded">
+                  Plain language
+                </span>
+              )}
+            </div>
+            <p className="text-muted-foreground">{displayDefinition}</p>
           </div>
           
           <div className="grid md:grid-cols-2 gap-4">
@@ -146,11 +207,19 @@ export function IndicatorAssessment({
               <p className="text-sm">{indicator.notes}</p>
             </div>
           )}
+
+          {/* Tier rationale for Tier 2 indicators */}
+          {isTier2 && indicator.tierRationale && (
+            <div className="p-3 bg-muted rounded-md">
+              <h4 className="text-sm font-medium mb-1">Why This Is Tier 2</h4>
+              <p className="text-sm text-muted-foreground">{indicator.tierRationale}</p>
+            </div>
+          )}
         </CardContent>
       </Card>
 
-      {/* Previous round summary (for rounds > 1) */}
-      {previousSummary && currentRound > 1 && (
+      {/* Previous round summary (for rounds > 1) - only for Tier 1 */}
+      {previousSummary && currentRound > 1 && !isTier2 && (
         <Card className="border-blue-200 bg-blue-50/50 dark:border-blue-900 dark:bg-blue-950/50">
           <CardHeader className="pb-3">
             <CardTitle className="text-base">Round {currentRound - 1} Group Summary</CardTitle>
@@ -202,107 +271,135 @@ export function IndicatorAssessment({
         </Card>
       )}
 
-      {/* Rating form */}
+      {/* Rating form - Different for Tier 1 vs Tier 2 */}
       <Card>
         <CardHeader>
-          <CardTitle className="text-base">Your Assessment</CardTitle>
+          <CardTitle className="text-base flex items-center gap-2">
+            {isTier2 ? (
+              <>
+                <MessageSquare className="w-4 h-4" />
+                Your Comments (Optional)
+              </>
+            ) : (
+              'Your Assessment'
+            )}
+          </CardTitle>
+          {isTier2 && (
+            <CardDescription>
+              This is an extended indicator. Rating is not required, but your comments are valuable.
+            </CardDescription>
+          )}
         </CardHeader>
         <CardContent className="space-y-6">
-          {/* Rating scales */}
-          <RatingScale
-            id="priority"
-            label="Priority"
-            description="How important is this indicator for the GBV framework?"
-            value={priorityRating}
-            onChange={setPriorityRating}
-            labels={priorityLabels}
-            required
-          />
+          {/* Rating scales - only for Tier 1 */}
+          {!isTier2 && (
+            <>
+              <RatingScale
+                id="priority"
+                label="Priority"
+                description="How important is this indicator for measuring GBV service capacity in Yukon?"
+                value={priorityRating}
+                onChange={setPriorityRating}
+                labels={priorityLabels}
+                required
+              />
 
-          <RatingScale
-            id="validity"
-            label="Operationalization Validity"
-            description="Does the operationalization accurately measure what we intend?"
-            value={validityRating}
-            onChange={setValidityRating}
-            labels={validityLabels}
-            required
-          />
+              <RatingScale
+                id="validity"
+                label="Operationalization Validity"
+                description="Does the operationalization accurately measure what we intend?"
+                value={validityRating}
+                onChange={setValidityRating}
+                labels={validityLabels}
+                required
+              />
 
-          <RatingScale
-            id="feasibility"
-            label="Data Collection Feasibility"
-            description="How realistic is data collection for this indicator in Yukon communities?"
-            value={feasibilityRating}
-            onChange={setFeasibilityRating}
-            labels={feasibilityLabels}
-            required
-          />
+              <RatingScale
+                id="feasibility"
+                label="Data Collection Feasibility"
+                description="How realistic is data collection for this indicator in Yukon communities?"
+                value={feasibilityRating}
+                onChange={setFeasibilityRating}
+                labels={feasibilityLabels}
+                required
+              />
+            </>
+          )}
 
-          {/* Qualitative inputs */}
+          {/* Qualitative inputs - for both tiers */}
           <div className="space-y-2">
             <Label htmlFor="reasoning">
-              Reasoning <span className="text-muted-foreground font-normal">(optional)</span>
+              {isTier2 ? 'Your Comments' : 'Reasoning'} 
+              <span className="text-muted-foreground font-normal">
+                {isTier2 ? '' : ' (optional)'}
+              </span>
             </Label>
             <Textarea
               id="reasoning"
-              placeholder="Why did you rate this indicator this way? Your reasoning will be anonymized and shared with the group in the next round."
+              placeholder={isTier2 
+                ? "Share any thoughts on this indicator - why it matters, challenges you see, or suggestions for improvement."
+                : "Why did you rate this indicator this way? Your reasoning will be anonymized and shared with the group in the next round."
+              }
               value={reasoning}
               onChange={(e) => setReasoning(e.target.value)}
-              rows={3}
+              rows={isTier2 ? 5 : 3}
             />
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="threshold">
-              Threshold Suggestion <span className="text-muted-foreground font-normal">(optional)</span>
-            </Label>
-            <Textarea
-              id="threshold"
-              placeholder="What value would indicate 'adequate' vs 'inadequate' service/capacity?"
-              value={thresholdSuggestion}
-              onChange={(e) => setThresholdSuggestion(e.target.value)}
-              rows={2}
-            />
-          </div>
-
-          {/* Dissent flag */}
-          <div className="p-4 border rounded-lg space-y-3">
-            <div className="flex items-start gap-3">
-              <input
-                type="checkbox"
-                id="dissent"
-                checked={dissentFlag}
-                onChange={(e) => setDissentFlag(e.target.checked)}
-                className="mt-1 h-4 w-4 rounded border-gray-300"
+          {!isTier2 && (
+            <div className="space-y-2">
+              <Label htmlFor="threshold">
+                Threshold Suggestion <span className="text-muted-foreground font-normal">(optional)</span>
+              </Label>
+              <Textarea
+                id="threshold"
+                placeholder="What value would indicate 'adequate' vs 'inadequate' service/capacity?"
+                value={thresholdSuggestion}
+                onChange={(e) => setThresholdSuggestion(e.target.value)}
+                rows={2}
               />
-              <div className="flex-1">
-                <Label htmlFor="dissent" className="font-medium">
-                  Flag Principled Dissent
-                </Label>
-                <p className="text-sm text-muted-foreground mt-1">
-                  Check this if you want your disagreement with the emerging consensus to be 
-                  preserved in the final report, even if you don't change your rating.
-                </p>
-              </div>
             </div>
+          )}
 
-            {dissentFlag && (
-              <div className="pl-7">
-                <Label htmlFor="dissent-reason" className="text-sm">
-                  Reason for dissent
-                </Label>
-                <Textarea
-                  id="dissent-reason"
-                  placeholder="Why do you believe this disagreement should be recorded?"
-                  value={dissentReason}
-                  onChange={(e) => setDissentReason(e.target.value)}
-                  rows={2}
-                  className="mt-1"
+          {/* Dissent flag - only for Tier 1 */}
+          {!isTier2 && (
+            <div className="p-4 border rounded-lg space-y-3">
+              <div className="flex items-start gap-3">
+                <input
+                  type="checkbox"
+                  id="dissent"
+                  checked={dissentFlag}
+                  onChange={(e) => setDissentFlag(e.target.checked)}
+                  className="mt-1 h-4 w-4 rounded border-gray-300"
                 />
+                <div className="flex-1">
+                  <Label htmlFor="dissent" className="font-medium">
+                    Flag Principled Dissent
+                  </Label>
+                  <p className="text-sm text-muted-foreground mt-1">
+                    Check this if you want your disagreement with the emerging consensus to be 
+                    preserved in the final report, even if you don't change your rating.
+                  </p>
+                </div>
               </div>
-            )}
-          </div>
+
+              {dissentFlag && (
+                <div className="pl-7">
+                  <Label htmlFor="dissent-reason" className="text-sm">
+                    Reason for dissent
+                  </Label>
+                  <Textarea
+                    id="dissent-reason"
+                    placeholder="Why do you believe this disagreement should be recorded?"
+                    value={dissentReason}
+                    onChange={(e) => setDissentReason(e.target.value)}
+                    rows={2}
+                    className="mt-1"
+                  />
+                </div>
+              )}
+            </div>
+          )}
         </CardContent>
       </Card>
 
@@ -339,11 +436,11 @@ export function IndicatorAssessment({
 
           <Button
             onClick={handleSaveAndNext}
-            disabled={isSaving || !isComplete}
+            disabled={isSaving || (!isTier2 && !isComplete)}
           >
             {hasNext ? (
               <>
-                Save & Next
+                {isTier2 ? 'Save & Next' : 'Save & Next'}
                 <ChevronRight className="w-4 h-4 ml-1" />
               </>
             ) : (
