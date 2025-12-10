@@ -220,31 +220,7 @@ npm run db:studio
 npx tsc --noEmit
 ```
 
-## Deployment
-
-### Netlify Deployment (Recommended)
-
-This project is configured for easy deployment to Netlify. See the comprehensive deployment guides:
-
-📘 **[Netlify Deployment Guide](./NETLIFY_DEPLOYMENT.md)** - Complete step-by-step instructions
-
-✅ **[Deployment Checklist](./DEPLOYMENT_CHECKLIST.md)** - Quick checklist format
-
-Key files for Netlify:
-- `netlify.toml` - Netlify configuration
-- `.nvmrc` - Node version specification (Node 20)
-- `.env.netlify` - Environment variables template
-
-### Quick Deployment Steps
-
-1. **Set up external services** (PostgreSQL + SMTP)
-2. **Choose deployment method**:
-   - **Git-based** (recommended): Connect repository to Netlify
-   - **Manual**: Build locally and drag & drop
-3. **Configure environment variables** in Netlify dashboard
-4. **Deploy!**
-
-### General Deployment Checklist
+## Deployment Checklist
 
 - [ ] Set `NODE_ENV=production`
 - [ ] Configure production `DATABASE_URL`
