@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useCallback, useMemo } from 'react'
+import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { ProgressBar, RoundStepper, DomainProgress, ConsensusBadge } from '@/components/ui/progress'
@@ -8,7 +9,7 @@ import { IndicatorAssessment } from './indicator-assessment'
 import { PanelistPreferences, TierBadge } from '@/components/panelist-preferences'
 import { roleDisplayNames } from '@/lib/utils'
 import { DOMAINS, FRAMEWORK_SUMMARY } from '@/lib/domains'
-import { Info } from 'lucide-react'
+import { Info, BookOpen } from 'lucide-react'
 import type { Study, Panelist, Indicator, Response, RoundSummary, Round } from '@prisma/client'
 
 interface StudyDashboardProps {
@@ -233,10 +234,17 @@ export function StudyDashboard({
             <div>
               <h1 className="text-xl font-semibold">{study.name}</h1>
               <p className="text-sm text-muted-foreground">
-                Welcome, {panelist.name || panelist.email} 
+                Welcome, {panelist.name || panelist.email}
                 <span className="mx-2">•</span>
                 <span className="capitalize">{roleDisplayNames[panelist.roleType]}</span>
               </p>
+              <Link
+                href={`/study/${study.id}/intro`}
+                className="text-xs text-primary hover:underline flex items-center gap-1 mt-1"
+              >
+                <BookOpen className="w-3 h-3" />
+                View Project Overview
+              </Link>
             </div>
             <div className="flex items-center gap-4">
               <RoundStepper 

@@ -54,7 +54,7 @@ export default async function HomePage() {
             </div>
 
             <div className="flex flex-col gap-3">
-              <Link href={`/study/${study.id}`}>
+              <Link href={`/study/${study.id}/intro`}>
                 <Button className="w-full" size="lg">
                   Enter Assessment Panel
                 </Button>
