@@ -53,3 +53,10 @@ next-env.d.ts
 .netlify
 netlify-deploy.zip
 *.pem
+
+# Secrets and sensitive files (DO NOT COMMIT)
+*ENV_VARS*
+*SECRETS*
+*_SECRETS*
+*credentials*.txt
+*keys*.txt
