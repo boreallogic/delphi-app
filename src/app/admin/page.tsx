@@ -61,7 +61,7 @@ export default async function AdminDashboard() {
           <div>
             <h1 className="text-2xl font-bold">Facilitator Dashboard</h1>
             <p className="text-muted-foreground">
-              YWC GBV Indicators Validation Study
+              Yukon University + YSWC • GBV Indicators Framework Validation Study
             </p>
           </div>
           <Link href="/">

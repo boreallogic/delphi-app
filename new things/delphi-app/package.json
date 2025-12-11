@@ -1,7 +1,7 @@
 {
   "name": "delphi-app",
   "version": "1.0.0",
-  "description": "Delphi method application for GBV indicator validation - Yukon University + YSWC (SSHRC funded)",
+  "description": "Delphi method application for GBV indicator validation - Yukon Women's Coalition",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -14,7 +14,6 @@
     "db:migrate:deploy": "prisma migrate deploy",
     "db:studio": "prisma studio",
     "db:seed": "npx tsx prisma/seed.ts",
-    "import-evidence": "npx tsx scripts/import-evidence.ts",
     "docker:up": "docker-compose up -d",
     "docker:down": "docker-compose down",
     "docker:logs": "docker-compose logs -f app"
@@ -22,35 +21,24 @@
   "author": "Boreal Logic Inc.",
   "license": "UNLICENSED",
   "dependencies": {
-    "@prisma/client": "^5.22.0",
-    "@radix-ui/react-collapsible": "^1.1.12",
-    "@radix-ui/react-popover": "^1.1.15",
-    "@types/node": "^20.17.10",
-    "@types/nodemailer": "^6.4.17",
-    "@types/react": "^18.3.18",
-    "@types/react-dom": "^18.3.5",
+    "@prisma/client": "^7.1.0",
+    "@types/node": "^24.10.1",
+    "@types/nodemailer": "^7.0.4",
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3",
     "autoprefixer": "^10.4.22",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^0.556.0",
     "next": "^14.2.33",
     "next-auth": "^5.0.0-beta.30",
-    "nodemailer": "^6.9.16",
-    "papaparse": "^5.5.3",
+    "nodemailer": "^7.0.11",
     "postcss": "^8.5.6",
-    "prisma": "^5.22.0",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
+    "prisma": "^7.1.0",
+    "react": "^19.2.1",
+    "react-dom": "^19.2.1",
     "tailwind-merge": "^3.4.0",
-    "tailwindcss": "^3.4.18",
+    "tailwindcss": "^4.1.17",
     "typescript": "^5.9.3"
-  },
-  "engines": {
-    "node": ">=20.0.0 <21.0.0",
-    "npm": ">=10.0.0"
-  },
-  "devDependencies": {
-    "@types/papaparse": "^5.5.1",
-    "tsx": "^4.21.0"
   }
 }

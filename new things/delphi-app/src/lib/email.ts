@@ -63,9 +63,8 @@ ${magicLink}
 If you didn't request this link, you can safely ignore this email.
 
 ---
-Yukon University + Yukon Status of Women Council
-GBV Indicators Framework Validation Study (SSHRC funded)
-In partnership with Boreal Logic Inc.
+Yukon Women's Coalition GBV Indicators Project
+Powered by Boreal Logic Inc.
       `.trim(),
       html: `
 <!DOCTYPE html>
@@ -109,9 +108,8 @@ In partnership with Boreal Logic Inc.
   <hr style="border: none; border-top: 1px solid #e5e7eb; margin: 32px 0;">
   
   <p style="margin: 0; font-size: 12px; color: #9ca3af;">
-    Yukon University + Yukon Status of Women Council<br>
-    GBV Indicators Framework Validation Study (SSHRC funded)<br>
-    In partnership with Boreal Logic Inc.
+    Yukon Women's Coalition GBV Indicators Project<br>
+    Powered by Boreal Logic Inc.
   </p>
 </body>
 </html>
@@ -172,8 +170,7 @@ Deadline: ${deadline.toLocaleDateString('en-CA', {
 Access the study: ${magicLink}
 
 ---
-Yukon University + Yukon Status of Women Council
-GBV Indicators Framework Validation Study (SSHRC funded)
+Yukon Women's Coalition GBV Indicators Project
       `.trim(),
       html: `
 <!DOCTYPE html>

@@ -106,10 +106,10 @@ async function main() {
   // Create the single study
   const study = await prisma.study.create({
     data: {
-      name: 'YWC GBV Indicators Validation Study',
-      description: 'Delphi study to validate and prioritize GBV indicators for the Yukon Women\'s Coalition framework.',
-      status: 'SETUP',
-      currentRound: 0,
+      name: 'GBV Indicators Framework Validation Study',
+      description: 'Delphi study to validate and prioritize GBV indicators. A collaboration between Yukon University and Yukon Status of Women Council, funded by SSHRC.',
+      status: 'ACTIVE',
+      currentRound: 1,
       totalRounds: 3,
       consensusThreshold: 1.0,
     },
@@ -123,11 +123,12 @@ async function main() {
       data: {
         studyId: study.id,
         roundNumber: i,
-        status: 'PENDING',
+        status: i === 1 ? 'OPEN' : 'PENDING',
+        opensAt: i === 1 ? new Date() : null,
       },
     })
   }
-  console.log(`✅ Created ${study.totalRounds} rounds`)
+  console.log(`✅ Created ${study.totalRounds} rounds (Round 1 is OPEN)`)
 
   // Create indicators by merging CSV and evidence data
   let createdCount = 0

@@ -1,8 +1,7 @@
 # Delphi Method Application
 
-**GBV Indicators Framework Validation**
-Yukon University + Yukon Status of Women Council
-Funded by SSHRC | In partnership with Boreal Logic Inc.
+**GBV Indicators Framework Validation**  
+Yukon Women's Coalition / Boreal Logic Inc.
 
 A full-stack web application for conducting Delphi method studies to achieve expert consensus on gender-based violence indicators for northern, rural, and remote communities.
 

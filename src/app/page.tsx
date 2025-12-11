@@ -34,9 +34,10 @@ export default async function HomePage() {
       <div className="max-w-2xl w-full space-y-6">
         <Card>
           <CardHeader className="text-center">
-            <CardTitle className="text-2xl">Yukon Women's Coalition</CardTitle>
+            <CardTitle className="text-2xl">Yukon University + YSWC</CardTitle>
             <CardDescription className="text-base mt-2">
               GBV Indicators Framework Validation Study
+              <div className="text-xs mt-1 text-muted-foreground">Funded by SSHRC</div>
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
@@ -68,8 +69,8 @@ export default async function HomePage() {
         </Card>
 
         <div className="text-center text-sm text-muted-foreground">
-          <p>Yukon Women's Coalition • Boreal Logic Inc.</p>
-          <p className="text-xs mt-1">Delphi Method Application</p>
+          <p>Yukon University • Yukon Status of Women Council</p>
+          <p className="text-xs mt-1">In partnership with Boreal Logic Inc.</p>
         </div>
       </div>
     </main>
