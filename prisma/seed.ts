@@ -33,6 +33,23 @@ const sampleIndicators = [
     tier: 1,
     tierRationale: 'Core capacity measure with HIGH priority and reliable data',
     dataReliability: 'HIGH',
+    evidenceSummary: 'Access to emergency shelter is consistently identified as a critical protective factor across the literature. Lack of shelter access is associated with women remaining in or returning to violent situations.',
+    riskFactors: [
+      'Long waitlists to access services (Mantler, 2024; Heggie et al., 2022)',
+      'Shelters do not reflect unique needs of rural women (Weeks, 2016)',
+      'Lack of emergency housing (Moffitt, 2022; Zorn, 2017; Farhall, 2020)',
+    ],
+    protectiveFactors: [
+      'Access to shelters / safe houses (CREVAWC, 2021; Faller, 2021; Hope et al., 2023)',
+      'Access to specialized GBV-specific services (Carter-Snell et al., 2020)',
+    ],
+    keyCitations: [
+      'CREVAWC (2021)',
+      'Faller (2021)',
+      'Women\'s Shelters Canada surveys',
+    ],
+    dataQualityNotes: 'Surveys by Women\'s Shelters Canada and ESVA are well documented but primarily in PDF format.',
+    rrnRelevance: 'HIGH - Critical infrastructure gap in northern/remote communities',
   },
   {
     externalId: 'SH02',
@@ -52,6 +69,23 @@ const sampleIndicators = [
     tier: 1,
     tierRationale: 'MEDIUM priority but important indicator of housing access barriers',
     dataReliability: 'MEDIUM',
+    evidenceSummary: 'Extended shelter stays often reflect systemic housing access barriers and lack of affordable transitional options.',
+    riskFactors: [
+      'Lack of affordable housing (Tutty, 2015)',
+      'Waitlists for transitional programs (Women\'s Shelters Canada, 2022)',
+      'Insufficient income support (Farhall, 2020)',
+    ],
+    protectiveFactors: [
+      'Access to transitional housing programs (YWCA Canada, 2021)',
+      'Coordinated housing support services (Hope et al., 2023)',
+    ],
+    keyCitations: [
+      'Women\'s Shelters Canada (2022)',
+      'Tutty (2015)',
+      'Farhall (2020)',
+    ],
+    dataQualityNotes: 'Most shelters track length of stay, though definitions may vary between emergency and transitional programs.',
+    rrnRelevance: 'HIGH - Housing access is particularly challenging in northern/remote communities',
   },
   {
     externalId: 'HA01',
@@ -71,6 +105,24 @@ const sampleIndicators = [
     tier: 1,
     tierRationale: 'Critical housing resource with HIGH priority',
     dataReliability: 'HIGH',
+    evidenceSummary: 'Transitional housing programs provide critical bridge between emergency shelter and permanent housing, reducing returns to violent relationships.',
+    riskFactors: [
+      'Limited transitional housing capacity (Moffitt, 2022)',
+      'Geographic isolation from services (Weeks, 2016)',
+      'Lack of flexible housing options (Zorn, 2017)',
+    ],
+    protectiveFactors: [
+      'Dedicated transitional housing programs (Faller, 2021)',
+      'Housing-first approaches (Tutty et al., 2016)',
+      'Flexible program models (YWCA Canada, 2021)',
+    ],
+    keyCitations: [
+      'Moffitt (2022)',
+      'Faller (2021)',
+      'Tutty et al. (2016)',
+    ],
+    dataQualityNotes: 'Data typically from Women\'s Shelters Canada surveys and provincial housing agencies.',
+    rrnRelevance: 'CRITICAL - Almost no transitional housing in rural/remote/northern regions',
   },
   {
     externalId: 'HC01',
@@ -90,6 +142,24 @@ const sampleIndicators = [
     tier: 1,
     tierRationale: 'Critical forensic capacity with HIGH priority',
     dataReliability: 'HIGH',
+    evidenceSummary: 'SANE programs improve forensic evidence quality, reduce secondary trauma, and increase prosecution rates.',
+    riskFactors: [
+      'No SANE-trained staff in region (Du Mont et al., 2014)',
+      'Geographic barriers to access (Mantler, 2024)',
+      'Lack of trauma-informed care training (Carter-Snell et al., 2020)',
+    ],
+    protectiveFactors: [
+      'Access to SANE programs (Du Mont & Parnis, 2003)',
+      'Trauma-informed healthcare practices (Campbell et al., 2015)',
+      'Coordinated response teams (Greeson & Campbell, 2013)',
+    ],
+    keyCitations: [
+      'Du Mont et al. (2014)',
+      'Campbell et al. (2015)',
+      'Carter-Snell et al. (2020)',
+    ],
+    dataQualityNotes: 'Hospital and health authority records provide reliable data on SANE program availability.',
+    rrnRelevance: 'CRITICAL - Major gap in northern/remote healthcare capacity',
   },
   {
     externalId: 'LJ01',
@@ -109,6 +179,24 @@ const sampleIndicators = [
     tier: 1,
     tierRationale: 'Time-sensitive safety measure with HIGH priority',
     dataReliability: 'MEDIUM',
+    evidenceSummary: 'Timely access to protection orders is critical for survivor safety, with delays increasing risk of further violence.',
+    riskFactors: [
+      'Court system delays (Hornosty & Doherty, 2002)',
+      'Geographic barriers to court access (Mantler, 2024)',
+      'Lack of legal representation (Tutty et al., 2006)',
+    ],
+    protectiveFactors: [
+      'Expedited protection order processes (Messing et al., 2014)',
+      'Access to legal advocates (Wathen et al., 2015)',
+      'Coordinated justice response (CREVAWC, 2021)',
+    ],
+    keyCitations: [
+      'Messing et al. (2014)',
+      'Wathen et al. (2015)',
+      'CREVAWC (2021)',
+    ],
+    dataQualityNotes: 'Provincial court data varies in accessibility and format across jurisdictions.',
+    rrnRelevance: 'HIGH - Circuit courts and limited legal services create processing delays',
   },
 ]
 
