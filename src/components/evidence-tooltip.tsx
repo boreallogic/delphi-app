@@ -71,10 +71,10 @@ export function EvidenceTooltip({
         <div className="space-y-4">
           {/* Header with close button */}
           <div className="flex items-start justify-between">
-            <h4 className="font-semibold text-sm">Research Evidence</h4>
+            <h4 className="font-semibold text-sm text-gray-900">Research Evidence</h4>
             <button
               onClick={() => setIsOpen(false)}
-              className="text-muted-foreground hover:text-foreground"
+              className="text-gray-500 hover:text-gray-900"
               aria-label="Close"
             >
               <X className="w-4 h-4" />
@@ -83,7 +83,7 @@ export function EvidenceTooltip({
 
           {/* Evidence Summary */}
           <div>
-            <p className="text-sm text-muted-foreground leading-relaxed">
+            <p className="text-sm text-gray-700 leading-relaxed">
               {summary}
             </p>
           </div>
@@ -91,7 +91,7 @@ export function EvidenceTooltip({
           {/* RRN Relevance Badge */}
           {rrnRelevance && (
             <div className="flex items-center gap-2">
-              <span className="text-xs text-muted-foreground">RRN Context:</span>
+              <span className="text-xs text-gray-600 font-medium">RRN Context:</span>
               {getRelevanceBadge(rrnRelevance)}
             </div>
           )}
@@ -99,14 +99,14 @@ export function EvidenceTooltip({
           {/* Risk Factors */}
           {riskFactors.length > 0 && (
             <Collapsible>
-              <CollapsibleTrigger className="text-destructive">
+              <CollapsibleTrigger className="text-red-700 font-medium">
                 Risk Factors ({riskFactors.length})
               </CollapsibleTrigger>
               <CollapsibleContent>
-                <ul className="text-sm space-y-2 text-muted-foreground">
+                <ul className="text-sm space-y-2 text-gray-700">
                   {riskFactors.map((factor, idx) => (
                     <li key={idx} className="flex gap-2">
-                      <span className="text-destructive mt-1">•</span>
+                      <span className="text-red-600 mt-1">•</span>
                       <span>{factor}</span>
                     </li>
                   ))}
@@ -118,11 +118,11 @@ export function EvidenceTooltip({
           {/* Protective Factors */}
           {protectiveFactors.length > 0 && (
             <Collapsible>
-              <CollapsibleTrigger className="text-green-700">
+              <CollapsibleTrigger className="text-green-700 font-medium">
                 Protective Factors ({protectiveFactors.length})
               </CollapsibleTrigger>
               <CollapsibleContent>
-                <ul className="text-sm space-y-2 text-muted-foreground">
+                <ul className="text-sm space-y-2 text-gray-700">
                   {protectiveFactors.map((factor, idx) => (
                     <li key={idx} className="flex gap-2">
                       <span className="text-green-700 mt-1">•</span>
@@ -137,14 +137,14 @@ export function EvidenceTooltip({
           {/* Key Citations */}
           {citations.length > 0 && (
             <Collapsible>
-              <CollapsibleTrigger>
+              <CollapsibleTrigger className="text-gray-900 font-medium">
                 Key Citations ({citations.length})
               </CollapsibleTrigger>
               <CollapsibleContent>
-                <ul className="text-sm space-y-1 text-muted-foreground">
+                <ul className="text-sm space-y-1 text-gray-700">
                   {citations.map((citation, idx) => (
                     <li key={idx} className="flex gap-2">
-                      <span className="mt-1">•</span>
+                      <span className="mt-1 text-gray-500">•</span>
                       <span>{citation}</span>
                     </li>
                   ))}
@@ -156,11 +156,11 @@ export function EvidenceTooltip({
           {/* Data Quality Notes */}
           {dataQualityNotes && (
             <Collapsible>
-              <CollapsibleTrigger>
+              <CollapsibleTrigger className="text-gray-900 font-medium">
                 Data Quality Notes
               </CollapsibleTrigger>
               <CollapsibleContent>
-                <p className="text-sm text-muted-foreground leading-relaxed">
+                <p className="text-sm text-gray-700 leading-relaxed">
                   {dataQualityNotes}
                 </p>
               </CollapsibleContent>
@@ -168,7 +168,7 @@ export function EvidenceTooltip({
           )}
 
           {/* Source Attribution */}
-          <div className="pt-2 border-t text-xs text-muted-foreground">
+          <div className="pt-2 border-t border-gray-200 text-xs text-gray-600">
             Source: Open North Synthesis of Risk and Protective Factors (Sept 2025)
           </div>
         </div>
