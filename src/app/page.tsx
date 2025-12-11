@@ -1,11 +1,12 @@
 import Link from 'next/link'
+import { redirect } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { prisma } from '@/lib/db'
 
 export default async function HomePage() {
-  // Get existing studies for quick access
-  const studies = await prisma.study.findMany({
+  // Get the single study (should always exist after seed)
+  const study = await prisma.study.findFirst({
     include: {
       _count: {
         select: {
@@ -14,72 +15,61 @@ export default async function HomePage() {
         },
       },
     },
-    orderBy: { createdAt: 'desc' },
-    take: 5,
   })
+
+  // If no study exists, redirect to admin to run seed
+  if (!study) {
+    redirect('/admin')
+  }
+
+  const statusColor = {
+    ACTIVE: 'bg-green-100 text-green-800',
+    SETUP: 'bg-blue-100 text-blue-800',
+    PAUSED: 'bg-amber-100 text-amber-800',
+    COMPLETE: 'bg-gray-100 text-gray-800',
+  }[study.status]
 
   return (
     <main className="min-h-screen flex items-center justify-center p-4">
       <div className="max-w-2xl w-full space-y-6">
         <Card>
           <CardHeader className="text-center">
-            <CardTitle className="text-2xl">Delphi Method Application</CardTitle>
-            <CardDescription>
+            <CardTitle className="text-2xl">Yukon Women's Coalition</CardTitle>
+            <CardDescription className="text-base mt-2">
               GBV Indicators Framework Validation Study
             </CardDescription>
           </CardHeader>
-          <CardContent className="flex flex-col gap-3">
-            <Link href="/admin">
-              <Button className="w-full" size="lg">
-                Facilitator Dashboard
-              </Button>
-            </Link>
-            <Link href="/admin/studies/new">
-              <Button className="w-full" size="lg" variant="outline">
-                Create New Study
-              </Button>
-            </Link>
+          <CardContent className="space-y-4">
+            <div className="p-4 border rounded-lg bg-muted/50">
+              <div className="flex items-center justify-between mb-2">
+                <h3 className="font-medium">{study.name}</h3>
+                <span className={`px-2 py-1 rounded text-xs font-medium ${statusColor}`}>
+                  {study.status}
+                </span>
+              </div>
+              <p className="text-sm text-muted-foreground">
+                {study._count.indicators} indicators • {study._count.panelists} panelists • Round {study.currentRound} of {study.totalRounds}
+              </p>
+            </div>
+
+            <div className="flex flex-col gap-3">
+              <Link href={`/study/${study.id}`}>
+                <Button className="w-full" size="lg">
+                  Enter Assessment Panel
+                </Button>
+              </Link>
+              <Link href="/admin">
+                <Button className="w-full" size="lg" variant="outline">
+                  Facilitator Dashboard
+                </Button>
+              </Link>
+            </div>
           </CardContent>
         </Card>
 
-        {studies.length > 0 && (
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-lg">Available Studies</CardTitle>
-              <CardDescription>
-                Click to view any study (authentication disabled for testing)
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-2">
-              {studies.map((study) => (
-                <Link key={study.id} href={`/study/${study.id}`}>
-                  <div className="p-4 border rounded-lg hover:bg-muted transition-colors cursor-pointer">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <h3 className="font-medium">{study.name}</h3>
-                        <p className="text-sm text-muted-foreground">
-                          {study._count.indicators} indicators • {study._count.panelists} panelists
-                        </p>
-                      </div>
-                      <span className={`
-                        px-2 py-1 rounded text-xs font-medium
-                        ${study.status === 'ACTIVE' ? 'bg-green-100 text-green-800' : ''}
-                        ${study.status === 'SETUP' ? 'bg-blue-100 text-blue-800' : ''}
-                        ${study.status === 'PAUSED' ? 'bg-amber-100 text-amber-800' : ''}
-                        ${study.status === 'COMPLETE' ? 'bg-gray-100 text-gray-800' : ''}
-                      `}>
-                        {study.status}
-                      </span>
-                    </div>
-                  </div>
-                </Link>
-              ))}
-            </CardContent>
-          </Card>
-        )}
-
         <div className="text-center text-sm text-muted-foreground">
           <p>Yukon Women's Coalition • Boreal Logic Inc.</p>
+          <p className="text-xs mt-1">Delphi Method Application</p>
         </div>
       </div>
     </main>
