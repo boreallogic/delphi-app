@@ -74,6 +74,14 @@ model Indicator {
   tierRationale       String?  @db.Text       // Why this tier assignment
   dataReliability     String   @default("MEDIUM")  // HIGH, MEDIUM, LOW
 
+  // === EVIDENCE BASE ===
+  evidenceSummary     String?  @db.Text       // Brief summary of research backing
+  riskFactors         Json?                   // Array of risk factors from literature
+  protectiveFactors   Json?                   // Array of protective factors
+  keyCitations        Json?                   // Array of key citation strings
+  dataQualityNotes    String?  @db.Text       // Notes on data reliability/sources
+  rrnRelevance        String?                 // CRITICAL, HIGH, MEDIUM, LOW - RRN context relevance
+
   // Study relation
   studyId String
   study   Study  @relation(fields: [studyId], references: [id], onDelete: Cascade)

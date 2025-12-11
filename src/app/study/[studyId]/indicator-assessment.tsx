@@ -7,6 +7,7 @@ import { Textarea, Label } from '@/components/ui/form-elements'
 import { RatingScale } from '@/components/ui/rating-scale'
 import { ConsensusBadge } from '@/components/ui/progress'
 import { TierBadge } from '@/components/panelist-preferences'
+import { EvidenceTooltip } from '@/components/evidence-tooltip'
 import { ChevronLeft, ChevronRight, Save, AlertCircle, MessageSquare } from 'lucide-react'
 import type { Indicator, Response, RoundSummary } from '@prisma/client'
 
@@ -160,7 +161,19 @@ export function IndicatorAssessment({
                   </span>
                 )}
               </div>
-              <CardTitle className="text-xl">{indicator.name}</CardTitle>
+              <CardTitle className="text-xl flex items-center">
+                {indicator.name}
+                {indicator.evidenceSummary && (
+                  <EvidenceTooltip
+                    summary={indicator.evidenceSummary}
+                    riskFactors={indicator.riskFactors as string[] | undefined}
+                    protectiveFactors={indicator.protectiveFactors as string[] | undefined}
+                    citations={indicator.keyCitations as string[] | undefined}
+                    dataQualityNotes={indicator.dataQualityNotes || undefined}
+                    rrnRelevance={indicator.rrnRelevance || undefined}
+                  />
+                )}
+              </CardTitle>
               {indicator.domainName && (
                 <p className="text-sm text-primary font-medium">
                   {indicator.domainCode}: {indicator.domainName}
