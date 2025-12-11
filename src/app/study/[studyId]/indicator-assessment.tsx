@@ -152,12 +152,12 @@ export function IndicatorAssessment({
                 </p>
                 <TierBadge tier={isTier2 ? 2 : 1} />
                 {indicator.dataReliability && (
-                  <span className={`text-xs px-1.5 py-0.5 rounded ${
-                    indicator.dataReliability === 'HIGH' ? 'bg-green-100 text-green-700' :
-                    indicator.dataReliability === 'MEDIUM' ? 'bg-amber-100 text-amber-700' :
-                    'bg-red-100 text-red-700'
+                  <span className={`text-xs px-2 py-0.5 rounded font-medium ${
+                    indicator.dataReliability === 'HIGH' ? 'bg-green-100 text-green-800 border border-green-200' :
+                    indicator.dataReliability === 'MEDIUM' ? 'bg-yellow-100 text-yellow-800 border border-yellow-200' :
+                    'bg-red-100 text-red-800 border border-red-200'
                   }`}>
-                    {indicator.dataReliability} reliability
+                    {indicator.dataReliability}
                   </span>
                 )}
               </div>
@@ -186,38 +186,49 @@ export function IndicatorAssessment({
           </div>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div>
-            <div className="flex items-center gap-2 mb-1">
-              <h4 className="text-sm font-medium">Definition</h4>
+          <div className="pb-2 border-b">
+            <div className="flex items-center gap-2 mb-2">
+              <h4 className="text-sm font-semibold">Definition</h4>
               {plainLanguage && indicator.definitionSimple && (
-                <span className="text-xs bg-blue-100 text-blue-700 px-1.5 py-0.5 rounded">
-                  Plain language
+                <span className="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full font-medium border border-blue-200">
+                  Plain Language
                 </span>
               )}
             </div>
-            <p className="text-muted-foreground">{displayDefinition}</p>
+            <p className="text-gray-700 leading-relaxed">{displayDefinition}</p>
           </div>
           
-          <div className="grid md:grid-cols-2 gap-4">
-            <div>
-              <h4 className="text-sm font-medium mb-1">Unit of Measure</h4>
-              <p className="text-sm text-muted-foreground">{indicator.unitOfMeasure}</p>
-            </div>
-            <div>
-              <h4 className="text-sm font-medium mb-1">Collection Frequency</h4>
-              <p className="text-sm text-muted-foreground">{indicator.collectionFrequency}</p>
-            </div>
-          </div>
+          <details className="group">
+            <summary className="cursor-pointer text-sm font-medium text-primary hover:text-primary/80 flex items-center gap-2 py-2">
+              <span className="group-open:rotate-90 transition-transform">▶</span>
+              Technical Details
+            </summary>
+            <div className="mt-2 space-y-3 pl-5">
+              <div className="grid md:grid-cols-2 gap-4">
+                <div>
+                  <h4 className="text-sm font-medium mb-1">Unit of Measure</h4>
+                  <p className="text-sm text-muted-foreground">{indicator.unitOfMeasure}</p>
+                </div>
+                <div>
+                  <h4 className="text-sm font-medium mb-1">Collection Frequency</h4>
+                  <p className="text-sm text-muted-foreground">{indicator.collectionFrequency}</p>
+                </div>
+              </div>
 
-          <div>
-            <h4 className="text-sm font-medium mb-1">Operationalization</h4>
-            <p className="text-sm text-muted-foreground">{indicator.operationalization}</p>
-          </div>
+              <div>
+                <h4 className="text-sm font-medium mb-1">Operationalization</h4>
+                <p className="text-sm text-muted-foreground">{indicator.operationalization}</p>
+              </div>
+            </div>
+          </details>
 
           {indicator.notes && (
-            <div className="p-3 bg-amber-50 dark:bg-amber-950 rounded-md">
-              <h4 className="text-sm font-medium mb-1">Notes / Edge Cases</h4>
-              <p className="text-sm">{indicator.notes}</p>
+            <div className="p-4 bg-amber-50 dark:bg-amber-950 rounded-lg border border-amber-200">
+              <h4 className="text-sm font-semibold mb-2 flex items-center gap-2">
+                <AlertCircle className="w-4 h-4" />
+                Important Notes
+              </h4>
+              <p className="text-sm leading-relaxed">{indicator.notes}</p>
             </div>
           )}
 
@@ -429,12 +440,19 @@ export function IndicatorAssessment({
 
         <div className="flex items-center gap-2">
           {saveStatus === 'saved' && (
-            <span className="text-sm text-green-600">Saved</span>
+            <span className="text-sm font-medium text-green-700 bg-green-100 px-3 py-1 rounded-full border border-green-200">
+              ✓ Saved
+            </span>
           )}
           {saveStatus === 'error' && (
-            <span className="text-sm text-destructive flex items-center gap-1">
+            <span className="text-sm font-medium text-red-700 bg-red-100 px-3 py-1 rounded-full border border-red-200 flex items-center gap-1">
               <AlertCircle className="w-4 h-4" />
               Error saving
+            </span>
+          )}
+          {hasChanges && saveStatus === 'idle' && (
+            <span className="text-sm text-amber-600">
+              Unsaved changes
             </span>
           )}
 
