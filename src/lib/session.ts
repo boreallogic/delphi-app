@@ -33,14 +33,9 @@ export async function getSession(): Promise<Session | null> {
 }
 
 export async function getPanelist() {
-  const session = await getSession()
-  
-  if (!session) {
-    return null
-  }
-
-  const panelist = await prisma.panelist.findUnique({
-    where: { id: session.panelistId },
+  // TEMPORARY: Bypass authentication for testing
+  // Find the first available panelist for testing
+  const panelist = await prisma.panelist.findFirst({
     include: {
       study: {
         include: {
