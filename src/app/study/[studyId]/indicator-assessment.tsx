@@ -344,16 +344,21 @@ export function IndicatorAssessment({
           {/* Qualitative inputs - for both tiers */}
           <div className="space-y-2">
             <Label htmlFor="reasoning">
-              {isTier2 ? 'Your Comments' : 'Reasoning'} 
+              {isTier2 ? 'Your Comments' : 'Reasoning'}
               <span className="text-muted-foreground font-normal">
                 {isTier2 ? '' : ' (optional)'}
               </span>
             </Label>
+            {!isTier2 && (
+              <p className="text-sm text-muted-foreground mb-2">
+                Share your thinking behind your ratings. This helps other panelists understand different perspectives. Your comments will be shared anonymously with the group in the next round.
+              </p>
+            )}
             <Textarea
               id="reasoning"
-              placeholder={isTier2 
+              placeholder={isTier2
                 ? "Share any thoughts on this indicator - why it matters, challenges you see, or suggestions for improvement."
-                : "Why did you rate this indicator this way? Your reasoning will be anonymized and shared with the group in the next round."
+                : "Example: 'I rated priority high because...' or 'From my experience, the challenge with feasibility is...'"
               }
               value={reasoning}
               onChange={(e) => setReasoning(e.target.value)}
@@ -366,9 +371,12 @@ export function IndicatorAssessment({
               <Label htmlFor="threshold">
                 Threshold Suggestion <span className="text-muted-foreground font-normal">(optional)</span>
               </Label>
+              <p className="text-sm text-muted-foreground mb-2">
+                If this indicator were being used to assess a community, what number or benchmark would tell us "this is good enough" versus "this needs improvement"? For example: "At least 2 shelters per 10,000 people" or "Services available within 1 hour travel time."
+              </p>
               <Textarea
                 id="threshold"
-                placeholder="What value would indicate 'adequate' vs 'inadequate' service/capacity?"
+                placeholder="Example: 'At least 75% of survivors should be able to access services within 24 hours'"
                 value={thresholdSuggestion}
                 onChange={(e) => setThresholdSuggestion(e.target.value)}
                 rows={2}
@@ -381,21 +389,21 @@ export function IndicatorAssessment({
             <Label htmlFor="general-comments">
               General Comments <span className="text-muted-foreground font-normal">(optional)</span>
             </Label>
+            <p className="text-sm text-muted-foreground mb-2">
+              Use this space for any other thoughts—concerns about how this might be misused, suggestions for improvement, context from your experience, or anything else that doesn't fit the structured questions above.
+            </p>
             <Textarea
               id="general-comments"
-              placeholder="Any other observations, concerns, or suggestions about this indicator? Share context that might not fit in the structured fields above."
+              placeholder="Example: 'In remote communities, this data might be sensitive because...' or 'This could be improved by also tracking...'"
               value={generalComments}
               onChange={(e) => setGeneralComments(e.target.value)}
               rows={3}
             />
-            <p className="text-xs text-muted-foreground">
-              Free-form space for thoughts that don't fit the specific questions above
-            </p>
           </div>
 
           {/* Dissent flag - only for Tier 1 */}
           {!isTier2 && (
-            <div className="p-4 border rounded-lg space-y-3">
+            <div className="p-4 border rounded-lg bg-amber-50/50 space-y-3">
               <div className="flex items-start gap-3">
                 <input
                   type="checkbox"
@@ -409,8 +417,10 @@ export function IndicatorAssessment({
                     Flag Principled Dissent
                   </Label>
                   <p className="text-sm text-muted-foreground mt-1">
-                    Check this if you want your disagreement with the emerging consensus to be 
-                    preserved in the final report, even if you don't change your rating.
+                    In later rounds, if you see that most panelists disagree with your rating but you still believe your perspective is important, check this box. Your reasoning will be included in the final report (anonymously) so your viewpoint isn't lost. This is especially important for lived experience perspectives that might differ from expert consensus.
+                  </p>
+                  <p className="text-xs text-muted-foreground mt-2 italic">
+                    You don't need to use this in Round 1—it's for when you see the group results and want to maintain your position.
                   </p>
                 </div>
               </div>
@@ -418,14 +428,17 @@ export function IndicatorAssessment({
               {dissentFlag && (
                 <div className="pl-7">
                   <Label htmlFor="dissent-reason" className="text-sm">
-                    Reason for dissent
+                    Why this disagreement matters
                   </Label>
+                  <p className="text-xs text-muted-foreground mb-2">
+                    Help us understand your perspective. What are we missing if we only follow the majority view?
+                  </p>
                   <Textarea
                     id="dissent-reason"
-                    placeholder="Why do you believe this disagreement should be recorded?"
+                    placeholder="Example: 'Based on my experience working in small communities, this indicator overlooks...'"
                     value={dissentReason}
                     onChange={(e) => setDissentReason(e.target.value)}
-                    rows={2}
+                    rows={3}
                     className="mt-1"
                   />
                 </div>

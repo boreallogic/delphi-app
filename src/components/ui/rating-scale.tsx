@@ -104,8 +104,7 @@ export function RatingScale({
             disabled={disabled}
             onClick={() => onChange(null)}
             className={cn(
-              "inline-flex items-center justify-center rounded-md border-2 font-medium transition-all px-3",
-              sizeClasses[size],
+              "inline-flex items-center justify-center rounded-md border-2 transition-all px-3 py-2 text-sm font-normal",
               value === null
                 ? "bg-muted-foreground text-muted border-muted-foreground"
                 : "bg-background border-input hover:bg-accent hover:border-accent-foreground/20",
