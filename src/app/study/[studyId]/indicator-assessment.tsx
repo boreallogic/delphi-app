@@ -277,7 +277,7 @@ export function IndicatorAssessment({
               <RatingScale
                 id="priority"
                 label="Priority"
-                description="How important is this indicator? Select 'Don't Know' if you lack sufficient information to assess."
+                description="How important is this indicator for measuring GBV service capacity?"
                 value={priorityRating}
                 onChange={setPriorityRating}
                 labels={priorityLabels}
@@ -288,8 +288,8 @@ export function IndicatorAssessment({
 
               <RatingScale
                 id="validity"
-                label="Operationalization Validity"
-                description="Does the operationalization accurately measure what we intend? Select 'Don't Know' if you lack sufficient information."
+                label="Validity"
+                description="Does this actually measure what it's supposed to measure?"
                 value={validityRating}
                 onChange={setValidityRating}
                 labels={validityLabels}
@@ -300,8 +300,8 @@ export function IndicatorAssessment({
 
               <RatingScale
                 id="feasibility"
-                label="Data Collection Feasibility"
-                description="How realistic is data collection for this indicator in Yukon communities? Select 'Don't Know' if unsure."
+                label="Feasibility"
+                description="How realistic is it to collect this data in Yukon communities?"
                 value={feasibilityRating}
                 onChange={setFeasibilityRating}
                 labels={feasibilityLabels}

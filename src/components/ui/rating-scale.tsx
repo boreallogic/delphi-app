@@ -118,9 +118,18 @@ export function RatingScale({
 
         {/* Scale labels */}
         {showLabels && (
-          <div className="flex justify-between text-xs text-muted-foreground">
-            <span>{labels[min] || `${min}`}</span>
-            <span>{labels[max] || `${max}`}</span>
+          <div className="flex gap-2">
+            {scalePoints.map((point) => (
+              <div
+                key={point}
+                className={cn(
+                  "flex items-center justify-center text-xs text-muted-foreground",
+                  sizeClasses[size]
+                )}
+              >
+                {labels[point] || `${point}`}
+              </div>
+            ))}
           </div>
         )}
       </div>
