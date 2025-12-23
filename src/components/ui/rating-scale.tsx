@@ -8,7 +8,7 @@ interface RatingScaleProps {
   label: string
   description?: string
   value: number | null
-  onChange: (value: number) => void
+  onChange: (value: number | null) => void
   labels?: Record<number, string>
   min?: number
   max?: number
@@ -34,7 +34,7 @@ export function RatingScale({
   onChange,
   labels = defaultLabels,
   min = 1,
-  max = 5,
+  max = 3,
   disabled = false,
   required = false,
   showLabels = true,
@@ -95,6 +95,26 @@ export function RatingScale({
               {point}
             </button>
           ))}
+
+          {/* Don't Know button */}
+          <button
+            type="button"
+            role="radio"
+            aria-checked={value === null}
+            disabled={disabled}
+            onClick={() => onChange(null)}
+            className={cn(
+              "inline-flex items-center justify-center rounded-md border-2 font-medium transition-all px-3",
+              sizeClasses[size],
+              value === null
+                ? "bg-muted-foreground text-muted border-muted-foreground"
+                : "bg-background border-input hover:bg-accent hover:border-accent-foreground/20",
+              disabled && "opacity-50 cursor-not-allowed",
+              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+            )}
+          >
+            Don't Know
+          </button>
         </div>
 
         {/* Scale labels */}
@@ -124,7 +144,7 @@ export function RatingScaleInline({
   onChange,
   labels,
   min = 1,
-  max = 5,
+  max = 3,
   disabled = false,
 }: Omit<RatingScaleProps, 'description' | 'showLabels' | 'size'>) {
   const scalePoints = Array.from({ length: max - min + 1 }, (_, i) => min + i)

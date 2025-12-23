@@ -23,7 +23,7 @@ model Study {
   // Delphi configuration
   currentRound       Int     @default(0)
   totalRounds        Int     @default(3)
-  consensusThreshold Float   @default(1.0)  // IQR threshold for consensus
+  consensusThreshold Float   @default(0.67)  // IQR threshold for consensus (adjusted for 3-point scale)
   allowDissentFlags  Boolean @default(true)
   
   // Timing
@@ -103,40 +103,43 @@ model Indicator {
 // ============================================================================
 
 model Panelist {
-  id        String      @id @default(cuid())
-  email     String
-  name      String?
-  roleType  PanelistRole
-  
+  id                  String        @id @default(cuid())
+  email               String
+  name                String?
+  primaryRole         PanelistRole  // Used for role-stratified analysis
+  secondaryRole       PanelistRole? // Optional secondary role (display only)
+  expertiseArea       String?       // Free text expertise field
+  jurisdictionContext String?       // 'LARGE', 'SMALL', 'BOTH'
+
   // Magic link auth
   magicToken      String?   @unique
   magicTokenExpiry DateTime?
   lastLoginAt     DateTime?
-  
+
   // Accessibility preferences
   preferences Json?  // { "plainLanguage": true, "highContrast": false, ... }
-  
+
   // Study relation
   studyId String
   study   Study  @relation(fields: [studyId], references: [id], onDelete: Cascade)
-  
+
   // Responses
   responses Response[]
-  
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  
+
   @@unique([studyId, email])
   @@map("panelists")
 }
 
 enum PanelistRole {
   EXPERT_GBV           // Domain expertise in gender-based violence
-  EXPERT_MEASUREMENT   // Expertise in indicator/composite development
   LIVED_EXPERIENCE     // Person with lived experience of GBV/services
   SERVICE_PROVIDER     // Frontline service delivery
   POLICY_MAKER         // Government/policy context
   COMMUNITY_MEMBER     // General community perspective
+  MEDICAL_PROFESSIONAL // Medical professionals (doctors, nurses, paramedics)
 }
 
 // ============================================================================
@@ -194,16 +197,19 @@ model Response {
   feasibilityRating Int?  // 1-5 scale
   
   // === QUALITATIVE ===
-  
+
   // Threshold suggestion: What value would indicate "adequate" vs "inadequate"?
   thresholdSuggestion String? @db.Text
-  
+
   // Weight suggestion: Relative importance within domain (0-100)
   weightSuggestion Float?
-  
+
   // Reasoning: Why did you rate this way?
   qualitativeReasoning String? @db.Text
-  
+
+  // General comments: Open-ended feedback not tied to specific dimensions
+  generalComments String? @db.Text
+
   // === DISSENT ===
   
   // Dissent flag: "I understand consensus but want disagreement recorded"

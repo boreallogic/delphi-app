@@ -35,11 +35,26 @@ export default function StudyIntroPage() {
             Measuring What Matters
           </h1>
           <p className="text-xl text-muted-foreground mb-2">
-            A Community-Driven Approach to Understanding
+            A Community-Driven Approach to Understanding GBV Service Capacity in Yukon
           </p>
-          <p className="text-xl font-medium text-primary">
-            GBV Service Capacity in Yukon
-          </p>
+
+          {/* Prominent time commitment */}
+          <div className="mt-6 inline-flex items-center gap-6 bg-primary/10 px-6 py-4 rounded-lg border-2 border-primary/20">
+            <div className="text-center">
+              <div className="text-2xl font-bold text-primary">45-60</div>
+              <div className="text-sm text-muted-foreground">minutes/round</div>
+            </div>
+            <div className="h-12 w-px bg-primary/20"></div>
+            <div className="text-center">
+              <div className="text-2xl font-bold text-primary">3</div>
+              <div className="text-sm text-muted-foreground">rounds total</div>
+            </div>
+            <div className="h-12 w-px bg-primary/20"></div>
+            <div className="text-center">
+              <div className="text-2xl font-bold text-primary">4-6</div>
+              <div className="text-sm text-muted-foreground">weeks duration</div>
+            </div>
+          </div>
         </div>
 
         {/* Key Stats */}
@@ -218,39 +233,38 @@ export default function StudyIntroPage() {
           </CardHeader>
           <CardContent className="space-y-4">
             <p className="text-sm text-muted-foreground">
-              For each Tier 1 indicator, you'll assess three dimensions on a 1-5 scale:
+              For each Tier 1 indicator, you'll assess three dimensions on a 3-point scale:
             </p>
 
             <div className="space-y-4">
               <div className="p-4 border-l-4 border-blue-500 bg-blue-50/50">
-                <h4 className="font-semibold mb-1">Priority (1-5)</h4>
+                <h4 className="font-semibold mb-1">Priority (Low/Medium/High)</h4>
                 <p className="text-sm text-muted-foreground">
-                  How important is this indicator for measuring GBV service capacity in Yukon?
-                  Should it be in the framework?
+                  How important is this indicator for measuring GBV service capacity?
                 </p>
               </div>
 
               <div className="p-4 border-l-4 border-green-500 bg-green-50/50">
-                <h4 className="font-semibold mb-1">Validity (1-5)</h4>
+                <h4 className="font-semibold mb-1">Validity (Low/Medium/High)</h4>
                 <p className="text-sm text-muted-foreground">
                   Does the operationalization actually measure what we intend?
-                  Does our measurement approach make sense?
                 </p>
               </div>
 
               <div className="p-4 border-l-4 border-purple-500 bg-purple-50/50">
-                <h4 className="font-semibold mb-1">Feasibility (1-5)</h4>
+                <h4 className="font-semibold mb-1">Feasibility (Low/Medium/High)</h4>
                 <p className="text-sm text-muted-foreground">
                   How realistic is data collection in Yukon communities?
-                  Can we actually collect this data?
+                </p>
+              </div>
+
+              <div className="p-3 bg-muted rounded-lg">
+                <p className="text-sm">
+                  <strong>"Don't Know" Option:</strong> Available for each dimension if you lack
+                  sufficient information to assess. These responses are excluded from group statistics.
                 </p>
               </div>
             </div>
-
-            <p className="text-xs text-muted-foreground italic pt-2">
-              <strong>Time commitment:</strong> ~45-60 minutes per round • 3 rounds over 4-6 weeks •
-              Complete at your own pace before each deadline
-            </p>
           </CardContent>
         </Card>
 

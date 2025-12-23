@@ -9,32 +9,8 @@ import { ConsensusBadge } from '@/components/ui/progress'
 import { TierBadge } from '@/components/panelist-preferences'
 import { EvidenceTooltip } from '@/components/evidence-tooltip'
 import { ChevronLeft, ChevronRight, Save, AlertCircle, MessageSquare } from 'lucide-react'
+import { priorityLabels, validityLabels, feasibilityLabels } from '@/lib/utils'
 import type { Indicator, Response, RoundSummary } from '@prisma/client'
-
-// Import label configs
-const priorityLabels: Record<number, string> = {
-  1: 'Not important',
-  2: 'Slightly important',
-  3: 'Moderately important',
-  4: 'Very important',
-  5: 'Essential',
-}
-
-const validityLabels: Record<number, string> = {
-  1: 'Not valid',
-  2: 'Somewhat valid',
-  3: 'Moderately valid',
-  4: 'Very valid',
-  5: 'Highly valid',
-}
-
-const feasibilityLabels: Record<number, string> = {
-  1: 'Not feasible',
-  2: 'Difficult',
-  3: 'Moderately feasible',
-  4: 'Feasible',
-  5: 'Easily feasible',
-}
 
 interface IndicatorAssessmentProps {
   indicator: Indicator
@@ -71,6 +47,7 @@ export function IndicatorAssessment({
   const [feasibilityRating, setFeasibilityRating] = useState<number | null>(response?.feasibilityRating || null)
   const [reasoning, setReasoning] = useState(response?.qualitativeReasoning || '')
   const [thresholdSuggestion, setThresholdSuggestion] = useState(response?.thresholdSuggestion || '')
+  const [generalComments, setGeneralComments] = useState(response?.generalComments || '')
   const [dissentFlag, setDissentFlag] = useState(response?.dissentFlag || false)
   const [dissentReason, setDissentReason] = useState(response?.dissentReason || '')
   
@@ -85,6 +62,7 @@ export function IndicatorAssessment({
     setFeasibilityRating(response?.feasibilityRating || null)
     setReasoning(response?.qualitativeReasoning || '')
     setThresholdSuggestion(response?.thresholdSuggestion || '')
+    setGeneralComments(response?.generalComments || '')
     setDissentFlag(response?.dissentFlag || false)
     setDissentReason(response?.dissentReason || '')
     setHasChanges(false)
@@ -93,16 +71,17 @@ export function IndicatorAssessment({
 
   // Track changes
   useEffect(() => {
-    const changed = 
+    const changed =
       priorityRating !== (response?.priorityRating || null) ||
       validityRating !== (response?.operationalizationValidity || null) ||
       feasibilityRating !== (response?.feasibilityRating || null) ||
       reasoning !== (response?.qualitativeReasoning || '') ||
       thresholdSuggestion !== (response?.thresholdSuggestion || '') ||
+      generalComments !== (response?.generalComments || '') ||
       dissentFlag !== (response?.dissentFlag || false) ||
       dissentReason !== (response?.dissentReason || '')
     setHasChanges(changed)
-  }, [priorityRating, validityRating, feasibilityRating, reasoning, thresholdSuggestion, dissentFlag, dissentReason, response])
+  }, [priorityRating, validityRating, feasibilityRating, reasoning, thresholdSuggestion, generalComments, dissentFlag, dissentReason, response])
 
   const handleSave = async () => {
     setIsSaving(true)
@@ -114,6 +93,7 @@ export function IndicatorAssessment({
       feasibilityRating: isTier2 ? null : feasibilityRating,
       qualitativeReasoning: reasoning || null,
       thresholdSuggestion: thresholdSuggestion || null,
+      generalComments: generalComments || null,
       dissentFlag,
       dissentReason: dissentFlag ? dissentReason : null,
       revisedFromPrevious: currentRound > 1,
@@ -126,7 +106,11 @@ export function IndicatorAssessment({
 
   const handleSaveAndNext = async () => {
     await handleSave()
-    if (hasNext) onNext()
+    if (hasNext) {
+      onNext()
+      // Scroll to top after navigation
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
   }
 
   // For Tier 1, require all ratings; for Tier 2, just need some content
@@ -197,24 +181,25 @@ export function IndicatorAssessment({
             </div>
             <p className="text-gray-700 leading-relaxed">{displayDefinition}</p>
           </div>
-          
+
+          {/* Prominent units display for feasibility context */}
+          <div className="flex items-center gap-4 p-3 bg-muted/50 rounded-lg border">
+            <div className="flex-1">
+              <h4 className="text-xs font-medium text-muted-foreground mb-1">Unit of Measure</h4>
+              <p className="text-sm font-medium">{indicator.unitOfMeasure}</p>
+            </div>
+            <div className="flex-1">
+              <h4 className="text-xs font-medium text-muted-foreground mb-1">Collection Frequency</h4>
+              <p className="text-sm font-medium">{indicator.collectionFrequency}</p>
+            </div>
+          </div>
+
           <details className="group">
             <summary className="cursor-pointer text-sm font-medium text-primary hover:text-primary/80 flex items-center gap-2 py-2">
               <span className="group-open:rotate-90 transition-transform">▶</span>
-              Technical Details
+              Operationalization Details
             </summary>
             <div className="mt-2 space-y-3 pl-5">
-              <div className="grid md:grid-cols-2 gap-4">
-                <div>
-                  <h4 className="text-sm font-medium mb-1">Unit of Measure</h4>
-                  <p className="text-sm text-muted-foreground">{indicator.unitOfMeasure}</p>
-                </div>
-                <div>
-                  <h4 className="text-sm font-medium mb-1">Collection Frequency</h4>
-                  <p className="text-sm text-muted-foreground">{indicator.collectionFrequency}</p>
-                </div>
-              </div>
-
               <div>
                 <h4 className="text-sm font-medium mb-1">Operationalization</h4>
                 <p className="text-sm text-muted-foreground">{indicator.operationalization}</p>
@@ -321,30 +306,36 @@ export function IndicatorAssessment({
               <RatingScale
                 id="priority"
                 label="Priority"
-                description="How important is this indicator for measuring GBV service capacity in Yukon?"
+                description="How important is this indicator? Select 'Don't Know' if you lack sufficient information to assess."
                 value={priorityRating}
                 onChange={setPriorityRating}
                 labels={priorityLabels}
+                min={1}
+                max={3}
                 required
               />
 
               <RatingScale
                 id="validity"
                 label="Operationalization Validity"
-                description="Does the operationalization accurately measure what we intend?"
+                description="Does the operationalization accurately measure what we intend? Select 'Don't Know' if you lack sufficient information."
                 value={validityRating}
                 onChange={setValidityRating}
                 labels={validityLabels}
+                min={1}
+                max={3}
                 required
               />
 
               <RatingScale
                 id="feasibility"
                 label="Data Collection Feasibility"
-                description="How realistic is data collection for this indicator in Yukon communities?"
+                description="How realistic is data collection for this indicator in Yukon communities? Select 'Don't Know' if unsure."
                 value={feasibilityRating}
                 onChange={setFeasibilityRating}
                 labels={feasibilityLabels}
+                min={1}
+                max={3}
                 required
               />
             </>
@@ -384,6 +375,23 @@ export function IndicatorAssessment({
               />
             </div>
           )}
+
+          {/* General comments field */}
+          <div className="space-y-2">
+            <Label htmlFor="general-comments">
+              General Comments <span className="text-muted-foreground font-normal">(optional)</span>
+            </Label>
+            <Textarea
+              id="general-comments"
+              placeholder="Any other observations, concerns, or suggestions about this indicator? Share context that might not fit in the structured fields above."
+              value={generalComments}
+              onChange={(e) => setGeneralComments(e.target.value)}
+              rows={3}
+            />
+            <p className="text-xs text-muted-foreground">
+              Free-form space for thoughts that don't fit the specific questions above
+            </p>
+          </div>
 
           {/* Dissent flag - only for Tier 1 */}
           {!isTier2 && (

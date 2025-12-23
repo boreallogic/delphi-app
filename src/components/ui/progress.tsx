@@ -174,7 +174,7 @@ interface ConsensusBadgeProps {
 
 export function ConsensusBadge({
   iqr,
-  threshold = 1.0,
+  threshold = 0.67,
   className,
 }: ConsensusBadgeProps) {
   const status = iqr <= threshold 

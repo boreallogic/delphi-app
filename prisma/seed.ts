@@ -57,11 +57,54 @@ interface EvidenceData {
 
 // Sample panelists
 const samplePanelists = [
-  { email: 'expert1@example.com', name: 'Dr. Jane Smith', roleType: 'EXPERT_GBV' },
-  { email: 'expert2@example.com', name: 'Dr. Maria Garcia', roleType: 'EXPERT_MEASUREMENT' },
-  { email: 'provider1@example.com', name: 'Sarah Johnson', roleType: 'SERVICE_PROVIDER' },
-  { email: 'lived1@example.com', name: 'Anonymous A', roleType: 'LIVED_EXPERIENCE' },
-  { email: 'policy1@example.com', name: 'Michael Chen', roleType: 'POLICY_MAKER' },
+  {
+    email: 'expert1@example.com',
+    name: 'Dr. Jane Smith',
+    primaryRole: 'EXPERT_GBV',
+    secondaryRole: null,
+    expertiseArea: 'Rural GBV Service Systems',
+    jurisdictionContext: 'SMALL'
+  },
+  {
+    email: 'expert2@example.com',
+    name: 'Dr. Maria Garcia',
+    primaryRole: 'EXPERT_GBV',
+    secondaryRole: null,
+    expertiseArea: 'Composite Indicator Development',
+    jurisdictionContext: 'BOTH'
+  },
+  {
+    email: 'provider1@example.com',
+    name: 'Sarah Johnson',
+    primaryRole: 'SERVICE_PROVIDER',
+    secondaryRole: 'LIVED_EXPERIENCE',
+    expertiseArea: null,
+    jurisdictionContext: 'SMALL'
+  },
+  {
+    email: 'lived1@example.com',
+    name: 'Anonymous A',
+    primaryRole: 'LIVED_EXPERIENCE',
+    secondaryRole: null,
+    expertiseArea: null,
+    jurisdictionContext: null
+  },
+  {
+    email: 'policy1@example.com',
+    name: 'Michael Chen',
+    primaryRole: 'POLICY_MAKER',
+    secondaryRole: 'COMMUNITY_MEMBER',
+    expertiseArea: 'Northern Governance',
+    jurisdictionContext: 'SMALL'
+  },
+  {
+    email: 'medical1@example.com',
+    name: 'Dr. Alex Chen',
+    primaryRole: 'MEDICAL_PROFESSIONAL',
+    secondaryRole: null,
+    expertiseArea: 'Remote Medicine',
+    jurisdictionContext: 'SMALL'
+  },
 ]
 
 async function main() {

@@ -51,7 +51,7 @@ export function calculateStats(values: number[]): {
 }
 
 // Check if consensus is reached based on IQR threshold
-export function checkConsensus(iqr: number, threshold: number = 1.0): boolean {
+export function checkConsensus(iqr: number, threshold: number = 0.67): boolean {
   return iqr <= threshold
 }
 
@@ -78,34 +78,28 @@ export function generateMagicToken(): string {
 // Role display names
 export const roleDisplayNames: Record<string, string> = {
   EXPERT_GBV: 'GBV Expert',
-  EXPERT_MEASUREMENT: 'Measurement Expert',
   LIVED_EXPERIENCE: 'Lived Experience',
   SERVICE_PROVIDER: 'Service Provider',
   POLICY_MAKER: 'Policy Maker',
   COMMUNITY_MEMBER: 'Community Member',
+  MEDICAL_PROFESSIONAL: 'Medical Professional',
 }
 
-// Priority labels for rating scale
+// Priority labels for rating scale (3-point scale)
 export const priorityLabels: Record<number, string> = {
-  1: 'Not Important',
-  2: 'Slightly Important',
-  3: 'Moderately Important',
-  4: 'Very Important',
-  5: 'Essential',
+  1: 'Low',
+  2: 'Medium',
+  3: 'High',
 }
 
 export const validityLabels: Record<number, string> = {
-  1: 'Not Valid',
-  2: 'Somewhat Valid',
-  3: 'Moderately Valid',
-  4: 'Very Valid',
-  5: 'Highly Valid',
+  1: 'Low',
+  2: 'Medium',
+  3: 'High',
 }
 
 export const feasibilityLabels: Record<number, string> = {
-  1: 'Not Feasible',
-  2: 'Difficult',
-  3: 'Moderately Feasible',
-  4: 'Feasible',
-  5: 'Easily Feasible',
+  1: 'Low',
+  2: 'Medium',
+  3: 'High',
 }

@@ -92,7 +92,16 @@ In partnership with Boreal Logic Inc.
     You've been invited to participate in a Delphi study for the GBV Indicators Framework.
     Click the button below to access the study.
   </p>
-  
+
+  <div style="background: #f0f9ff; border-left: 4px solid #0284c7; padding: 16px; margin: 24px 0; border-radius: 4px;">
+    <p style="margin: 0 0 8px 0; font-weight: 600; color: #0c4a6e;">Time Commitment</p>
+    <p style="margin: 0; font-size: 14px; color: #0c4a6e;">
+      📅 <strong>3 rounds</strong> over 4-6 weeks<br>
+      ⏱️ <strong>45-60 minutes</strong> per round<br>
+      💾 Complete at your own pace before each deadline
+    </p>
+  </div>
+
   <div style="text-align: center; margin: 32px 0;">
     <a href="${magicLink}" 
        style="display: inline-block; background: #1e3a5f; color: white; 
@@ -188,11 +197,15 @@ GBV Indicators Framework Validation Study (SSHRC funded)
   <p>${greeting}</p>
   
   <p>
-    ${roundNumber > 1 
-      ? 'The next round is ready. You can now see how your responses compare to the group and revise if you wish.' 
+    ${roundNumber > 1
+      ? 'The next round is ready. You can now see how your responses compare to the group and revise if you wish.'
       : 'Please complete your assessment of the indicators for the GBV framework.'}
   </p>
-  
+
+  <p style="background: #fef3c7; padding: 12px; border-radius: 4px; margin: 16px 0;">
+    <strong>Estimated time:</strong> 45-60 minutes
+  </p>
+
   <p style="background: #fef3c7; padding: 12px; border-radius: 4px;">
     <strong>Deadline:</strong> ${deadline.toLocaleDateString('en-CA', { 
       weekday: 'long', 

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/db'
+import { roleDisplayNames } from '@/lib/utils'
 
 interface RouteParams {
   params: Promise<{ studyId: string }>
@@ -8,11 +9,27 @@ interface RouteParams {
 export async function POST(request: NextRequest, { params }: RouteParams) {
   try {
     const { studyId } = await params
-    const { email, name, roleType } = await request.json()
+    const { email, name, primaryRole, secondaryRole, expertiseArea, jurisdictionContext } = await request.json()
 
-    if (!email || !roleType) {
+    if (!email || !primaryRole) {
       return NextResponse.json(
-        { error: 'Email and role type are required' },
+        { error: 'Email and primary role are required' },
+        { status: 400 }
+      )
+    }
+
+    // Validate primary role
+    if (!Object.keys(roleDisplayNames).includes(primaryRole)) {
+      return NextResponse.json(
+        { error: 'Invalid primary role' },
+        { status: 400 }
+      )
+    }
+
+    // Validate secondary role if provided
+    if (secondaryRole && !Object.keys(roleDisplayNames).includes(secondaryRole)) {
+      return NextResponse.json(
+        { error: 'Invalid secondary role' },
         { status: 400 }
       )
     }
@@ -50,7 +67,10 @@ export async function POST(request: NextRequest, { params }: RouteParams) {
         studyId,
         email: email.toLowerCase().trim(),
         name: name || null,
-        roleType,
+        primaryRole,
+        secondaryRole: secondaryRole || null,
+        expertiseArea: expertiseArea || null,
+        jurisdictionContext: jurisdictionContext || null,
       },
     })
 
@@ -63,7 +83,10 @@ export async function POST(request: NextRequest, { params }: RouteParams) {
         metadata: {
           panelistId: panelist.id,
           email: panelist.email,
-          roleType,
+          primaryRole,
+          secondaryRole,
+          expertiseArea,
+          jurisdictionContext,
         },
       },
     })

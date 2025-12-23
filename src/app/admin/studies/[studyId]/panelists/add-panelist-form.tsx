@@ -16,6 +16,9 @@ export function AddPanelistForm({ studyId }: AddPanelistFormProps) {
   const [email, setEmail] = useState('')
   const [name, setName] = useState('')
   const [roleType, setRoleType] = useState('EXPERT_GBV')
+  const [secondaryRole, setSecondaryRole] = useState<string>('')
+  const [expertiseArea, setExpertiseArea] = useState('')
+  const [jurisdictionContext, setJurisdictionContext] = useState<string>('')
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState('')
   const [success, setSuccess] = useState(false)
@@ -30,7 +33,14 @@ export function AddPanelistForm({ studyId }: AddPanelistFormProps) {
       const response = await fetch(`/api/study/${studyId}/panelists`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, name, roleType }),
+        body: JSON.stringify({
+          email,
+          name,
+          primaryRole: roleType,
+          secondaryRole: secondaryRole || null,
+          expertiseArea: expertiseArea || null,
+          jurisdictionContext: jurisdictionContext || null,
+        }),
       })
 
       if (!response.ok) {
@@ -79,7 +89,7 @@ export function AddPanelistForm({ studyId }: AddPanelistFormProps) {
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="role">Role Type *</Label>
+        <Label htmlFor="role">Primary Role *</Label>
         <select
           id="role"
           value={roleType}
@@ -92,6 +102,61 @@ export function AddPanelistForm({ studyId }: AddPanelistFormProps) {
             </option>
           ))}
         </select>
+        <p className="text-xs text-muted-foreground">
+          Primary role is used for role-stratified analysis
+        </p>
+      </div>
+
+      <div className="space-y-2">
+        <Label htmlFor="secondary-role">Secondary Role (Optional)</Label>
+        <select
+          id="secondary-role"
+          value={secondaryRole}
+          onChange={(e) => setSecondaryRole(e.target.value)}
+          className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+        >
+          <option value="">None</option>
+          {Object.entries(roleDisplayNames).map(([value, label]) => (
+            <option key={value} value={value}>
+              {label}
+            </option>
+          ))}
+        </select>
+        <p className="text-xs text-muted-foreground">
+          Shown in profile but not used in statistics
+        </p>
+      </div>
+
+      <div className="space-y-2">
+        <Label htmlFor="expertise">Area of Expertise (Optional)</Label>
+        <Input
+          id="expertise"
+          type="text"
+          value={expertiseArea}
+          onChange={(e) => setExpertiseArea(e.target.value)}
+          placeholder="e.g., Psychometrics, Rural Health Systems"
+        />
+        <p className="text-xs text-muted-foreground">
+          Specific area of expertise relevant to this study
+        </p>
+      </div>
+
+      <div className="space-y-2">
+        <Label htmlFor="jurisdiction">Jurisdictional Context (Optional)</Label>
+        <select
+          id="jurisdiction"
+          value={jurisdictionContext}
+          onChange={(e) => setJurisdictionContext(e.target.value)}
+          className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+        >
+          <option value="">Not specified</option>
+          <option value="LARGE">Large jurisdiction (urban centers, large municipalities)</option>
+          <option value="SMALL">Small jurisdiction (remote, rural, small communities)</option>
+          <option value="BOTH">Experience in both contexts</option>
+        </select>
+        <p className="text-xs text-muted-foreground">
+          Helps understand if expertise is specific to large or small community contexts
+        </p>
       </div>
 
       {error && (

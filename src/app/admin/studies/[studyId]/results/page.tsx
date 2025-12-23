@@ -80,6 +80,9 @@ export default async function ResultsPage({ params }: PageProps) {
             </Link>
             <h1 className="text-2xl font-bold">Results & Consensus</h1>
             <p className="text-muted-foreground">{study.name}</p>
+            <p className="text-sm text-muted-foreground mt-2">
+              Ratings use a 3-point scale (Low/Medium/High). "Don't Know" responses excluded from statistics.
+            </p>
           </div>
           <ExportButton studyId={studyId} />
         </div>
@@ -213,7 +216,10 @@ export default async function ResultsPage({ params }: PageProps) {
                 <p className="text-sm text-muted-foreground mb-4">
                   This analysis helps identify where expert opinions diverge from lived experience perspectives.
                 </p>
-                
+                <p className="text-sm text-muted-foreground mb-4">
+                  Analysis uses primary roles only. Secondary roles are not included in stratification.
+                </p>
+
                 {summaries.length > 0 && summaries[0].priorityByRole && (
                   <div className="overflow-x-auto">
                     <table className="w-full text-sm">

@@ -12,6 +12,13 @@ import { DOMAINS, FRAMEWORK_SUMMARY } from '@/lib/domains'
 import { Info, BookOpen } from 'lucide-react'
 import type { Study, Panelist, Indicator, Response, RoundSummary, Round } from '@prisma/client'
 
+// Helper for jurisdiction context display
+const jurisdictionLabels: Record<string, string> = {
+  LARGE: 'Large Jurisdiction',
+  SMALL: 'Small Jurisdiction',
+  BOTH: 'Multi-Context',
+}
+
 interface StudyDashboardProps {
   study: Study & { rounds: Round[] }
   panelist: Panelist
@@ -34,7 +41,7 @@ export function StudyDashboard({
   // Panelist preferences from stored preferences or defaults
   const storedPrefs = (panelist.preferences as Record<string, boolean>) || {}
   const [preferences, setPreferences] = useState({
-    plainLanguage: storedPrefs.plainLanguage || false,
+    plainLanguage: storedPrefs.plainLanguage !== undefined ? storedPrefs.plainLanguage : true,
     showTier2: storedPrefs.showTier2 || false,
   })
 
@@ -236,7 +243,24 @@ export function StudyDashboard({
               <p className="text-sm text-muted-foreground">
                 Welcome, {panelist.name || panelist.email}
                 <span className="mx-2">•</span>
-                <span className="capitalize">{roleDisplayNames[panelist.roleType]}</span>
+                <span className="capitalize">
+                  {roleDisplayNames[panelist.primaryRole]}
+                  {panelist.secondaryRole && ` & ${roleDisplayNames[panelist.secondaryRole]}`}
+                </span>
+                {panelist.expertiseArea && (
+                  <>
+                    <span className="mx-2">•</span>
+                    <span className="italic">{panelist.expertiseArea}</span>
+                  </>
+                )}
+                {panelist.jurisdictionContext && (
+                  <>
+                    <span className="mx-2">•</span>
+                    <span className="text-xs bg-muted px-2 py-0.5 rounded">
+                      {jurisdictionLabels[panelist.jurisdictionContext]}
+                    </span>
+                  </>
+                )}
               </p>
               <Link
                 href={`/study/${study.id}/intro`}

@@ -136,13 +136,13 @@ export async function POST(request: NextRequest, { params }: RouteParams) {
           const validityStats = calculateStats(validityValues)
           const feasibilityStats = calculateStats(feasibilityValues)
 
-          // Calculate by role
-          const roles = [...new Set(indResponses.map(r => r.panelist.roleType))]
+          // Calculate by role (using primary role only)
+          const roles = [...new Set(indResponses.map(r => r.panelist.primaryRole))]
           const priorityByRole: Record<string, { mean: number; median: number }> = {}
           const validityByRole: Record<string, { mean: number; median: number }> = {}
 
           for (const role of roles) {
-            const roleResponses = indResponses.filter(r => r.panelist.roleType === role)
+            const roleResponses = indResponses.filter(r => r.panelist.primaryRole === role)
             
             const rolePriority = roleResponses
               .map(r => r.priorityRating)
