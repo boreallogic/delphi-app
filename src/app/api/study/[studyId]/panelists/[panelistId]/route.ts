@@ -76,7 +76,10 @@ export async function PATCH(request: NextRequest, { params }: RouteParams) {
     // Update allowed fields
     const updateData: Record<string, unknown> = {}
     if (body.name !== undefined) updateData.name = body.name
-    if (body.roleType !== undefined) updateData.roleType = body.roleType
+    if (body.primaryRole !== undefined) updateData.primaryRole = body.primaryRole
+    if (body.secondaryRole !== undefined) updateData.secondaryRole = body.secondaryRole
+    if (body.expertiseArea !== undefined) updateData.expertiseArea = body.expertiseArea
+    if (body.jurisdictionContext !== undefined) updateData.jurisdictionContext = body.jurisdictionContext
     if (body.preferences !== undefined) updateData.preferences = body.preferences
 
     const updated = await prisma.panelist.update({

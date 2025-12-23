@@ -45,8 +45,8 @@ export default async function PanelistsPage({ params }: PageProps) {
 
   // Group panelists by role
   const byRole = study.panelists.reduce((acc, p) => {
-    if (!acc[p.roleType]) acc[p.roleType] = []
-    acc[p.roleType].push(p)
+    if (!acc[p.primaryRole]) acc[p.primaryRole] = []
+    acc[p.primaryRole].push(p)
     return acc
   }, {} as Record<string, typeof study.panelists>)
 
@@ -139,7 +139,7 @@ export default async function PanelistsPage({ params }: PageProps) {
                             </p>
                             <div className="flex items-center gap-2 mt-1">
                               <span className="text-xs px-2 py-0.5 rounded bg-secondary">
-                                {roleDisplayNames[panelist.roleType]}
+                                {roleDisplayNames[panelist.primaryRole]}
                               </span>
                               {panelist.lastLoginAt && (
                                 <span className="text-xs text-muted-foreground">

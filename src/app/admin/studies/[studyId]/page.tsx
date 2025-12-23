@@ -173,7 +173,7 @@ export default async function StudyManagementPage({ params }: PageProps) {
                               {panelist.name || panelist.email}
                             </p>
                             <p className="text-xs text-muted-foreground">
-                              {roleDisplayNames[panelist.roleType]}
+                              {roleDisplayNames[panelist.primaryRole]}
                             </p>
                           </div>
                           <div className="w-32">
