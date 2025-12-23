@@ -14,6 +14,7 @@ interface EvidenceTooltipProps {
   citations?: string[]
   dataQualityNotes?: string
   rrnRelevance?: string
+  prominent?: boolean
 }
 
 export function EvidenceTooltip({
@@ -23,6 +24,7 @@ export function EvidenceTooltip({
   citations = [],
   dataQualityNotes,
   rrnRelevance,
+  prominent = false,
 }: EvidenceTooltipProps) {
   const [isOpen, setIsOpen] = useState(false)
 
@@ -61,10 +63,16 @@ export function EvidenceTooltip({
     <Popover open={isOpen} onOpenChange={setIsOpen}>
       <PopoverTrigger asChild>
         <button
-          className="text-muted-foreground hover:text-primary transition-colors ml-2"
-          aria-label="View evidence base"
+          className={cn(
+            "transition-all ml-2 flex items-center justify-center rounded-full",
+            prominent
+              ? "w-8 h-8 bg-blue-100 hover:bg-blue-200 text-blue-700 hover:text-blue-900 border-2 border-blue-300 hover:border-blue-400 shadow-sm hover:shadow-md"
+              : "text-muted-foreground hover:text-primary"
+          )}
+          aria-label="View research evidence"
+          title="Click to view research evidence"
         >
-          <Info className="w-4 h-4" />
+          <Info className={prominent ? "w-5 h-5" : "w-4 h-4"} />
         </button>
       </PopoverTrigger>
       <PopoverContent className="w-96 max-h-[60vh] overflow-y-auto" align="start">

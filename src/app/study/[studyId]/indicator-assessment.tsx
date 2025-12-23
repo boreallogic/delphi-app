@@ -135,18 +135,8 @@ export function IndicatorAssessment({
                   <p className="text-sm text-muted-foreground">
                     {indicator.externalId} • {indicator.category}
                   </p>
-                  <TierBadge tier={isTier2 ? 2 : 1} />
-                  {indicator.dataReliability && (
-                    <span className={`text-xs px-2 py-0.5 rounded font-medium ${
-                      indicator.dataReliability === 'HIGH' ? 'bg-green-100 text-green-800 border border-green-200' :
-                      indicator.dataReliability === 'MEDIUM' ? 'bg-yellow-100 text-yellow-800 border border-yellow-200' :
-                      'bg-red-100 text-red-800 border border-red-200'
-                    }`}>
-                      {indicator.dataReliability}
-                    </span>
-                  )}
                 </div>
-                <CardTitle className="text-xl flex items-center">
+                <CardTitle className="text-xl flex items-center gap-2">
                   {indicator.name}
                   {indicator.evidenceSummary && (
                     <EvidenceTooltip
@@ -156,6 +146,7 @@ export function IndicatorAssessment({
                       citations={indicator.keyCitations as string[] | undefined}
                       dataQualityNotes={indicator.dataQualityNotes || undefined}
                       rrnRelevance={indicator.rrnRelevance || undefined}
+                      prominent
                     />
                   )}
                 </CardTitle>
