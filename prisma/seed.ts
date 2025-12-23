@@ -223,7 +223,10 @@ async function main() {
         studyId: study.id,
         email: p.email,
         name: p.name,
-        roleType: p.roleType as any,
+        primaryRole: p.primaryRole as any,
+        secondaryRole: p.secondaryRole as any,
+        expertiseArea: p.expertiseArea,
+        jurisdictionContext: p.jurisdictionContext,
       },
     })
   }
@@ -261,7 +264,7 @@ async function main() {
   console.log('  3. Access admin dashboard or view study directly')
   console.log('')
   console.log('Sample panelist emails for testing:')
-  samplePanelists.forEach(p => console.log(`  - ${p.email} (${p.roleType})`))
+  samplePanelists.forEach(p => console.log(`  - ${p.email} (${p.primaryRole})`))
   console.log('')
 }
 
