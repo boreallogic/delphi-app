@@ -125,52 +125,52 @@ export function IndicatorAssessment({
 
   return (
     <div className="space-y-4">
-      {/* Indicator header */}
-      <Card>
-        <CardHeader>
-          <div className="flex items-start justify-between gap-4">
-            <div className="space-y-1">
-              <div className="flex items-center gap-2">
-                <p className="text-sm text-muted-foreground">
-                  {indicator.externalId} • {indicator.category}
-                </p>
-                <TierBadge tier={isTier2 ? 2 : 1} />
-                {indicator.dataReliability && (
-                  <span className={`text-xs px-2 py-0.5 rounded font-medium ${
-                    indicator.dataReliability === 'HIGH' ? 'bg-green-100 text-green-800 border border-green-200' :
-                    indicator.dataReliability === 'MEDIUM' ? 'bg-yellow-100 text-yellow-800 border border-yellow-200' :
-                    'bg-red-100 text-red-800 border border-red-200'
-                  }`}>
-                    {indicator.dataReliability}
-                  </span>
+      {/* Sticky indicator header */}
+      <div className="sticky top-0 z-10 bg-background/95 backdrop-blur-sm border-b pb-4 mb-4">
+        <Card className="shadow-md">
+          <CardHeader className="pb-3">
+            <div className="flex items-start justify-between gap-4">
+              <div className="space-y-1 flex-1">
+                <div className="flex items-center gap-2">
+                  <p className="text-sm text-muted-foreground">
+                    {indicator.externalId} • {indicator.category}
+                  </p>
+                  <TierBadge tier={isTier2 ? 2 : 1} />
+                  {indicator.dataReliability && (
+                    <span className={`text-xs px-2 py-0.5 rounded font-medium ${
+                      indicator.dataReliability === 'HIGH' ? 'bg-green-100 text-green-800 border border-green-200' :
+                      indicator.dataReliability === 'MEDIUM' ? 'bg-yellow-100 text-yellow-800 border border-yellow-200' :
+                      'bg-red-100 text-red-800 border border-red-200'
+                    }`}>
+                      {indicator.dataReliability}
+                    </span>
+                  )}
+                </div>
+                <CardTitle className="text-xl flex items-center">
+                  {indicator.name}
+                  {indicator.evidenceSummary && (
+                    <EvidenceTooltip
+                      summary={indicator.evidenceSummary}
+                      riskFactors={indicator.riskFactors as string[] | undefined}
+                      protectiveFactors={indicator.protectiveFactors as string[] | undefined}
+                      citations={indicator.keyCitations as string[] | undefined}
+                      dataQualityNotes={indicator.dataQualityNotes || undefined}
+                      rrnRelevance={indicator.rrnRelevance || undefined}
+                    />
+                  )}
+                </CardTitle>
+                {indicator.domainName && (
+                  <p className="text-sm text-primary font-medium">
+                    {indicator.domainCode}: {indicator.domainName}
+                  </p>
                 )}
               </div>
-              <CardTitle className="text-xl flex items-center">
-                {indicator.name}
-                {indicator.evidenceSummary && (
-                  <EvidenceTooltip
-                    summary={indicator.evidenceSummary}
-                    riskFactors={indicator.riskFactors as string[] | undefined}
-                    protectiveFactors={indicator.protectiveFactors as string[] | undefined}
-                    citations={indicator.keyCitations as string[] | undefined}
-                    dataQualityNotes={indicator.dataQualityNotes || undefined}
-                    rrnRelevance={indicator.rrnRelevance || undefined}
-                  />
-                )}
-              </CardTitle>
-              {indicator.domainName && (
-                <p className="text-sm text-primary font-medium">
-                  {indicator.domainCode}: {indicator.domainName}
-                </p>
-              )}
+              <span className="text-sm text-muted-foreground whitespace-nowrap">
+                {position}
+              </span>
             </div>
-            <span className="text-sm text-muted-foreground whitespace-nowrap">
-              {position}
-            </span>
-          </div>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="pb-2 border-b">
+          </CardHeader>
+          <CardContent className="pt-0">
             <div className="flex items-center gap-2 mb-2">
               <h4 className="text-sm font-semibold">Definition</h4>
               {plainLanguage && indicator.definitionSimple && (
@@ -180,33 +180,13 @@ export function IndicatorAssessment({
               )}
             </div>
             <p className="text-gray-700 leading-relaxed">{displayDefinition}</p>
-          </div>
+          </CardContent>
+        </Card>
+      </div>
 
-          {/* Prominent units display for feasibility context */}
-          <div className="flex items-center gap-4 p-3 bg-muted/50 rounded-lg border">
-            <div className="flex-1">
-              <h4 className="text-xs font-medium text-muted-foreground mb-1">Unit of Measure</h4>
-              <p className="text-sm font-medium">{indicator.unitOfMeasure}</p>
-            </div>
-            <div className="flex-1">
-              <h4 className="text-xs font-medium text-muted-foreground mb-1">Collection Frequency</h4>
-              <p className="text-sm font-medium">{indicator.collectionFrequency}</p>
-            </div>
-          </div>
-
-          <details className="group">
-            <summary className="cursor-pointer text-sm font-medium text-primary hover:text-primary/80 flex items-center gap-2 py-2">
-              <span className="group-open:rotate-90 transition-transform">▶</span>
-              Operationalization Details
-            </summary>
-            <div className="mt-2 space-y-3 pl-5">
-              <div>
-                <h4 className="text-sm font-medium mb-1">Operationalization</h4>
-                <p className="text-sm text-muted-foreground">{indicator.operationalization}</p>
-              </div>
-            </div>
-          </details>
-
+      {/* Scrollable content */}
+      <Card>
+        <CardContent className="space-y-4 pt-6">
           {indicator.notes && (
             <div className="p-4 bg-amber-50 dark:bg-amber-950 rounded-lg border border-amber-200">
               <h4 className="text-sm font-semibold mb-2 flex items-center gap-2">
