@@ -52,24 +52,104 @@ export function IndicatorAssessment({
   const [dissentReason, setDissentReason] = useState(response?.dissentReason || '')
   
   const [isSaving, setIsSaving] = useState(false)
-  const [saveStatus, setSaveStatus] = useState<'idle' | 'saved' | 'error'>('idle')
+  const [saveStatus, setSaveStatus] = useState<'idle' | 'saved' | 'error' | 'auto-saved'>('idle')
   const [hasChanges, setHasChanges] = useState(false)
+  const [lastSaveTime, setLastSaveTime] = useState<Date | null>(null)
+  const [draftRecovered, setDraftRecovered] = useState(false)
+
+  // localStorage key for drafts
+  const getDraftKey = (indicatorId: string) => `delphi_draft_${currentRound}_${indicatorId}`
+
+  // Save draft to localStorage
+  const saveDraft = useCallback((indicatorId: string, data: any) => {
+    try {
+      const draftData = {
+        ...data,
+        timestamp: new Date().toISOString(),
+        indicatorId,
+        roundNumber: currentRound,
+      }
+      localStorage.setItem(getDraftKey(indicatorId), JSON.stringify(draftData))
+      console.log('💾 Draft saved to localStorage:', indicatorId)
+    } catch (error) {
+      console.error('Failed to save draft:', error)
+    }
+  }, [currentRound])
+
+  // Load draft from localStorage
+  const loadDraft = useCallback((indicatorId: string) => {
+    try {
+      const draftStr = localStorage.getItem(getDraftKey(indicatorId))
+      if (draftStr) {
+        const draft = JSON.parse(draftStr)
+        console.log('📂 Draft loaded from localStorage:', indicatorId)
+        return draft
+      }
+    } catch (error) {
+      console.error('Failed to load draft:', error)
+    }
+    return null
+  }, [currentRound])
+
+  // Clear draft from localStorage
+  const clearDraft = useCallback((indicatorId: string) => {
+    try {
+      localStorage.removeItem(getDraftKey(indicatorId))
+      console.log('🗑️ Draft cleared from localStorage:', indicatorId)
+    } catch (error) {
+      console.error('Failed to clear draft:', error)
+    }
+  }, [currentRound])
 
   // Reset form when indicator changes
   useEffect(() => {
-    setPriorityRating(response?.priorityRating || null)
-    setValidityRating(response?.operationalizationValidity || null)
-    setFeasibilityRating(response?.feasibilityRating || null)
-    setReasoning(response?.qualitativeReasoning || '')
-    setThresholdSuggestion(response?.thresholdSuggestion || '')
-    setGeneralComments(response?.generalComments || '')
-    setDissentFlag(response?.dissentFlag || false)
-    setDissentReason(response?.dissentReason || '')
-    setHasChanges(false)
-    setSaveStatus('idle')
-  }, [indicator.id, response])
+    setDraftRecovered(false) // Reset recovery flag
 
-  // Track changes
+    // First try to load from response (saved in DB)
+    if (response) {
+      setPriorityRating(response.priorityRating || null)
+      setValidityRating(response.operationalizationValidity || null)
+      setFeasibilityRating(response.feasibilityRating || null)
+      setReasoning(response.qualitativeReasoning || '')
+      setThresholdSuggestion(response.thresholdSuggestion || '')
+      setGeneralComments(response.generalComments || '')
+      setDissentFlag(response.dissentFlag || false)
+      setDissentReason(response.dissentReason || '')
+      setHasChanges(false)
+      setSaveStatus('idle')
+    } else {
+      // Try to load draft from localStorage
+      const draft = loadDraft(indicator.id)
+      if (draft) {
+        setPriorityRating(draft.priorityRating || null)
+        setValidityRating(draft.operationalizationValidity || null)
+        setFeasibilityRating(draft.feasibilityRating || null)
+        setReasoning(draft.qualitativeReasoning || '')
+        setThresholdSuggestion(draft.thresholdSuggestion || '')
+        setGeneralComments(draft.generalComments || '')
+        setDissentFlag(draft.dissentFlag || false)
+        setDissentReason(draft.dissentReason || '')
+        setHasChanges(true)
+        setSaveStatus('idle')
+        setDraftRecovered(true)
+        console.log('✨ Restored unsaved draft from', new Date(draft.timestamp).toLocaleString())
+      } else {
+        // No response and no draft - start fresh
+        setPriorityRating(null)
+        setValidityRating(null)
+        setFeasibilityRating(null)
+        setReasoning('')
+        setThresholdSuggestion('')
+        setGeneralComments('')
+        setDissentFlag(false)
+        setDissentReason('')
+        setHasChanges(false)
+        setSaveStatus('idle')
+      }
+    }
+  }, [indicator.id, response, loadDraft])
+
+  // Track changes and save drafts
   useEffect(() => {
     const changed =
       priorityRating !== (response?.priorityRating || null) ||
@@ -80,14 +160,29 @@ export function IndicatorAssessment({
       generalComments !== (response?.generalComments || '') ||
       dissentFlag !== (response?.dissentFlag || false) ||
       dissentReason !== (response?.dissentReason || '')
+
     setHasChanges(changed)
-  }, [priorityRating, validityRating, feasibilityRating, reasoning, thresholdSuggestion, generalComments, dissentFlag, dissentReason, response])
 
-  const handleSave = async () => {
+    // Auto-save draft to localStorage whenever form changes
+    if (changed) {
+      saveDraft(indicator.id, {
+        priorityRating: isTier2 ? null : priorityRating,
+        operationalizationValidity: isTier2 ? null : validityRating,
+        feasibilityRating: isTier2 ? null : feasibilityRating,
+        qualitativeReasoning: reasoning || null,
+        thresholdSuggestion: thresholdSuggestion || null,
+        generalComments: generalComments || null,
+        dissentFlag,
+        dissentReason: dissentFlag ? dissentReason : null,
+      })
+    }
+  }, [priorityRating, validityRating, feasibilityRating, reasoning, thresholdSuggestion, generalComments, dissentFlag, dissentReason, response, indicator.id, isTier2, saveDraft])
+
+  const handleSave = async (isAutoSave = false, retryCount = 0) => {
     setIsSaving(true)
-    setSaveStatus('idle')
+    if (!isAutoSave) setSaveStatus('idle')
 
-    const success = await onSave(indicator.id, {
+    const data = {
       priorityRating: isTier2 ? null : priorityRating,
       operationalizationValidity: isTier2 ? null : validityRating,
       feasibilityRating: isTier2 ? null : feasibilityRating,
@@ -97,16 +192,66 @@ export function IndicatorAssessment({
       dissentFlag,
       dissentReason: dissentFlag ? dissentReason : null,
       revisedFromPrevious: currentRound > 1,
-    })
+    }
+
+    const success = await onSave(indicator.id, data)
 
     setIsSaving(false)
-    setSaveStatus(success ? 'saved' : 'error')
-    if (success) setHasChanges(false)
+
+    if (success) {
+      setSaveStatus(isAutoSave ? 'auto-saved' : 'saved')
+      setHasChanges(false)
+      setLastSaveTime(new Date())
+      // Clear draft from localStorage after successful save
+      clearDraft(indicator.id)
+      console.log('✅ Response saved to database', isAutoSave ? '(auto-save)' : '')
+    } else {
+      setSaveStatus('error')
+      // Retry logic: retry up to 3 times with exponential backoff
+      if (retryCount < 3) {
+        const delay = Math.pow(2, retryCount) * 1000 // 1s, 2s, 4s
+        console.log(`⚠️ Save failed, retrying in ${delay}ms... (attempt ${retryCount + 1}/3)`)
+        setTimeout(() => {
+          handleSave(isAutoSave, retryCount + 1)
+        }, delay)
+      } else {
+        console.error('❌ Save failed after 3 retries. Draft saved in localStorage.')
+      }
+    }
+
+    return success
   }
 
+  // Auto-save every 30 seconds if there are changes
+  useEffect(() => {
+    if (!hasChanges || isSaving) return
+
+    const autoSaveInterval = setInterval(() => {
+      if (hasChanges && !isSaving) {
+        console.log('⏰ Auto-saving...')
+        handleSave(true)
+      }
+    }, 30000) // 30 seconds
+
+    return () => clearInterval(autoSaveInterval)
+  }, [hasChanges, isSaving])
+
+  // Warn before closing/refreshing with unsaved changes
+  useEffect(() => {
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      if (hasChanges) {
+        e.preventDefault()
+        e.returnValue = 'You have unsaved changes. Your draft is saved locally, but it\'s recommended to save to the database first.'
+      }
+    }
+
+    window.addEventListener('beforeunload', handleBeforeUnload)
+    return () => window.removeEventListener('beforeunload', handleBeforeUnload)
+  }, [hasChanges])
+
   const handleSaveAndNext = async () => {
-    await handleSave()
-    if (hasNext) {
+    const success = await handleSave(false)
+    if (success && hasNext) {
       onNext()
       // Scroll to top after navigation
       window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -125,6 +270,36 @@ export function IndicatorAssessment({
 
   return (
     <div className="space-y-4">
+      {/* Draft recovered notification */}
+      {draftRecovered && (
+        <div className="bg-blue-50 dark:bg-blue-950 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
+          <div className="flex items-start gap-3">
+            <div className="flex-shrink-0">
+              <svg className="w-5 h-5 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+              </svg>
+            </div>
+            <div className="flex-1">
+              <h3 className="text-sm font-semibold text-blue-900 dark:text-blue-100">
+                Draft Restored
+              </h3>
+              <p className="text-sm text-blue-800 dark:text-blue-200 mt-1">
+                We recovered your previous unsaved work on this indicator. Click "Save" to store it in the database, or continue editing.
+              </p>
+            </div>
+            <button
+              onClick={() => setDraftRecovered(false)}
+              className="flex-shrink-0 text-blue-600 hover:text-blue-800"
+              aria-label="Dismiss"
+            >
+              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* Sticky indicator header */}
       <div className="sticky top-0 z-10 bg-background/95 backdrop-blur-sm border-b pb-4 mb-4">
         <Card className="shadow-md">
@@ -430,18 +605,28 @@ export function IndicatorAssessment({
         <div className="flex items-center gap-2">
           {saveStatus === 'saved' && (
             <span className="text-sm font-medium text-green-700 bg-green-100 px-3 py-1 rounded-full border border-green-200">
-              ✓ Saved
+              ✓ Saved to database
+            </span>
+          )}
+          {saveStatus === 'auto-saved' && (
+            <span className="text-sm font-medium text-blue-700 bg-blue-100 px-3 py-1 rounded-full border border-blue-200">
+              ✓ Auto-saved
+              {lastSaveTime && (
+                <span className="ml-1 text-xs text-blue-600">
+                  {lastSaveTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                </span>
+              )}
             </span>
           )}
           {saveStatus === 'error' && (
             <span className="text-sm font-medium text-red-700 bg-red-100 px-3 py-1 rounded-full border border-red-200 flex items-center gap-1">
               <AlertCircle className="w-4 h-4" />
-              Error saving
+              Error - retrying...
             </span>
           )}
-          {hasChanges && saveStatus === 'idle' && (
-            <span className="text-sm text-amber-600">
-              Unsaved changes
+          {hasChanges && (saveStatus === 'idle' || saveStatus === 'auto-saved') && (
+            <span className="text-sm text-amber-600 flex items-center gap-1">
+              💾 Draft saved locally
             </span>
           )}
 
