@@ -179,7 +179,7 @@ export default function StudyIntroPage() {
             Measuring What Matters
           </h1>
           <p className="text-xl text-muted-foreground mb-2">
-            A Community-Driven Approach to Understanding GBV Service Capacity in Yukon
+            Identifying the Infrastructure That Creates Pathways to Safety for Survivors
           </p>
 
           {/* Prominent time commitment */}
@@ -334,7 +334,7 @@ export default function StudyIntroPage() {
         >
           <div>
             <p className="text-base text-foreground mb-6">
-              Each domain addresses a critical aspect of GBV service capacity. You'll assess
+              Each domain addresses a critical aspect of whether survivors have pathways to safety. You'll assess
               <strong className="text-primary"> {totalTier1} core indicators</strong> (full ratings required) and have the option to
               comment on <strong>{totalTier2} extended indicators</strong>.
             </p>
@@ -410,21 +410,21 @@ export default function StudyIntroPage() {
               <div className="p-4 border-l-4 border-blue-500 bg-blue-50/50">
                 <h4 className="font-semibold mb-1">Priority (Low/Medium/High)</h4>
                 <p className="text-sm text-muted-foreground">
-                  How important is this indicator for measuring GBV service capacity?
+                  How critical is knowing this for understanding whether survivors have pathways to safety?
                 </p>
               </div>
 
               <div className="p-4 border-l-4 border-green-500 bg-green-50/50">
                 <h4 className="font-semibold mb-1">Validity (Low/Medium/High)</h4>
                 <p className="text-sm text-muted-foreground">
-                  Does the operationalization actually measure what we intend?
+                  How well does this reflect whether survivors can actually access help when they need it?
                 </p>
               </div>
 
               <div className="p-4 border-l-4 border-purple-500 bg-purple-50/50">
                 <h4 className="font-semibold mb-1">Feasibility (Low/Medium/High)</h4>
                 <p className="text-sm text-muted-foreground">
-                  How realistic is data collection in Yukon communities?
+                  How feasible is it to measure this accurately and safely in Yukon communities?
                 </p>
               </div>
 
@@ -442,17 +442,23 @@ export default function StudyIntroPage() {
         <CollapsibleCard title="A Note on Measurement Justice" className="mb-8 border-primary/20 bg-primary/5">
           <div className="prose prose-sm max-w-none">
             <p>
-              Measurement is not neutral. What we choose to count shapes what gets attention and resources.
-              Who decides what to count shapes whose priorities are centered.
+              Traditional GBV measurement relies on counting incidents—but in small communities where reporting
+              is structurally impossible, this approach systematically undercounts need. When reporting probability
+              approaches zero due to infrastructure absence, incident data becomes actively misleading.
             </p>
             <p>
-              This project is grounded in principles of <strong>measurement justice</strong>:
+              This project takes a different approach: <strong>measuring the infrastructure conditions that determine
+              whether survivors have any viable path to safety</strong>. Instead of asking "how many reported violence?"
+              we ask "do conditions exist that would allow someone experiencing violence to safely seek help?"
+            </p>
+            <p>
+              This shift is grounded in principles of <strong>measurement justice</strong>:
             </p>
             <ul className="text-sm">
-              <li><strong>Community agency</strong>: Framework serves Yukon communities</li>
+              <li><strong>Infrastructure as determinant</strong>: The presence or absence of services shapes the entire landscape of possibility</li>
+              <li><strong>Community agency</strong>: Framework serves Yukon communities, not external reporting requirements</li>
               <li><strong>Diverse ways of knowing</strong>: Lived experience is expertise</li>
-              <li><strong>Transparency</strong>: Development and validation are visible</li>
-              <li><strong>Dissent preservation</strong>: Minority perspectives have value</li>
+              <li><strong>Dissent preservation</strong>: Minority perspectives have value and won't be smoothed away</li>
             </ul>
           </div>
         </CollapsibleCard>

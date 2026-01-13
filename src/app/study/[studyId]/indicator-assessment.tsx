@@ -530,7 +530,7 @@ export function IndicatorAssessment({
               <RatingScale
                 id="priority"
                 label="Priority"
-                description={`How critical is knowing this — ${displayDefinition.toLowerCase()} — for understanding GBV service capacity?`}
+                description={`How critical is knowing this — ${displayDefinition.toLowerCase()} — for understanding whether survivors have pathways to safety?`}
                 value={priorityRating}
                 onChange={setPriorityRating}
                 labels={priorityLabels}
@@ -543,7 +543,7 @@ export function IndicatorAssessment({
               <RatingScale
                 id="validity"
                 label="Validity"
-                description={`How well does this — ${displayDefinition.toLowerCase()} — actually reflect real GBV service capacity?`}
+                description={`How well does this — ${displayDefinition.toLowerCase()} — reflect whether survivors can actually access help when they need it?`}
                 value={validityRating}
                 onChange={setValidityRating}
                 labels={validityLabels}
@@ -556,7 +556,7 @@ export function IndicatorAssessment({
               <RatingScale
                 id="feasibility"
                 label="Feasibility"
-                description={`How feasible is it to accurately and safely measure this — ${displayDefinition.toLowerCase()} — in Yukon?`}
+                description={`How feasible is it to measure this — ${displayDefinition.toLowerCase()} — accurately and safely in Yukon communities?`}
                 value={feasibilityRating}
                 onChange={setFeasibilityRating}
                 labels={feasibilityLabels}
