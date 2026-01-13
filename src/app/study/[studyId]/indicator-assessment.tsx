@@ -519,7 +519,7 @@ export function IndicatorAssessment({
               </p>
               <Textarea
                 id="threshold"
-                placeholder="Example: 'At least 75% of survivors should be able to access services within 24 hours'"
+                placeholder="At least 75% of survivors should be able to access services within 24 hours"
                 value={thresholdSuggestion}
                 onChange={(e) => setThresholdSuggestion(e.target.value)}
                 rows={2}
@@ -544,8 +544,8 @@ export function IndicatorAssessment({
             />
           </div>
 
-          {/* Dissent flag - only for Tier 1 */}
-          {!isTier2 && (
+          {/* Dissent flag - only for Tier 1 and only from Round 2 onwards */}
+          {!isTier2 && currentRound > 1 && (
             <div className="p-4 border rounded-lg bg-amber-50/50 space-y-3">
               <div className="flex items-start gap-3">
                 <input
@@ -560,10 +560,7 @@ export function IndicatorAssessment({
                     Flag Principled Dissent
                   </Label>
                   <p className="text-sm text-muted-foreground mt-1">
-                    In later rounds, if you see that most panelists disagree with your rating but you still believe your perspective is important, check this box. Your reasoning will be included in the final report (anonymously) so your viewpoint isn't lost. This is especially important for lived experience perspectives that might differ from expert consensus.
-                  </p>
-                  <p className="text-xs text-muted-foreground mt-2 italic">
-                    You don't need to use this in Round 1—it's for when you see the group results and want to maintain your position.
+                    If you see that most panelists disagree with your rating but you still believe your perspective is important, check this box. Your reasoning will be included in the final report (anonymously) so your viewpoint isn't lost. This is especially important for lived experience perspectives that might differ from expert consensus.
                   </p>
                 </div>
               </div>
@@ -578,7 +575,7 @@ export function IndicatorAssessment({
                   </p>
                   <Textarea
                     id="dissent-reason"
-                    placeholder="Example: 'Based on my experience working in small communities, this indicator overlooks...'"
+                    placeholder="Based on my experience working in small communities, this indicator overlooks..."
                     value={dissentReason}
                     onChange={(e) => setDissentReason(e.target.value)}
                     rows={3}

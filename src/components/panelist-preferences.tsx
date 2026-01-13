@@ -93,14 +93,14 @@ export function PanelistPreferences({ preferences, onUpdate }: PanelistPreferenc
               Show Extended Indicators
             </div>
             <p className="text-xs text-muted-foreground mt-1">
-              View Tier 2 indicators (comment only, no rating required)
+              View extended indicators (comment only, no rating required)
             </p>
           </div>
         </label>
 
         <div className="pt-2 border-t text-xs text-muted-foreground">
-          <p><strong>Tier 1:</strong> 27 core indicators you'll rate</p>
-          <p><strong>Tier 2:</strong> 23 extended indicators for optional comments</p>
+          <p><strong>Core:</strong> 27 indicators you'll rate</p>
+          <p><strong>Extended:</strong> 23 indicators for optional comments</p>
         </div>
       </CardContent>
     </Card>

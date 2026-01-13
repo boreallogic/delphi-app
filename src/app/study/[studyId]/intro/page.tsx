@@ -86,7 +86,7 @@ export default function StudyIntroPage() {
               <div className="text-3xl font-bold">3</div>
               <div className="text-sm text-muted-foreground">Delphi Rounds</div>
               <div className="text-xs text-muted-foreground mt-1">
-                To reach consensus
+                To build consensus
               </div>
             </CardContent>
           </Card>
@@ -131,9 +131,9 @@ export default function StudyIntroPage() {
             </div>
             <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
               <p className="text-sm">
-                <strong className="text-blue-900">Tier 1 (Core):</strong> <span className="text-blue-700">You'll rate these indicators on priority, validity, and feasibility</span>
+                <strong className="text-blue-900">Core Indicators:</strong> <span className="text-blue-700">You'll rate these on priority, validity, and feasibility</span>
                 <br />
-                <strong className="text-blue-900">Tier 2 (Extended):</strong> <span className="text-blue-700">Optional comments only—important but face data challenges</span>
+                <strong className="text-blue-900">Extended Indicators:</strong> <span className="text-blue-700">Optional comments only—important but face data challenges</span>
               </p>
             </div>
           </CardContent>
@@ -191,7 +191,7 @@ export default function StudyIntroPage() {
           </CardHeader>
           <CardContent className="space-y-4">
             <p className="text-sm text-muted-foreground">
-              The Delphi method is a structured way to build consensus among experts while preserving the value of disagreement.
+              The Delphi method is a structured approach for building consensus among experts while preserving the value of disagreement.
             </p>
 
             <div className="grid md:grid-cols-3 gap-4">
@@ -233,7 +233,7 @@ export default function StudyIntroPage() {
           </CardHeader>
           <CardContent className="space-y-4">
             <p className="text-sm text-muted-foreground">
-              For each Tier 1 indicator, you'll assess three dimensions on a 3-point scale:
+              For each core indicator, you'll assess three dimensions on a 3-point scale:
             </p>
 
             <div className="space-y-4">
