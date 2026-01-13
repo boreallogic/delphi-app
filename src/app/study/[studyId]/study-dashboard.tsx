@@ -9,7 +9,7 @@ import { IndicatorAssessment } from './indicator-assessment'
 import { PanelistPreferences, TierBadge } from '@/components/panelist-preferences'
 import { roleDisplayNames } from '@/lib/utils'
 import { DOMAINS, FRAMEWORK_SUMMARY } from '@/lib/domains'
-import { Info, BookOpen } from 'lucide-react'
+import { Info, BookOpen, ChevronDown, ChevronUp, Menu, X } from 'lucide-react'
 import type { Study, Panelist, Indicator, Response, RoundSummary, Round } from '@prisma/client'
 
 // Helper for jurisdiction context display
@@ -49,6 +49,7 @@ export function StudyDashboard({
   )
   const [responses, setResponses] = useState<Response[]>(initialResponses)
   const [currentIndicatorIndex, setCurrentIndicatorIndex] = useState(0)
+  const [sidebarOpen, setSidebarOpen] = useState(false)
 
   // Filter indicators based on tier preference
   const filteredIndicators = useMemo(() => {
@@ -103,12 +104,13 @@ export function StudyDashboard({
       completed: number
       tier1Total: number
       tier1Completed: number
+      indicatorStatuses: { id: string; completed: boolean; tier: number }[]
     }>()
 
     filteredIndicators.forEach(ind => {
       const code = ind.domainCode || ind.domain
       const config = DOMAINS[code as keyof typeof DOMAINS]
-      
+
       if (!domainMap.has(code)) {
         domainMap.set(code, {
           id: code,
@@ -118,24 +120,34 @@ export function StudyDashboard({
           completed: 0,
           tier1Total: 0,
           tier1Completed: 0,
+          indicatorStatuses: [],
         })
       }
 
       const domain = domainMap.get(code)!
       domain.total++
-      
-      if ((ind.tier || 1) === 1) {
+
+      const tier = ind.tier || 1
+      let isCompleted = false
+
+      if (tier === 1) {
         domain.tier1Total++
         const hasResponse = responses.some(r => r.indicatorId === ind.id && r.priorityRating !== null)
         if (hasResponse) {
           domain.tier1Completed++
           domain.completed++
+          isCompleted = true
         }
       } else {
         // For tier 2, count comments as completion
         const hasComment = responses.some(r => r.indicatorId === ind.id && r.qualitativeReasoning)
-        if (hasComment) domain.completed++
+        if (hasComment) {
+          domain.completed++
+          isCompleted = true
+        }
       }
+
+      domain.indicatorStatuses.push({ id: ind.id, completed: isCompleted, tier })
     })
 
     return Array.from(domainMap.values()).sort((a, b) => a.id.localeCompare(b.id))
@@ -316,11 +328,25 @@ export function StudyDashboard({
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
           {/* Sidebar - Domain navigation */}
           <aside className="lg:col-span-1">
-            <Card>
+            {/* Mobile toggle button */}
+            <button
+              onClick={() => setSidebarOpen(!sidebarOpen)}
+              className="lg:hidden w-full flex items-center justify-between p-3 mb-3 bg-background border rounded-lg"
+            >
+              <div className="flex items-center gap-2">
+                <Menu className="w-4 h-4" />
+                <span className="font-medium text-sm">
+                  {selectedDomain ? enhancedDomains.find(d => d.id === selectedDomain)?.name : 'Select Domain'}
+                </span>
+              </div>
+              {sidebarOpen ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+            </button>
+
+            <Card className={`${sidebarOpen ? 'block' : 'hidden'} lg:block`}>
               <CardHeader className="pb-3">
                 <CardTitle className="text-base">Indicator Domains</CardTitle>
                 <CardDescription>
-                  {preferences.showTier2 
+                  {preferences.showTier2
                     ? `${FRAMEWORK_SUMMARY.totalIndicators} total indicators`
                     : `${FRAMEWORK_SUMMARY.tier1Count} core indicators to rate`
                   }
@@ -367,6 +393,7 @@ export function StudyDashboard({
                         onClick={() => {
                           setSelectedDomain(domain.id)
                           setCurrentIndicatorIndex(0)
+                          setSidebarOpen(false) // Close on mobile after selection
                         }}
                         className={`
                           w-full text-left p-3 rounded-lg border transition-colors
@@ -384,11 +411,23 @@ export function StudyDashboard({
                             )}
                           </span>
                         </div>
-                        <div className="h-1.5 bg-secondary rounded-full overflow-hidden">
-                          <div
-                            className={`h-full transition-all duration-300 ${isComplete ? 'bg-green-500' : 'bg-primary'}`}
-                            style={{ width: `${percentage}%` }}
-                          />
+                        {/* Indicator completion dots */}
+                        <div className="flex gap-1 flex-wrap mt-1">
+                          {domain.indicatorStatuses
+                            .filter(s => preferences.showTier2 || s.tier === 1)
+                            .map((status, idx) => (
+                              <div
+                                key={status.id}
+                                className={`w-2 h-2 rounded-full transition-colors ${
+                                  status.completed
+                                    ? 'bg-green-500'
+                                    : status.tier === 1
+                                      ? 'bg-muted-foreground/30'
+                                      : 'bg-muted-foreground/15 border border-dashed border-muted-foreground/30'
+                                }`}
+                                title={`Indicator ${idx + 1}${status.tier === 2 ? ' (Extended)' : ''}: ${status.completed ? 'Completed' : 'Not yet rated'}`}
+                              />
+                            ))}
                         </div>
                         {domain.question && (
                           <p className="text-xs text-muted-foreground mt-1 line-clamp-2">
@@ -402,8 +441,8 @@ export function StudyDashboard({
               </CardContent>
             </Card>
 
-            {/* Instructions card */}
-            <Card className="mt-4">
+            {/* Instructions card - hidden on mobile by default */}
+            <Card className={`mt-4 ${sidebarOpen ? 'block' : 'hidden'} lg:block`}>
               <CardHeader className="pb-3">
                 <CardTitle className="text-base flex items-center gap-2">
                   <Info className="w-4 h-4" />

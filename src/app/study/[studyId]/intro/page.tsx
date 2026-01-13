@@ -1,10 +1,50 @@
 'use client'
 
+import { useState } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { ArrowRight, BookOpen, BarChart3, Users, Target, Shield } from 'lucide-react'
+import { ArrowRight, BookOpen, BarChart3, Users, Target, Shield, ChevronDown, ChevronUp } from 'lucide-react'
 import { DOMAINS } from '@/lib/domains'
+
+// Collapsible card component
+function CollapsibleCard({
+  title,
+  icon,
+  children,
+  defaultOpen = false,
+  className = '',
+}: {
+  title: string
+  icon?: React.ReactNode
+  children: React.ReactNode
+  defaultOpen?: boolean
+  className?: string
+}) {
+  const [isOpen, setIsOpen] = useState(defaultOpen)
+
+  return (
+    <Card className={className}>
+      <CardHeader
+        className="cursor-pointer select-none"
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        <CardTitle className="flex items-center justify-between">
+          <span className="flex items-center gap-2">
+            {icon}
+            {title}
+          </span>
+          {isOpen ? (
+            <ChevronUp className="w-5 h-5 text-muted-foreground" />
+          ) : (
+            <ChevronDown className="w-5 h-5 text-muted-foreground" />
+          )}
+        </CardTitle>
+      </CardHeader>
+      {isOpen && <CardContent>{children}</CardContent>}
+    </Card>
+  )
+}
 
 export default function StudyIntroPage() {
   const params = useParams()
@@ -181,15 +221,14 @@ export default function StudyIntroPage() {
           </Card>
         </div>
 
-        {/* Domain Overview - MOVED DOWN */}
-        <Card className="mb-8">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <BookOpen className="w-5 h-5" />
-              Framework Overview: 8 Domains
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
+        {/* Domain Overview - Collapsible, default open */}
+        <CollapsibleCard
+          title="Framework Overview: 8 Domains"
+          icon={<BookOpen className="w-5 h-5" />}
+          defaultOpen={true}
+          className="mb-8"
+        >
+          <div>
             <p className="text-base text-foreground mb-6">
               Each domain addresses a critical aspect of GBV service capacity. You'll assess
               <strong className="text-primary"> {totalTier1} core indicators</strong> (full ratings required) and have the option to
@@ -225,15 +264,12 @@ export default function StudyIntroPage() {
                 <strong className="text-blue-900">Extended Indicators:</strong> <span className="text-blue-700">Optional comments only—important but face data challenges</span>
               </p>
             </div>
-          </CardContent>
-        </Card>
+          </div>
+        </CollapsibleCard>
 
-        {/* How the Delphi Method Works */}
-        <Card className="mb-8">
-          <CardHeader>
-            <CardTitle>How the Delphi Method Works</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
+        {/* How the Delphi Method Works - Collapsible */}
+        <CollapsibleCard title="How the Delphi Method Works" className="mb-8">
+          <div className="space-y-4">
             <p className="text-sm text-muted-foreground">
               The Delphi method is a structured approach for building consensus among experts while preserving the value of disagreement.
             </p>
@@ -267,15 +303,12 @@ export default function StudyIntroPage() {
                 perspectives—especially from lived experience—aren't smoothed away.
               </p>
             </div>
-          </CardContent>
-        </Card>
+          </div>
+        </CollapsibleCard>
 
-        {/* What You're Rating */}
-        <Card className="mb-8">
-          <CardHeader>
-            <CardTitle>What You're Rating</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
+        {/* What You're Rating - Collapsible */}
+        <CollapsibleCard title="What You're Rating" className="mb-8">
+          <div className="space-y-4">
             <p className="text-sm text-muted-foreground">
               For each core indicator, you'll assess three dimensions on a 3-point scale:
             </p>
@@ -304,20 +337,17 @@ export default function StudyIntroPage() {
 
               <div className="p-3 bg-muted rounded-lg">
                 <p className="text-sm">
-                  <strong>"Don't Know" Option:</strong> Available for each dimension if you lack
+                  <strong>"Unsure" Option:</strong> Available for each dimension if you lack
                   sufficient information to assess. These responses are excluded from group statistics.
                 </p>
               </div>
             </div>
-          </CardContent>
-        </Card>
+          </div>
+        </CollapsibleCard>
 
-        {/* Measurement Justice Note */}
-        <Card className="mb-8 border-primary/20 bg-primary/5">
-          <CardHeader>
-            <CardTitle>A Note on Measurement Justice</CardTitle>
-          </CardHeader>
-          <CardContent className="prose prose-sm max-w-none">
+        {/* Measurement Justice Note - Collapsible */}
+        <CollapsibleCard title="A Note on Measurement Justice" className="mb-8 border-primary/20 bg-primary/5">
+          <div className="prose prose-sm max-w-none">
             <p>
               Measurement is not neutral. What we choose to count shapes what gets attention and resources.
               Who decides what to count shapes whose priorities are centered.
@@ -331,8 +361,8 @@ export default function StudyIntroPage() {
               <li><strong>Transparency</strong>: Development and validation are visible</li>
               <li><strong>Dissent preservation</strong>: Minority perspectives have value</li>
             </ul>
-          </CardContent>
-        </Card>
+          </div>
+        </CollapsibleCard>
 
         {/* CTA */}
         <div className="text-center">

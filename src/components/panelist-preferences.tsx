@@ -46,7 +46,7 @@ export function PanelistPreferences({ preferences, onUpdate }: PanelistPreferenc
         onClick={() => setIsOpen(false)}
       />
 
-      <Card className="absolute right-0 top-full mt-2 z-50 w-72 shadow-lg">
+      <Card className="fixed md:absolute inset-x-4 md:inset-x-auto md:right-0 top-1/4 md:top-full mt-0 md:mt-2 z-50 md:w-72 max-w-sm mx-auto md:mx-0 shadow-lg border">
         <CardHeader className="pb-3">
           <div className="flex items-center justify-between">
             <CardTitle className="text-sm">Display Settings</CardTitle>
