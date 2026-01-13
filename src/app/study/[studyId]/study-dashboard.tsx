@@ -193,6 +193,26 @@ export function StudyDashboard({
 
   // Navigation
   const totalInDomain = tier1Indicators.length + (preferences.showTier2 ? tier2Indicators.length : 0)
+
+  // Build position string with core/extended context
+  const getPositionString = () => {
+    const currentPos = currentIndicatorIndex + 1
+    const isInTier2 = currentIndicatorIndex >= tier1Indicators.length
+
+    if (!preferences.showTier2) {
+      // Only showing core indicators
+      return `${currentPos} of ${tier1Indicators.length} core`
+    }
+
+    if (isInTier2) {
+      // Currently in extended indicators section
+      const tier2Pos = currentIndicatorIndex - tier1Indicators.length + 1
+      return `Extended ${tier2Pos} of ${tier2Indicators.length}`
+    }
+
+    // In core indicators, with extended available
+    return `Core ${currentPos} of ${tier1Indicators.length}`
+  }
   
   const goToNext = () => {
     if (currentIndicatorIndex < totalInDomain - 1) {
@@ -309,11 +329,37 @@ export function StudyDashboard({
               <CardContent>
                 <div className="space-y-2">
                   {enhancedDomains.map((domain) => {
-                    const isComplete = domain.tier1Completed === domain.tier1Total
+                    const isComplete = domain.tier1Completed === domain.tier1Total && domain.tier1Total > 0
                     const isCurrent = domain.id === selectedDomain
-                    const percentage = domain.tier1Total > 0 
-                      ? Math.round((domain.tier1Completed / domain.tier1Total) * 100) 
+                    const percentage = domain.tier1Total > 0
+                      ? Math.round((domain.tier1Completed / domain.tier1Total) * 100)
                       : 0
+                    const hasOnlyExtended = domain.tier1Total === 0 && domain.total > 0
+
+                    // Skip domains with no indicators at all (shouldn't happen, but safety)
+                    if (domain.total === 0) return null
+
+                    // If not showing Tier 2 and domain has only extended indicators, show differently
+                    if (hasOnlyExtended && !preferences.showTier2) {
+                      return (
+                        <div
+                          key={domain.id}
+                          className="w-full text-left p-3 rounded-lg border border-dashed border-muted-foreground/30 opacity-60"
+                        >
+                          <div className="flex items-center justify-between mb-1">
+                            <span className="text-sm font-medium text-muted-foreground">
+                              {domain.name}
+                            </span>
+                            <span className="text-xs text-muted-foreground italic">
+                              Extended only
+                            </span>
+                          </div>
+                          <p className="text-xs text-muted-foreground">
+                            Enable "Show Extended" in settings to view
+                          </p>
+                        </div>
+                      )
+                    }
 
                     return (
                       <button
@@ -333,6 +379,9 @@ export function StudyDashboard({
                           </span>
                           <span className="text-xs text-muted-foreground">
                             {domain.tier1Completed}/{domain.tier1Total}
+                            {preferences.showTier2 && domain.total > domain.tier1Total && (
+                              <span className="text-muted-foreground/60"> +{domain.total - domain.tier1Total}</span>
+                            )}
                           </span>
                         </div>
                         <div className="h-1.5 bg-secondary rounded-full overflow-hidden">
@@ -404,7 +453,7 @@ export function StudyDashboard({
                   currentIndicatorIndex < totalInDomain - 1 ||
                   enhancedDomains.findIndex(d => d.id === selectedDomain) < enhancedDomains.length - 1
                 }
-                position={`${currentIndicatorIndex + 1} of ${totalInDomain}`}
+                position={getPositionString()}
                 isTier2={currentIndicator.tier === 2}
               />
             ) : (

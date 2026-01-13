@@ -37,16 +37,8 @@ export function RatingScale({
   max = 3,
   disabled = false,
   required = false,
-  showLabels = true,
-  size = 'md',
 }: RatingScaleProps) {
   const scalePoints = Array.from({ length: max - min + 1 }, (_, i) => min + i)
-
-  const sizeClasses = {
-    sm: 'w-8 h-8 text-sm',
-    md: 'w-10 h-10 text-base',
-    lg: 'w-12 h-12 text-lg',
-  }
 
   return (
     <div className="space-y-2">
@@ -66,35 +58,44 @@ export function RatingScale({
         </p>
       )}
 
-      <div 
-        role="radiogroup" 
+      <div
+        role="radiogroup"
         aria-labelledby={`${id}-label`}
         aria-describedby={description ? `${id}-description` : undefined}
-        className="flex flex-col gap-3"
+        className="flex flex-col gap-2"
       >
-        {/* Rating buttons */}
+        {/* Rating buttons with labels */}
         <div className="flex gap-2 flex-wrap">
-          {scalePoints.map((point) => (
-            <button
-              key={point}
-              type="button"
-              role="radio"
-              aria-checked={value === point}
-              disabled={disabled}
-              onClick={() => onChange(point)}
-              className={cn(
-                "inline-flex items-center justify-center rounded-md border-2 font-medium transition-all",
-                sizeClasses[size],
-                value === point
-                  ? "bg-primary text-primary-foreground border-primary"
-                  : "bg-background border-input hover:bg-accent hover:border-accent-foreground/20",
-                disabled && "opacity-50 cursor-not-allowed",
-                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-              )}
-            >
-              {point}
-            </button>
-          ))}
+          {scalePoints.map((point) => {
+            const labelText = labels[point] || `${point}`
+            return (
+              <button
+                key={point}
+                type="button"
+                role="radio"
+                aria-checked={value === point}
+                aria-label={`${point} - ${labelText}`}
+                disabled={disabled}
+                onClick={() => onChange(point)}
+                className={cn(
+                  "inline-flex flex-col items-center justify-center rounded-md border-2 font-medium transition-all px-4 py-2 min-w-[70px]",
+                  value === point
+                    ? "bg-primary text-primary-foreground border-primary"
+                    : "bg-background border-input hover:bg-accent hover:border-accent-foreground/20",
+                  disabled && "opacity-50 cursor-not-allowed",
+                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                )}
+              >
+                <span className="text-lg font-bold">{point}</span>
+                <span className={cn(
+                  "text-xs",
+                  value === point ? "text-primary-foreground/80" : "text-muted-foreground"
+                )}>
+                  {labelText}
+                </span>
+              </button>
+            )
+          })}
 
           {/* Don't Know button */}
           <button
@@ -104,7 +105,7 @@ export function RatingScale({
             disabled={disabled}
             onClick={() => onChange(null)}
             className={cn(
-              "inline-flex items-center justify-center rounded-md border-2 transition-all px-3 py-2 text-sm font-normal",
+              "inline-flex flex-col items-center justify-center rounded-md border-2 transition-all px-4 py-2 min-w-[70px]",
               value === null
                 ? "bg-muted-foreground text-muted border-muted-foreground"
                 : "bg-background border-input hover:bg-accent hover:border-accent-foreground/20",
@@ -112,34 +113,16 @@ export function RatingScale({
               "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             )}
           >
-            Don't Know
+            <span className="text-sm font-medium">?</span>
+            <span className={cn(
+              "text-xs",
+              value === null ? "text-muted/80" : "text-muted-foreground"
+            )}>
+              Unsure
+            </span>
           </button>
         </div>
-
-        {/* Scale labels */}
-        {showLabels && (
-          <div className="flex gap-2">
-            {scalePoints.map((point) => (
-              <div
-                key={point}
-                className={cn(
-                  "flex items-center justify-center text-xs text-muted-foreground",
-                  sizeClasses[size]
-                )}
-              >
-                {labels[point] || `${point}`}
-              </div>
-            ))}
-          </div>
-        )}
       </div>
-
-      {/* Selected value label */}
-      {value !== null && labels[value] && labels[value] !== String(value) && (
-        <p className="text-sm font-medium text-primary">
-          Selected: {labels[value]}
-        </p>
-      )}
     </div>
   )
 }
