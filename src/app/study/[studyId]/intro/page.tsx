@@ -101,9 +101,9 @@ export default function StudyIntroPage() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-sm text-muted-foreground mb-6">
+            <p className="text-base text-foreground mb-6">
               Each domain addresses a critical aspect of GBV service capacity. You'll assess
-              <strong> {totalTier1} core indicators</strong> (full ratings required) and have the option to
+              <strong className="text-primary"> {totalTier1} core indicators</strong> (full ratings required) and have the option to
               comment on <strong>{totalTier2} extended indicators</strong>.
             </p>
             <div className="space-y-3">
@@ -154,8 +154,7 @@ export default function StudyIntroPage() {
             <p>
               In the Yukon, a survivor's safety might depend on whether the shelter takes pets, whether there's
               a way to get there without a car, whether services exist in their language, or whether they can
-              access help without everyone in town knowing. These aren't edge cases—they're the reality of life
-              in northern communities.
+              access help without everyone in town knowing.
             </p>
             <p className="font-medium text-primary">
               This project exists because Yukon communities deserve measurement tools designed for their context,

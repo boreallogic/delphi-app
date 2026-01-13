@@ -487,14 +487,18 @@ export function IndicatorAssessment({
           {/* Qualitative inputs - for both tiers */}
           <div className="space-y-2">
             <Label htmlFor="reasoning">
-              {isTier2 ? 'Your Comments' : 'Reasoning'}
+              {isTier2 ? 'Your Comments' : 'Share Your Thinking'}
               <span className="text-muted-foreground font-normal">
                 {isTier2 ? '' : ' (optional)'}
               </span>
             </Label>
             {!isTier2 && (
               <p className="text-sm text-muted-foreground mb-2">
-                Share your thinking behind your ratings. This helps other panelists understand different perspectives. Your comments will be shared anonymously with the group in the next round.
+                Share your thinking behind your ratings.
+                <span className="inline-flex items-center gap-1 ml-1 text-blue-600 font-medium">
+                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                  Shared anonymously with other panelists in the next round
+                </span>
               </p>
             )}
             <Textarea
@@ -530,14 +534,18 @@ export function IndicatorAssessment({
           {/* General comments field */}
           <div className="space-y-2">
             <Label htmlFor="general-comments">
-              General Comments <span className="text-muted-foreground font-normal">(optional)</span>
+              Private Notes for Research Team <span className="text-muted-foreground font-normal">(optional)</span>
             </Label>
             <p className="text-sm text-muted-foreground mb-2">
-              Use this space for any other thoughts—concerns about how this might be misused, suggestions for improvement, context from your experience, or anything else that doesn't fit the structured questions above.
+              Anything else you want us to know—concerns, suggestions, context from your experience.
+              <span className="inline-flex items-center gap-1 ml-1 text-amber-600 font-medium">
+                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
+                Not shared with other panelists
+              </span>
             </p>
             <Textarea
               id="general-comments"
-              placeholder="Example: 'In remote communities, this data might be sensitive because...' or 'This could be improved by also tracking...'"
+              placeholder="In remote communities, this data might be sensitive because..."
               value={generalComments}
               onChange={(e) => setGeneralComments(e.target.value)}
               rows={3}
