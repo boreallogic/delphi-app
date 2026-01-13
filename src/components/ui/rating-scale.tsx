@@ -45,12 +45,12 @@ export function RatingScale({
   // Compact layout: label and buttons on same row, description below
   if (compact) {
     return (
-      <div className="space-y-1.5">
+      <div className="space-y-2">
         <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
           <div className="flex-shrink-0 sm:min-w-[100px]">
             <label
               id={`${id}-label`}
-              className="text-sm font-medium"
+              className="text-base font-semibold"
             >
               {label}
               {required && <span className="text-destructive ml-1">*</span>}
@@ -75,7 +75,7 @@ export function RatingScale({
                   disabled={disabled}
                   onClick={() => onChange(point)}
                   className={cn(
-                    "inline-flex items-center justify-center rounded-md border-2 font-medium transition-all px-3 py-1.5 min-w-[70px] text-sm",
+                    "inline-flex items-center justify-center rounded-md border-2 font-medium transition-all px-4 py-2 min-w-[80px] text-sm",
                     value === point
                       ? "bg-primary text-primary-foreground border-primary"
                       : "bg-background border-input hover:bg-accent hover:border-accent-foreground/20",
@@ -96,7 +96,7 @@ export function RatingScale({
               disabled={disabled}
               onClick={() => onChange(null)}
               className={cn(
-                "inline-flex items-center justify-center rounded-md border-2 transition-all px-2.5 py-1.5 min-w-[60px] text-sm",
+                "inline-flex items-center justify-center rounded-md border-2 transition-all px-3 py-2 min-w-[70px] text-sm",
                 value === null
                   ? "bg-muted-foreground text-muted border-muted-foreground"
                   : "bg-background border-input hover:bg-accent hover:border-accent-foreground/20",
@@ -109,7 +109,7 @@ export function RatingScale({
           </div>
         </div>
         {description && (
-          <p className="text-xs text-muted-foreground pl-0 sm:pl-[116px]" id={`${id}-description`}>
+          <p className="text-sm text-muted-foreground pl-0 sm:pl-[116px] leading-relaxed" id={`${id}-description`}>
             {description}
           </p>
         )}
