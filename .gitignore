@@ -63,3 +63,13 @@ netlify-deploy.zip
 
 # Netlify deployment secrets
 NETLIFY_SECRETS.txt
+
+# Local documentation and learning materials (keep local only)
+FOR_SARA_READ_THIS.md
+RECOVERY_INSTRUCTIONS.md
+RECOVERY_INSTRUCTIONS_SIMPLE.md
+RECOVERY_SUMMARY.md
+STEP_BY_STEP_FOR_SARA.md
+IMPLEMENTATION_SUMMARY.md
+SAVE_PROTECTION_FEATURES.md
+agent-templates/
