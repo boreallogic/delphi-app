@@ -60,3 +60,6 @@ netlify-deploy.zip
 *_SECRETS*
 *credentials*.txt
 *keys*.txt
+
+# Netlify deployment secrets
+NETLIFY_SECRETS.txt
