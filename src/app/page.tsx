@@ -4,6 +4,9 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { prisma } from '@/lib/db'
 
+// Force dynamic rendering - this page queries the database for current study status
+export const dynamic = 'force-dynamic'
+
 export default async function HomePage() {
   // Get the single study (should always exist after seed)
   const study = await prisma.study.findFirst({
