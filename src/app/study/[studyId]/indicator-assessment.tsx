@@ -530,7 +530,7 @@ export function IndicatorAssessment({
               <RatingScale
                 id="priority"
                 label="Priority"
-                description="How important for measuring GBV service capacity?"
+                description={`How critical is knowing this — ${displayDefinition.toLowerCase()} — for understanding GBV service capacity?`}
                 value={priorityRating}
                 onChange={setPriorityRating}
                 labels={priorityLabels}
@@ -543,7 +543,7 @@ export function IndicatorAssessment({
               <RatingScale
                 id="validity"
                 label="Validity"
-                description="How well does it measure what it's supposed to?"
+                description={`How well does this — ${displayDefinition.toLowerCase()} — actually reflect real GBV service capacity?`}
                 value={validityRating}
                 onChange={setValidityRating}
                 labels={validityLabels}
@@ -556,7 +556,7 @@ export function IndicatorAssessment({
               <RatingScale
                 id="feasibility"
                 label="Feasibility"
-                description="How realistic to collect this data in Yukon?"
+                description={`How feasible is it to accurately and safely measure this — ${displayDefinition.toLowerCase()} — in Yukon?`}
                 value={feasibilityRating}
                 onChange={setFeasibilityRating}
                 labels={feasibilityLabels}

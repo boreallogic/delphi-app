@@ -42,75 +42,77 @@ export function RatingScale({
 }: RatingScaleProps) {
   const scalePoints = Array.from({ length: max - min + 1 }, (_, i) => min + i)
 
-  // Compact layout: label and buttons on same row
+  // Compact layout: label and buttons on same row, description below
   if (compact) {
     return (
-      <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
-        <div className="flex-shrink-0 sm:min-w-[100px]">
-          <label
-            id={`${id}-label`}
-            className="text-sm font-medium"
-          >
-            {label}
-            {required && <span className="text-destructive ml-1">*</span>}
-          </label>
-          {description && (
-            <p className="text-xs text-muted-foreground mt-0.5" id={`${id}-description`}>
-              {description}
-            </p>
-          )}
-        </div>
+      <div className="space-y-1.5">
+        <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
+          <div className="flex-shrink-0 sm:min-w-[100px]">
+            <label
+              id={`${id}-label`}
+              className="text-sm font-medium"
+            >
+              {label}
+              {required && <span className="text-destructive ml-1">*</span>}
+            </label>
+          </div>
 
-        <div
-          role="radiogroup"
-          aria-labelledby={`${id}-label`}
-          aria-describedby={description ? `${id}-description` : undefined}
-          className="flex gap-1.5 flex-wrap"
-        >
-          {scalePoints.map((point) => {
-            const labelText = labels[point] || `${point}`
-            return (
-              <button
-                key={point}
-                type="button"
-                role="radio"
-                aria-checked={value === point}
-                aria-label={`${labelText} (${point})`}
-                disabled={disabled}
-                onClick={() => onChange(point)}
-                className={cn(
-                  "inline-flex items-center justify-center rounded-md border-2 font-medium transition-all px-3 py-1.5 min-w-[70px] text-sm",
-                  value === point
-                    ? "bg-primary text-primary-foreground border-primary"
-                    : "bg-background border-input hover:bg-accent hover:border-accent-foreground/20",
-                  disabled && "opacity-50 cursor-not-allowed",
-                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-                )}
-              >
-                {labelText}
-              </button>
-            )
-          })}
-
-          {/* Unsure button */}
-          <button
-            type="button"
-            role="radio"
-            aria-checked={value === null}
-            disabled={disabled}
-            onClick={() => onChange(null)}
-            className={cn(
-              "inline-flex items-center justify-center rounded-md border-2 transition-all px-2.5 py-1.5 min-w-[60px] text-sm",
-              value === null
-                ? "bg-muted-foreground text-muted border-muted-foreground"
-                : "bg-background border-input hover:bg-accent hover:border-accent-foreground/20",
-              disabled && "opacity-50 cursor-not-allowed",
-              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-            )}
+          <div
+            role="radiogroup"
+            aria-labelledby={`${id}-label`}
+            aria-describedby={description ? `${id}-description` : undefined}
+            className="flex gap-1.5 flex-wrap"
           >
-            Unsure
-          </button>
+            {scalePoints.map((point) => {
+              const labelText = labels[point] || `${point}`
+              return (
+                <button
+                  key={point}
+                  type="button"
+                  role="radio"
+                  aria-checked={value === point}
+                  aria-label={`${labelText} (${point})`}
+                  disabled={disabled}
+                  onClick={() => onChange(point)}
+                  className={cn(
+                    "inline-flex items-center justify-center rounded-md border-2 font-medium transition-all px-3 py-1.5 min-w-[70px] text-sm",
+                    value === point
+                      ? "bg-primary text-primary-foreground border-primary"
+                      : "bg-background border-input hover:bg-accent hover:border-accent-foreground/20",
+                    disabled && "opacity-50 cursor-not-allowed",
+                    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                  )}
+                >
+                  {labelText}
+                </button>
+              )
+            })}
+
+            {/* Unsure button */}
+            <button
+              type="button"
+              role="radio"
+              aria-checked={value === null}
+              disabled={disabled}
+              onClick={() => onChange(null)}
+              className={cn(
+                "inline-flex items-center justify-center rounded-md border-2 transition-all px-2.5 py-1.5 min-w-[60px] text-sm",
+                value === null
+                  ? "bg-muted-foreground text-muted border-muted-foreground"
+                  : "bg-background border-input hover:bg-accent hover:border-accent-foreground/20",
+                disabled && "opacity-50 cursor-not-allowed",
+                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+              )}
+            >
+              Unsure
+            </button>
+          </div>
         </div>
+        {description && (
+          <p className="text-xs text-muted-foreground pl-0 sm:pl-[116px]" id={`${id}-description`}>
+            {description}
+          </p>
+        )}
       </div>
     )
   }
