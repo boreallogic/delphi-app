@@ -39,19 +39,26 @@ export function PanelistPreferences({ preferences, onUpdate }: PanelistPreferenc
   }
 
   return (
-    <Card className="absolute right-0 top-full mt-2 z-20 w-72 shadow-lg">
-      <CardHeader className="pb-3">
-        <div className="flex items-center justify-between">
-          <CardTitle className="text-sm">Display Settings</CardTitle>
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => setIsOpen(false)}
-          >
-            ✕
-          </Button>
-        </div>
-      </CardHeader>
+    <>
+      {/* Backdrop to close dropdown when clicking outside */}
+      <div
+        className="fixed inset-0 z-40"
+        onClick={() => setIsOpen(false)}
+      />
+
+      <Card className="absolute right-0 top-full mt-2 z-50 w-72 shadow-lg">
+        <CardHeader className="pb-3">
+          <div className="flex items-center justify-between">
+            <CardTitle className="text-sm">Display Settings</CardTitle>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setIsOpen(false)}
+            >
+              ✕
+            </Button>
+          </div>
+        </CardHeader>
       <CardContent className="space-y-4">
         {/* Plain Language Toggle */}
         <label className="flex items-start gap-3 cursor-pointer">
@@ -97,6 +104,7 @@ export function PanelistPreferences({ preferences, onUpdate }: PanelistPreferenc
         </div>
       </CardContent>
     </Card>
+    </>
   )
 }
 
