@@ -8,9 +8,88 @@ import { RatingScale } from '@/components/ui/rating-scale'
 import { ConsensusBadge } from '@/components/ui/progress'
 import { TierBadge } from '@/components/panelist-preferences'
 import { EvidenceTooltip } from '@/components/evidence-tooltip'
-import { ChevronLeft, ChevronRight, Save, AlertCircle, MessageSquare } from 'lucide-react'
+import { ChevronLeft, ChevronRight, Save, AlertCircle, MessageSquare, Check, ChevronDown } from 'lucide-react'
 import { priorityLabels, validityLabels, feasibilityLabels } from '@/lib/utils'
 import type { Indicator, Response, RoundSummary } from '@prisma/client'
+
+// Collapsible comments component to reduce vertical space
+function CollapsibleComments({
+  reasoning,
+  setReasoning,
+  generalComments,
+  setGeneralComments,
+  hasContent,
+}: {
+  reasoning: string
+  setReasoning: (value: string) => void
+  generalComments: string
+  setGeneralComments: (value: string) => void
+  hasContent: boolean
+}) {
+  const [isExpanded, setIsExpanded] = useState(hasContent)
+
+  return (
+    <div className="border rounded-lg">
+      <button
+        type="button"
+        onClick={() => setIsExpanded(!isExpanded)}
+        className="w-full flex items-center justify-between p-3 text-left hover:bg-muted/50 transition-colors"
+      >
+        <div className="flex items-center gap-2">
+          <MessageSquare className="w-4 h-4 text-muted-foreground" />
+          <span className="font-medium text-sm">
+            Add Comments
+            <span className="text-muted-foreground font-normal ml-1">(optional)</span>
+          </span>
+          {hasContent && (
+            <span className="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">
+              Has content
+            </span>
+          )}
+        </div>
+        <ChevronDown className={`w-4 h-4 text-muted-foreground transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
+      </button>
+
+      {isExpanded && (
+        <div className="p-4 pt-0 space-y-4 border-t">
+          <div className="space-y-2">
+            <Label htmlFor="reasoning" className="text-sm">
+              Share Your Thinking
+              <span className="inline-flex items-center gap-1 ml-2 text-blue-600 text-xs font-normal">
+                <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                Shared with panelists
+              </span>
+            </Label>
+            <Textarea
+              id="reasoning"
+              placeholder="Example: 'I rated priority high because...' or 'The challenge with feasibility is...'"
+              value={reasoning}
+              onChange={(e) => setReasoning(e.target.value)}
+              rows={2}
+            />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="general-comments" className="text-sm">
+              Private Notes for Research Team
+              <span className="inline-flex items-center gap-1 ml-2 text-amber-600 text-xs font-normal">
+                <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
+                Private
+              </span>
+            </Label>
+            <Textarea
+              id="general-comments"
+              placeholder="Concerns, suggestions, context from your experience..."
+              value={generalComments}
+              onChange={(e) => setGeneralComments(e.target.value)}
+              rows={2}
+            />
+          </div>
+        </div>
+      )}
+    </div>
+  )
+}
 
 interface IndicatorAssessmentProps {
   indicator: Indicator
@@ -327,37 +406,25 @@ export function IndicatorAssessment({
               </span>
             </div>
           </CardHeader>
-          <CardContent className="pt-0">
+          <CardContent className="pt-0 space-y-3">
             <div className="bg-blue-50/50 dark:bg-blue-950/30 p-4 rounded-lg border border-blue-100 dark:border-blue-900">
-              <h4 className="text-base font-semibold text-blue-900 dark:text-blue-100 mb-3">Definition</h4>
               <p className="text-base text-gray-900 dark:text-gray-100 leading-relaxed font-medium">{displayDefinition}</p>
+              {/* Notes integrated into definition area */}
+              {indicator.notes && (
+                <p className="text-sm text-blue-700 dark:text-blue-300 mt-3 pt-3 border-t border-blue-200 dark:border-blue-800">
+                  <span className="font-semibold">Note:</span> {indicator.notes}
+                </p>
+              )}
             </div>
+            {/* Tier rationale for Tier 2 indicators */}
+            {isTier2 && indicator.tierRationale && (
+              <div className="text-sm text-muted-foreground bg-muted/50 px-3 py-2 rounded">
+                <span className="font-medium">Why Tier 2:</span> {indicator.tierRationale}
+              </div>
+            )}
           </CardContent>
         </Card>
       </div>
-
-      {/* Scrollable content */}
-      <Card>
-        <CardContent className="space-y-4 pt-6">
-          {indicator.notes && (
-            <div className="p-4 bg-amber-50 dark:bg-amber-950 rounded-lg border border-amber-200">
-              <h4 className="text-sm font-semibold mb-2 flex items-center gap-2">
-                <AlertCircle className="w-4 h-4" />
-                Important Notes
-              </h4>
-              <p className="text-sm leading-relaxed">{indicator.notes}</p>
-            </div>
-          )}
-
-          {/* Tier rationale for Tier 2 indicators */}
-          {isTier2 && indicator.tierRationale && (
-            <div className="p-3 bg-muted rounded-md">
-              <h4 className="text-sm font-medium mb-1">Why This Is Tier 2</h4>
-              <p className="text-sm text-muted-foreground">{indicator.tierRationale}</p>
-            </div>
-          )}
-        </CardContent>
-      </Card>
 
       {/* Previous round summary (for rounds > 1) - only for Tier 1 */}
       {previousSummary && currentRound > 1 && !isTier2 && (
@@ -442,112 +509,87 @@ export function IndicatorAssessment({
         <CardContent className="space-y-6">
           {/* Rating scales - only for Tier 1 */}
           {!isTier2 && (
-            <>
+            <div className="space-y-4">
+              {/* Compact rating progress indicator */}
+              <div className="flex items-center gap-3 text-sm text-muted-foreground pb-2 border-b">
+                <span className="font-medium">Rate all three:</span>
+                <span className={`flex items-center gap-1 ${priorityRating !== null ? 'text-green-600' : ''}`}>
+                  {priorityRating !== null && <Check className="w-3.5 h-3.5" />}
+                  Priority
+                </span>
+                <span className={`flex items-center gap-1 ${validityRating !== null ? 'text-green-600' : ''}`}>
+                  {validityRating !== null && <Check className="w-3.5 h-3.5" />}
+                  Validity
+                </span>
+                <span className={`flex items-center gap-1 ${feasibilityRating !== null ? 'text-green-600' : ''}`}>
+                  {feasibilityRating !== null && <Check className="w-3.5 h-3.5" />}
+                  Feasibility
+                </span>
+              </div>
+
               <RatingScale
                 id="priority"
-                label="Priority Level"
-                description="What priority level should this indicator have for measuring GBV service capacity?"
+                label="Priority"
+                description="How important for measuring GBV service capacity?"
                 value={priorityRating}
                 onChange={setPriorityRating}
                 labels={priorityLabels}
                 min={1}
                 max={3}
                 required
+                compact
               />
 
               <RatingScale
                 id="validity"
-                label="Validity Level"
-                description="How well does this indicator actually measure what it's supposed to measure?"
+                label="Validity"
+                description="How well does it measure what it's supposed to?"
                 value={validityRating}
                 onChange={setValidityRating}
                 labels={validityLabels}
                 min={1}
                 max={3}
                 required
+                compact
               />
 
               <RatingScale
                 id="feasibility"
-                label="Feasibility Level"
-                description="How feasible is it to collect this data in Yukon communities?"
+                label="Feasibility"
+                description="How realistic to collect this data in Yukon?"
                 value={feasibilityRating}
                 onChange={setFeasibilityRating}
                 labels={feasibilityLabels}
                 min={1}
                 max={3}
                 required
-              />
-            </>
-          )}
-
-          {/* Qualitative inputs - for both tiers */}
-          <div className="space-y-2">
-            <Label htmlFor="reasoning">
-              {isTier2 ? 'Your Comments' : 'Share Your Thinking'}
-              <span className="text-muted-foreground font-normal">
-                {isTier2 ? '' : ' (optional)'}
-              </span>
-            </Label>
-            {!isTier2 && (
-              <p className="text-sm text-muted-foreground mb-2">
-                Share your thinking behind your ratings.
-                <span className="inline-flex items-center gap-1 ml-1 text-blue-600 font-medium">
-                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
-                  Shared anonymously with other panelists in the next round
-                </span>
-              </p>
-            )}
-            <Textarea
-              id="reasoning"
-              placeholder={isTier2
-                ? "Share any thoughts on this indicator - why it matters, challenges you see, or suggestions for improvement."
-                : "Example: 'I rated priority high because...' or 'From my experience, the challenge with feasibility is...'"
-              }
-              value={reasoning}
-              onChange={(e) => setReasoning(e.target.value)}
-              rows={isTier2 ? 5 : 3}
-            />
-          </div>
-
-          {!isTier2 && (
-            <div className="space-y-2">
-              <Label htmlFor="threshold">
-                Threshold Suggestion <span className="text-muted-foreground font-normal">(optional)</span>
-              </Label>
-              <p className="text-sm text-muted-foreground mb-2">
-                If this indicator were being used to assess a community, what number or benchmark would tell us "this is good enough" versus "this needs improvement"? For example: "At least 2 shelters per 10,000 people" or "Services available within 1 hour travel time."
-              </p>
-              <Textarea
-                id="threshold"
-                placeholder="At least 75% of survivors should be able to access services within 24 hours"
-                value={thresholdSuggestion}
-                onChange={(e) => setThresholdSuggestion(e.target.value)}
-                rows={2}
+                compact
               />
             </div>
           )}
 
-          {/* General comments field */}
-          <div className="space-y-2">
-            <Label htmlFor="general-comments">
-              Private Notes for Research Team <span className="text-muted-foreground font-normal">(optional)</span>
-            </Label>
-            <p className="text-sm text-muted-foreground mb-2">
-              Anything else you want us to know—concerns, suggestions, context from your experience.
-              <span className="inline-flex items-center gap-1 ml-1 text-amber-600 font-medium">
-                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
-                Not shared with other panelists
-              </span>
-            </p>
-            <Textarea
-              id="general-comments"
-              placeholder="In remote communities, this data might be sensitive because..."
-              value={generalComments}
-              onChange={(e) => setGeneralComments(e.target.value)}
-              rows={3}
+          {/* Qualitative inputs - for both tiers */}
+          {/* Collapsible comments section for Tier 1 */}
+          {!isTier2 ? (
+            <CollapsibleComments
+              reasoning={reasoning}
+              setReasoning={setReasoning}
+              generalComments={generalComments}
+              setGeneralComments={setGeneralComments}
+              hasContent={reasoning.length > 0 || generalComments.length > 0}
             />
-          </div>
+          ) : (
+            <div className="space-y-2">
+              <Label htmlFor="reasoning">Your Comments</Label>
+              <Textarea
+                id="reasoning"
+                placeholder="Share any thoughts on this indicator - why it matters, challenges you see, or suggestions for improvement."
+                value={reasoning}
+                onChange={(e) => setReasoning(e.target.value)}
+                rows={5}
+              />
+            </div>
+          )}
 
           {/* Dissent flag - only for Tier 1 and only from Round 2 onwards */}
           {!isTier2 && currentRound > 1 && (

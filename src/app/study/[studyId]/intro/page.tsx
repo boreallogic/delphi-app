@@ -1,11 +1,11 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { ArrowRight, BookOpen, BarChart3, Users, Target, Shield, ChevronDown, ChevronUp } from 'lucide-react'
-import { DOMAINS } from '@/lib/domains'
+import { DOMAINS, TIER_1_INDICATORS } from '@/lib/domains'
 
 // Collapsible card component
 function CollapsibleCard({
@@ -46,22 +46,126 @@ function CollapsibleCard({
   )
 }
 
+// Expandable domain row component
+function ExpandableDomainRow({
+  domain,
+  indicators,
+}: {
+  domain: { code: string; name: string; tier1: number; tier2: number; total: number }
+  indicators: { id: string; name: string; definition: string; tier: number }[]
+}) {
+  const [isExpanded, setIsExpanded] = useState(false)
+
+  return (
+    <div className="border rounded-lg bg-card overflow-hidden">
+      <button
+        onClick={() => setIsExpanded(!isExpanded)}
+        className="w-full flex items-center gap-4 p-4 hover:bg-accent/50 transition-colors text-left"
+      >
+        <div className="flex-shrink-0">
+          <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+            <span className="text-xl font-bold text-primary">{domain.code}</span>
+          </div>
+        </div>
+        <div className="flex-1 min-w-0">
+          <h3 className="font-semibold text-sm mb-1">{domain.name}</h3>
+          <p className="text-xs text-muted-foreground">
+            {DOMAINS[domain.code as keyof typeof DOMAINS]?.question}
+          </p>
+        </div>
+        <div className="flex-shrink-0 text-right flex items-center gap-3">
+          <div>
+            <div className="text-sm font-semibold">{domain.total}</div>
+            <div className="text-xs text-muted-foreground">
+              <span className="text-primary font-medium">{domain.tier1}</span> + {domain.tier2}
+            </div>
+          </div>
+          <ChevronDown className={`w-4 h-4 text-muted-foreground transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
+        </div>
+      </button>
+
+      {isExpanded && (
+        <div className="border-t bg-muted/30 p-4">
+          <div className="space-y-2">
+            {indicators.map((ind) => (
+              <div
+                key={ind.id}
+                className={`flex items-start gap-3 p-2 rounded text-sm ${
+                  ind.tier === 1 ? 'bg-primary/5' : 'bg-muted/50'
+                }`}
+              >
+                <span className={`flex-shrink-0 text-xs font-mono px-1.5 py-0.5 rounded ${
+                  ind.tier === 1
+                    ? 'bg-primary/20 text-primary'
+                    : 'bg-muted text-muted-foreground'
+                }`}>
+                  {ind.tier === 1 ? 'Core' : 'Ext'}
+                </span>
+                <div className="flex-1 min-w-0">
+                  <span className="font-medium">{ind.name}</span>
+                  <p className="text-xs text-muted-foreground mt-0.5 line-clamp-2">
+                    {ind.definition}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  )
+}
+
 export default function StudyIntroPage() {
   const params = useParams()
   const router = useRouter()
   const studyId = params.studyId as string
+
+  // Fetch indicators from API
+  const [indicators, setIndicators] = useState<{ id: string; name: string; definitionSimple: string; domainCode: string; externalId: string }[]>([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    async function fetchIndicators() {
+      try {
+        const response = await fetch(`/api/studies/${studyId}/indicators`)
+        if (response.ok) {
+          const data = await response.json()
+          setIndicators(data.indicators || [])
+        }
+      } catch (error) {
+        console.error('Failed to fetch indicators:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchIndicators()
+  }, [studyId])
 
   // Domain indicator counts (from your framework)
   const domainData = [
     { code: 'A', name: 'Safe Places to Stay', tier1: 5, tier2: 1, total: 6 },
     { code: 'B', name: 'Getting Where You Need to Go', tier1: 4, tier2: 1, total: 5 },
     { code: 'C', name: 'Health Care That Understands', tier1: 3, tier2: 2, total: 5 },
-    { code: 'D', name: 'Protection and Justice', tier1: 3, tier2: 1, total: 4 },
-    { code: 'E', name: 'Help When You Need It', tier1: 3, tier2: 1, total: 4 },
-    { code: 'F', name: 'Money and Independence', tier1: 2, tier2: 1, total: 3 },
-    { code: 'G', name: 'How Systems Work Together', tier1: 4, tier2: 7, total: 11 },
+    { code: 'D', name: 'Protection and Justice', tier1: 4, tier2: 0, total: 4 },
+    { code: 'E', name: 'Help When You Need It', tier1: 6, tier2: 1, total: 7 },
+    { code: 'F', name: 'Money and Independence', tier1: 2, tier2: 2, total: 4 },
+    { code: 'G', name: 'How Systems Work Together', tier1: 2, tier2: 9, total: 11 },
     { code: 'H', name: 'Community Conditions', tier1: 3, tier2: 9, total: 12 },
   ]
+
+  // Group indicators by domain
+  const indicatorsByDomain = indicators.reduce((acc, ind) => {
+    const code = ind.domainCode || 'A'
+    if (!acc[code]) acc[code] = []
+    acc[code].push({
+      id: ind.id,
+      name: ind.name,
+      definition: ind.definitionSimple || '',
+      tier: TIER_1_INDICATORS.has(ind.externalId) ? 1 : 2,
+    })
+    return acc
+  }, {} as Record<string, { id: string; name: string; definition: string; tier: number }[]>)
 
   const totalTier1 = domainData.reduce((sum, d) => sum + d.tier1, 0)
   const totalTier2 = domainData.reduce((sum, d) => sum + d.tier2, 0)
@@ -236,26 +340,15 @@ export default function StudyIntroPage() {
             </p>
             <div className="space-y-3">
               {domainData.map((domain) => (
-                <div key={domain.code} className="flex items-center gap-4 p-4 rounded-lg border bg-card hover:bg-accent/50 transition-colors">
-                  <div className="flex-shrink-0">
-                    <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
-                      <span className="text-xl font-bold text-primary">{domain.code}</span>
-                    </div>
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <h3 className="font-semibold text-sm mb-1">{domain.name}</h3>
-                    <p className="text-xs text-muted-foreground">
-                      {DOMAINS[domain.code as keyof typeof DOMAINS]?.question}
-                    </p>
-                  </div>
-                  <div className="flex-shrink-0 text-right">
-                    <div className="text-sm font-semibold">{domain.total}</div>
-                    <div className="text-xs text-muted-foreground">
-                      <span className="text-primary font-medium">{domain.tier1}</span> + {domain.tier2}
-                    </div>
-                  </div>
-                </div>
+                <ExpandableDomainRow
+                  key={domain.code}
+                  domain={domain}
+                  indicators={indicatorsByDomain[domain.code] || []}
+                />
               ))}
+              <p className="text-xs text-muted-foreground text-center pt-2">
+                Click any domain to see its indicators
+              </p>
             </div>
             <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
               <p className="text-sm">
