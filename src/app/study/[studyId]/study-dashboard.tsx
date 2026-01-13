@@ -9,7 +9,7 @@ import { IndicatorAssessment } from './indicator-assessment'
 import { PanelistPreferences, TierBadge } from '@/components/panelist-preferences'
 import { roleDisplayNames } from '@/lib/utils'
 import { DOMAINS, FRAMEWORK_SUMMARY } from '@/lib/domains'
-import { Info, BookOpen, ChevronDown, ChevronUp, Menu, X } from 'lucide-react'
+import { Info, BookOpen, ChevronDown, ChevronUp, Menu, X, CheckCircle2, PartyPopper } from 'lucide-react'
 import type { Study, Panelist, Indicator, Response, RoundSummary, Round } from '@prisma/client'
 
 // Helper for jurisdiction context display
@@ -92,6 +92,9 @@ export function StudyDashboard({
     const ind = indicators.find(i => i.id === r.indicatorId)
     return (ind?.tier || 1) === 1 && r.priorityRating !== null
   }).length
+
+  // Check if all core indicators are complete
+  const allCoreComplete = tier1Completed === tier1Total && tier1Total > 0
 
   // Domain progress with tier awareness
   const enhancedDomains = useMemo(() => {
@@ -478,7 +481,53 @@ export function StudyDashboard({
 
           {/* Main content - Indicator assessment */}
           <div className="lg:col-span-3">
-            {currentIndicator ? (
+            {allCoreComplete && !preferences.showTier2 ? (
+              /* Completion Screen */
+              <Card className="border-green-200 bg-green-50/30">
+                <CardContent className="py-12 text-center">
+                  <div className="flex justify-center mb-4">
+                    <div className="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center">
+                      <PartyPopper className="w-8 h-8 text-green-600" />
+                    </div>
+                  </div>
+                  <h2 className="text-2xl font-bold text-green-800 mb-2">
+                    Round {currentRound} Complete!
+                  </h2>
+                  <p className="text-green-700 mb-6 max-w-md mx-auto">
+                    You've rated all {tier1Total} core indicators. Thank you for your valuable input!
+                    Your responses have been saved securely.
+                  </p>
+
+                  <div className="bg-white/60 rounded-lg p-4 max-w-sm mx-auto mb-6">
+                    <div className="flex items-center justify-center gap-2 text-green-700 mb-2">
+                      <CheckCircle2 className="w-5 h-5" />
+                      <span className="font-medium">All responses saved</span>
+                    </div>
+                    <p className="text-sm text-muted-foreground">
+                      You can return anytime to review or revise your ratings before the round closes.
+                    </p>
+                  </div>
+
+                  {!preferences.showTier2 && (
+                    <div className="border-t pt-4 mt-4">
+                      <p className="text-sm text-muted-foreground mb-3">
+                        Want to provide additional input? You can optionally comment on extended indicators.
+                      </p>
+                      <Button
+                        variant="outline"
+                        onClick={() => handlePreferencesUpdate({ showTier2: true })}
+                      >
+                        View Extended Indicators
+                      </Button>
+                    </div>
+                  )}
+
+                  <div className="mt-6 text-xs text-muted-foreground">
+                    <p>Questions? Contact the research team at the email provided in your invitation.</p>
+                  </div>
+                </CardContent>
+              </Card>
+            ) : currentIndicator ? (
               <IndicatorAssessment
                 indicator={currentIndicator}
                 response={currentResponse}

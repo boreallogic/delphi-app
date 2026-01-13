@@ -74,11 +74,11 @@ export function RatingScale({
                 type="button"
                 role="radio"
                 aria-checked={value === point}
-                aria-label={`${point} - ${labelText}`}
+                aria-label={`${labelText} (${point})`}
                 disabled={disabled}
                 onClick={() => onChange(point)}
                 className={cn(
-                  "inline-flex flex-col items-center justify-center rounded-md border-2 font-medium transition-all px-4 py-2 min-w-[70px]",
+                  "inline-flex flex-col items-center justify-center rounded-md border-2 font-medium transition-all px-5 py-3 min-w-[85px]",
                   value === point
                     ? "bg-primary text-primary-foreground border-primary"
                     : "bg-background border-input hover:bg-accent hover:border-accent-foreground/20",
@@ -86,12 +86,12 @@ export function RatingScale({
                   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                 )}
               >
-                <span className="text-lg font-bold">{point}</span>
+                <span className="text-base font-bold">{labelText}</span>
                 <span className={cn(
-                  "text-xs",
-                  value === point ? "text-primary-foreground/80" : "text-muted-foreground"
+                  "text-xs mt-0.5",
+                  value === point ? "text-primary-foreground/60" : "text-muted-foreground/60"
                 )}>
-                  {labelText}
+                  ({point})
                 </span>
               </button>
             )

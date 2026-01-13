@@ -425,9 +425,17 @@ export function IndicatorAssessment({
               'Your Assessment'
             )}
           </CardTitle>
-          {isTier2 && (
+          {isTier2 ? (
             <CardDescription>
               This is an extended indicator. Rating is not required, but your comments are valuable.
+            </CardDescription>
+          ) : (
+            <CardDescription className="flex items-center gap-2">
+              <span className="inline-flex items-center text-red-600">
+                <span className="text-red-500 mr-1">*</span>
+                Required:
+              </span>
+              Rate all three dimensions to proceed. Select "Unsure" if you're uncertain.
             </CardDescription>
           )}
         </CardHeader>
@@ -437,8 +445,8 @@ export function IndicatorAssessment({
             <>
               <RatingScale
                 id="priority"
-                label="Priority"
-                description="How important is this indicator for measuring GBV service capacity?"
+                label="Priority Level"
+                description="What priority level should this indicator have for measuring GBV service capacity?"
                 value={priorityRating}
                 onChange={setPriorityRating}
                 labels={priorityLabels}
@@ -449,8 +457,8 @@ export function IndicatorAssessment({
 
               <RatingScale
                 id="validity"
-                label="Validity"
-                description="Does this actually measure what it's supposed to measure?"
+                label="Validity Level"
+                description="How well does this indicator actually measure what it's supposed to measure?"
                 value={validityRating}
                 onChange={setValidityRating}
                 labels={validityLabels}
@@ -461,8 +469,8 @@ export function IndicatorAssessment({
 
               <RatingScale
                 id="feasibility"
-                label="Feasibility"
-                description="How realistic is it to collect this data in Yukon communities?"
+                label="Feasibility Level"
+                description="How feasible is it to collect this data in Yukon communities?"
                 value={feasibilityRating}
                 onChange={setFeasibilityRating}
                 labels={feasibilityLabels}
@@ -598,29 +606,38 @@ export function IndicatorAssessment({
 
         <div className="flex items-center gap-2">
           {saveStatus === 'saved' && (
-            <span className="text-sm font-medium text-green-700 bg-green-100 px-3 py-1 rounded-full border border-green-200">
-              ✓ Saved to database
+            <span className="text-sm font-medium text-green-700 bg-green-100 px-3 py-1.5 rounded-full border border-green-200 flex items-center gap-1.5 animate-in fade-in duration-300">
+              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+              </svg>
+              Saved securely
             </span>
           )}
           {saveStatus === 'auto-saved' && (
-            <span className="text-sm font-medium text-blue-700 bg-blue-100 px-3 py-1 rounded-full border border-blue-200">
-              ✓ Auto-saved
+            <span className="text-sm font-medium text-blue-700 bg-blue-100 px-3 py-1.5 rounded-full border border-blue-200 flex items-center gap-1.5">
+              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+              </svg>
+              Auto-saved
               {lastSaveTime && (
-                <span className="ml-1 text-xs text-blue-600">
-                  {lastSaveTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                <span className="text-xs text-blue-600">
+                  at {lastSaveTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                 </span>
               )}
             </span>
           )}
           {saveStatus === 'error' && (
-            <span className="text-sm font-medium text-red-700 bg-red-100 px-3 py-1 rounded-full border border-red-200 flex items-center gap-1">
+            <span className="text-sm font-medium text-red-700 bg-red-100 px-3 py-1.5 rounded-full border border-red-200 flex items-center gap-1.5">
               <AlertCircle className="w-4 h-4" />
               Error - retrying...
             </span>
           )}
           {hasChanges && (saveStatus === 'idle' || saveStatus === 'auto-saved') && (
-            <span className="text-sm text-amber-600 flex items-center gap-1">
-              💾 Draft saved locally
+            <span className="text-sm text-amber-600 flex items-center gap-1.5 bg-amber-50 px-3 py-1.5 rounded-full border border-amber-200">
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
+              </svg>
+              Draft backed up
             </span>
           )}
 
