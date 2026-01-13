@@ -23,7 +23,6 @@ interface IndicatorAssessmentProps {
   hasPrevious: boolean
   hasNext: boolean
   position: string
-  plainLanguage?: boolean
   isTier2?: boolean
 }
 
@@ -38,7 +37,6 @@ export function IndicatorAssessment({
   hasPrevious,
   hasNext,
   position,
-  plainLanguage = false,
   isTier2 = false,
 }: IndicatorAssessmentProps) {
   // Form state
@@ -263,10 +261,8 @@ export function IndicatorAssessment({
     ? reasoning.length > 0  // Tier 2 just needs a comment
     : priorityRating !== null && validityRating !== null && feasibilityRating !== null
 
-  // Determine which definition to show
-  const displayDefinition = plainLanguage && indicator.definitionSimple
-    ? indicator.definitionSimple
-    : indicator.definition
+  // Always use plain language definition if available
+  const displayDefinition = indicator.definitionSimple || indicator.definition
 
   return (
     <div className="space-y-4">
@@ -333,14 +329,7 @@ export function IndicatorAssessment({
           </CardHeader>
           <CardContent className="pt-0">
             <div className="bg-blue-50/50 dark:bg-blue-950/30 p-4 rounded-lg border border-blue-100 dark:border-blue-900">
-              <div className="flex items-center gap-2 mb-3">
-                <h4 className="text-base font-semibold text-blue-900 dark:text-blue-100">Definition</h4>
-                {plainLanguage && indicator.definitionSimple && (
-                  <span className="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full font-medium border border-blue-200">
-                    Plain Language
-                  </span>
-                )}
-              </div>
+              <h4 className="text-base font-semibold text-blue-900 dark:text-blue-100 mb-3">Definition</h4>
               <p className="text-base text-gray-900 dark:text-gray-100 leading-relaxed font-medium">{displayDefinition}</p>
             </div>
           </CardContent>

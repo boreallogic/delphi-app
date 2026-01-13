@@ -41,7 +41,6 @@ export function StudyDashboard({
   // Panelist preferences from stored preferences or defaults
   const storedPrefs = (panelist.preferences as Record<string, boolean>) || {}
   const [preferences, setPreferences] = useState({
-    plainLanguage: storedPrefs.plainLanguage !== undefined ? storedPrefs.plainLanguage : true,
     showTier2: storedPrefs.showTier2 || false,
   })
 
@@ -406,7 +405,6 @@ export function StudyDashboard({
                   enhancedDomains.findIndex(d => d.id === selectedDomain) < enhancedDomains.length - 1
                 }
                 position={`${currentIndicatorIndex + 1} of ${totalInDomain}`}
-                plainLanguage={preferences.plainLanguage}
                 isTier2={currentIndicator.tier === 2}
               />
             ) : (

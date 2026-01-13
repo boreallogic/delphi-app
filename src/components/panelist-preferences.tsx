@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Settings, Eye, Languages } from 'lucide-react'
+import { Settings, Eye } from 'lucide-react'
 
 interface PanelistPreferencesProps {
   preferences: {
@@ -60,26 +60,7 @@ export function PanelistPreferences({ preferences, onUpdate }: PanelistPreferenc
           </div>
         </CardHeader>
       <CardContent className="space-y-4">
-        {/* Plain Language Toggle */}
-        <label className="flex items-start gap-3 cursor-pointer">
-          <input
-            type="checkbox"
-            checked={localPrefs.plainLanguage || false}
-            onChange={() => handleToggle('plainLanguage')}
-            className="mt-1 h-4 w-4 rounded border-gray-300"
-          />
-          <div>
-            <div className="flex items-center gap-2 font-medium text-sm">
-              <Languages className="w-4 h-4" />
-              Plain Language Mode
-            </div>
-            <p className="text-xs text-muted-foreground mt-1">
-              Show simplified definitions that are easier to understand
-            </p>
-          </div>
-        </label>
-
-        {/* Show Tier 2 Toggle */}
+        {/* Show Extended Indicators Toggle */}
         <label className="flex items-start gap-3 cursor-pointer">
           <input
             type="checkbox"

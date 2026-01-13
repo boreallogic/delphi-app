@@ -3,7 +3,7 @@
 import { useParams, useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { ArrowRight, BookOpen, BarChart3, Users, Target } from 'lucide-react'
+import { ArrowRight, BookOpen, BarChart3, Users, Target, Shield } from 'lucide-react'
 import { DOMAINS } from '@/lib/domains'
 
 export default function StudyIntroPage() {
@@ -57,8 +57,97 @@ export default function StudyIntroPage() {
           </div>
         </div>
 
+        {/* Why This Project Exists - MOVED UP */}
+        <Card className="mb-8">
+          <CardHeader>
+            <CardTitle>Why This Project Exists</CardTitle>
+          </CardHeader>
+          <CardContent className="prose prose-sm max-w-none">
+            <p>
+              Gender-based violence affects people in every community. But measuring whether communities have
+              what they need to respond effectively—shelters, transportation, healthcare, justice options,
+              economic supports—is harder than it sounds. Standard measurement tools were built for cities.
+              They miss what matters in rural, remote, and northern contexts.
+            </p>
+            <p>
+              In the Yukon, a survivor's safety might depend on whether the shelter takes pets, whether there's
+              a way to get there without a car, whether services exist in their language, or whether they can
+              access help without everyone in town knowing.
+            </p>
+            <p className="font-medium text-primary">
+              This project exists because Yukon communities deserve measurement tools designed for their context,
+              not adapted from somewhere else.
+            </p>
+          </CardContent>
+        </Card>
+
+        {/* Why Your Input Matters - MOVED UP */}
+        <Card className="mb-8">
+          <CardHeader>
+            <CardTitle>Why Your Input Matters</CardTitle>
+          </CardHeader>
+          <CardContent className="prose prose-sm max-w-none">
+            <p>Having a list of indicators is not enough. We need to know:</p>
+            <ul>
+              <li><strong>Are we measuring the right things?</strong> Some indicators might be theoretically important but practically irrelevant in Yukon.</li>
+              <li><strong>Are we measuring them the right way?</strong> An indicator might capture the right concept but be operationalized in a way that doesn't work here.</li>
+              <li><strong>Can we actually collect this data?</strong> Some information is easy to gather; some is locked behind privacy barriers or simply doesn't exist.</li>
+            </ul>
+            <p>
+              You're here because you have knowledge we need—whether from research, service delivery, policy work,
+              or lived experience navigating these systems. No single perspective is sufficient. The framework will
+              be stronger because it reflects multiple ways of knowing.
+            </p>
+          </CardContent>
+        </Card>
+
+        {/* Your Participation & Data Protection - NEW SECTION */}
+        <Card className="mb-8 border-green-200 bg-green-50/30">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Shield className="w-5 h-5 text-green-700" />
+              Your Participation & Data Protection
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="grid md:grid-cols-2 gap-4">
+              <div className="space-y-3">
+                <div>
+                  <h4 className="font-semibold text-sm mb-1">Where is my data stored?</h4>
+                  <p className="text-sm text-muted-foreground">
+                    Your responses are stored securely on encrypted servers. Only the research team has access.
+                  </p>
+                </div>
+                <div>
+                  <h4 className="font-semibold text-sm mb-1">Who sees my responses?</h4>
+                  <p className="text-sm text-muted-foreground">
+                    The research team sees your individual responses. Other panelists only see anonymized, aggregated summaries (medians, themes) with no identifying information.
+                  </p>
+                </div>
+              </div>
+              <div className="space-y-3">
+                <div>
+                  <h4 className="font-semibold text-sm mb-1">How long is data kept?</h4>
+                  <p className="text-sm text-muted-foreground">
+                    Data will be retained for the duration of the project and archived according to SSHRC requirements. Personal identifiers will be removed from any published findings.
+                  </p>
+                </div>
+                <div>
+                  <h4 className="font-semibold text-sm mb-1">What if I want to withdraw?</h4>
+                  <p className="text-sm text-muted-foreground">
+                    You can stop participating at any time. Contact the research team and your data will be removed from analysis unless already included in anonymized summaries.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <p className="text-xs text-muted-foreground border-t pt-3">
+              This study has received ethics approval from Yukon University. For questions, contact the research team at the email provided in your invitation.
+            </p>
+          </CardContent>
+        </Card>
+
         {/* Key Stats */}
-        <div className="grid md:grid-cols-3 gap-4 mb-12">
+        <div className="grid md:grid-cols-3 gap-4 mb-8">
           <Card>
             <CardContent className="pt-6 text-center">
               <BarChart3 className="w-10 h-10 mx-auto mb-2 text-primary" />
@@ -92,7 +181,7 @@ export default function StudyIntroPage() {
           </Card>
         </div>
 
-        {/* Domain Overview */}
+        {/* Domain Overview - MOVED DOWN */}
         <Card className="mb-8">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
@@ -136,50 +225,6 @@ export default function StudyIntroPage() {
                 <strong className="text-blue-900">Extended Indicators:</strong> <span className="text-blue-700">Optional comments only—important but face data challenges</span>
               </p>
             </div>
-          </CardContent>
-        </Card>
-
-        {/* Why This Project Exists */}
-        <Card className="mb-8">
-          <CardHeader>
-            <CardTitle>Why This Project Exists</CardTitle>
-          </CardHeader>
-          <CardContent className="prose prose-sm max-w-none">
-            <p>
-              Gender-based violence affects people in every community. But measuring whether communities have
-              what they need to respond effectively—shelters, transportation, healthcare, justice options,
-              economic supports—is harder than it sounds. Standard measurement tools were built for cities.
-              They miss what matters in rural, remote, and northern contexts.
-            </p>
-            <p>
-              In the Yukon, a survivor's safety might depend on whether the shelter takes pets, whether there's
-              a way to get there without a car, whether services exist in their language, or whether they can
-              access help without everyone in town knowing.
-            </p>
-            <p className="font-medium text-primary">
-              This project exists because Yukon communities deserve measurement tools designed for their context,
-              not adapted from somewhere else.
-            </p>
-          </CardContent>
-        </Card>
-
-        {/* Why Your Input Matters */}
-        <Card className="mb-8">
-          <CardHeader>
-            <CardTitle>Why Your Input Matters</CardTitle>
-          </CardHeader>
-          <CardContent className="prose prose-sm max-w-none">
-            <p>Having a list of indicators is not enough. We need to know:</p>
-            <ul>
-              <li><strong>Are we measuring the right things?</strong> Some indicators might be theoretically important but practically irrelevant in Yukon.</li>
-              <li><strong>Are we measuring them the right way?</strong> An indicator might capture the right concept but be operationalized in a way that doesn't work here.</li>
-              <li><strong>Can we actually collect this data?</strong> Some information is easy to gather; some is locked behind privacy barriers or simply doesn't exist.</li>
-            </ul>
-            <p>
-              You're here because you have knowledge we need—whether from research, service delivery, policy work,
-              or lived experience navigating these systems. No single perspective is sufficient. The framework will
-              be stronger because it reflects multiple ways of knowing.
-            </p>
           </CardContent>
         </Card>
 
