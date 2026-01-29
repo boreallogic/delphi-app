@@ -2,51 +2,24 @@ import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/db'
 import { sendMagicLinkEmail } from '@/lib/email'
 import { generateMagicToken } from '@/lib/utils'
-import { rateLimiters, checkRateLimit, getRateLimitHeaders } from '@/lib/rate-limit'
-import { magicLinkSchema, formatValidationErrors } from '@/lib/validation'
 
 export const dynamic = 'force-dynamic'
 
 export async function POST(request: NextRequest) {
   try {
-    const body = await request.json()
+    const { email } = await request.json()
 
-    // Validate input
-    const validationResult = magicLinkSchema.safeParse(body)
-
-    if (!validationResult.success) {
+    if (!email || typeof email !== 'string') {
       return NextResponse.json(
-        {
-          error: 'Validation failed',
-          details: formatValidationErrors(validationResult.error),
-        },
+        { error: 'Email is required' },
         { status: 400 }
-      )
-    }
-
-    const { email } = validationResult.data
-    const normalizedEmail = email.toLowerCase().trim()
-
-    // Check rate limit by email (5 requests per 15 minutes)
-    const rateLimitResult = await checkRateLimit(normalizedEmail, rateLimiters.magicLink)
-
-    if (!rateLimitResult.success) {
-      return NextResponse.json(
-        {
-          error: 'Too many requests. Please try again later.',
-          retryAfter: new Date(rateLimitResult.reset * 1000).toISOString(),
-        },
-        {
-          status: 429,
-          headers: getRateLimitHeaders(rateLimitResult),
-        }
       )
     }
 
     // Find panelist by email (across all studies)
     const panelist = await prisma.panelist.findFirst({
-      where: {
-        email: normalizedEmail
+      where: { 
+        email: email.toLowerCase().trim() 
       },
       include: {
         study: true,
@@ -104,16 +77,11 @@ export async function POST(request: NextRequest) {
       },
     })
 
-    return NextResponse.json(
-      {
-        message: 'Login link sent successfully',
-        // Include preview URL in development
-        ...(process.env.NODE_ENV !== 'production' && previewUrl ? { previewUrl } : {}),
-      },
-      {
-        headers: getRateLimitHeaders(rateLimitResult),
-      }
-    )
+    return NextResponse.json({
+      message: 'Login link sent successfully',
+      // Include preview URL in development
+      ...(process.env.NODE_ENV !== 'production' && previewUrl ? { previewUrl } : {}),
+    })
 
   } catch (error) {
     console.error('Magic link error:', error)

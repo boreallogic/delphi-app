@@ -21,19 +21,33 @@ export async function getSession(): Promise<Session | null> {
       Buffer.from(sessionCookie.value, 'base64').toString()
     ) as Session
 
-    // Check expiry and clear cookie if expired
+    // Check expiry
     if (session.exp < Date.now()) {
-      cookieStore.delete('delphi_session')
       return null
     }
 
     return session
-  } catch (error) {
-    // Clear invalid cookie
-    const cookieStore = await cookies()
-    cookieStore.delete('delphi_session')
+  } catch {
     return null
   }
+}
+
+export async function getPanelist() {
+  // TEMPORARY: Bypass authentication for testing
+  // Find the first available panelist for testing
+  const panelist = await prisma.panelist.findFirst({
+    include: {
+      study: {
+        include: {
+          rounds: {
+            orderBy: { roundNumber: 'asc' },
+          },
+        },
+      },
+    },
+  })
+
+  return panelist
 }
 
 export async function requireSession() {

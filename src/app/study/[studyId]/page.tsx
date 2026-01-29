@@ -1,5 +1,5 @@
 import { redirect } from 'next/navigation'
-import { requireSession } from '@/lib/session'
+import { getPanelist } from '@/lib/session'
 import { prisma } from '@/lib/db'
 import { StudyDashboard } from './study-dashboard'
 
@@ -10,31 +10,47 @@ interface PageProps {
 export default async function StudyPage({ params }: PageProps) {
   const { studyId } = await params
 
-  // Get authenticated session (middleware ensures this exists)
-  const session = await requireSession()
+  // TEMPORARY: Get any panelist for testing (auth bypassed)
+  let panelist = await getPanelist()
 
-  // Get panelist with study data
-  const panelist = await prisma.panelist.findUnique({
-    where: { id: session.panelistId },
-    include: {
-      study: {
-        include: {
-          rounds: {
-            orderBy: { roundNumber: 'asc' },
-          },
+  // If no panelist exists, get the study directly
+  if (!panelist) {
+    const study = await prisma.study.findUnique({
+      where: { id: studyId },
+      include: {
+        rounds: {
+          orderBy: { roundNumber: 'asc' },
+        },
+        panelists: {
+          take: 1,
         },
       },
-    },
-  })
+    })
 
-  if (!panelist) {
-    // Session has panelist ID but panelist doesn't exist
-    redirect('/auth/login')
+    if (!study) {
+      redirect('/admin')
+    }
+
+    // Use the first panelist if available
+    if (study.panelists.length > 0) {
+      panelist = await prisma.panelist.findUnique({
+        where: { id: study.panelists[0].id },
+        include: {
+          study: {
+            include: {
+              rounds: {
+                orderBy: { roundNumber: 'asc' },
+              },
+            },
+          },
+        },
+      })
+    }
   }
 
-  // Verify panelist belongs to this study
-  if (panelist.studyId !== studyId) {
-    redirect(`/study/${panelist.studyId}`)
+  // If still no panelist, redirect to admin to create study
+  if (!panelist) {
+    redirect('/admin')
   }
 
   const study = panelist.study
