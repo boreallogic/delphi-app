@@ -1,36 +1,56 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/db'
 import { getSession } from '@/lib/session'
+import { responseSchema, formatValidationErrors } from '@/lib/validation'
+import { rateLimiters, checkRateLimit, getRateLimitHeaders } from '@/lib/rate-limit'
+import { repositories } from '@/lib/repositories'
 
 export async function POST(request: NextRequest) {
   try {
-    // TEMPORARY: Try session first, fall back to first panelist for testing
-    let session = await getSession()
-    let panelistId: string
-    let studyId: string
+    // Require valid session
+    const session = await getSession()
 
     if (!session) {
-      // AUTH BYPASS: Use first available panelist for testing
-      const panelist = await prisma.panelist.findFirst({
-        include: { study: true }
-      })
+      return NextResponse.json(
+        { error: 'Unauthorized. Please log in to continue.' },
+        { status: 401 }
+      )
+    }
 
-      if (!panelist) {
-        return NextResponse.json(
-          { error: 'No panelists found in database' },
-          { status: 404 }
-        )
-      }
+    const panelistId = session.panelistId
+    const studyId = session.studyId
 
-      panelistId = panelist.id
-      studyId = panelist.studyId
-      console.log('⚠️ AUTH BYPASSED: Using panelist', panelist.email)
-    } else {
-      panelistId = session.panelistId
-      studyId = session.studyId
+    // Check rate limit (100 responses per hour per panelist)
+    const rateLimitResult = await checkRateLimit(panelistId, rateLimiters.responses)
+
+    if (!rateLimitResult.success) {
+      return NextResponse.json(
+        {
+          error: 'Too many responses submitted. Please try again later.',
+          retryAfter: new Date(rateLimitResult.reset * 1000).toISOString(),
+        },
+        {
+          status: 429,
+          headers: getRateLimitHeaders(rateLimitResult),
+        }
+      )
     }
 
     const body = await request.json()
+
+    // Validate input
+    const validationResult = responseSchema.safeParse(body)
+
+    if (!validationResult.success) {
+      return NextResponse.json(
+        {
+          error: 'Validation failed',
+          details: formatValidationErrors(validationResult.error),
+        },
+        { status: 400 }
+      )
+    }
+
     const {
       indicatorId,
       roundNumber,
@@ -44,14 +64,7 @@ export async function POST(request: NextRequest) {
       dissentFlag,
       dissentReason,
       revisedFromPrevious,
-    } = body
-
-    if (!indicatorId || !roundNumber) {
-      return NextResponse.json(
-        { error: 'indicatorId and roundNumber are required' },
-        { status: 400 }
-      )
-    }
+    } = validationResult.data
 
     // Verify indicator belongs to panelist's study
     const indicator = await prisma.indicator.findFirst({
@@ -68,43 +81,21 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Upsert response
-    const response = await prisma.response.upsert({
-      where: {
-        panelistId_indicatorId_roundNumber: {
-          panelistId: panelistId,
-          indicatorId,
-          roundNumber,
-        },
-      },
-      update: {
-        priorityRating,
-        operationalizationValidity,
-        feasibilityRating,
-        qualitativeReasoning,
-        thresholdSuggestion,
-        weightSuggestion,
-        generalComments,
-        dissentFlag: dissentFlag || false,
-        dissentReason,
-        revisedFromPrevious: revisedFromPrevious || false,
-        updatedAt: new Date(),
-      },
-      create: {
-        panelistId: panelistId,
-        indicatorId,
-        roundNumber,
-        priorityRating,
-        operationalizationValidity,
-        feasibilityRating,
-        qualitativeReasoning,
-        thresholdSuggestion,
-        weightSuggestion,
-        generalComments,
-        dissentFlag: dissentFlag || false,
-        dissentReason,
-        revisedFromPrevious: false,
-      },
+    // Upsert response using repository
+    const response = await repositories.response.upsertResponse({
+      panelistId,
+      indicatorId,
+      roundNumber,
+      priorityRating,
+      operationalizationValidity,
+      feasibilityRating,
+      qualitativeReasoning,
+      thresholdSuggestion,
+      weightSuggestion,
+      generalComments,
+      dissentFlag: dissentFlag || false,
+      dissentReason,
+      revisedFromPrevious: revisedFromPrevious || false,
     })
 
     // Log the action
@@ -123,7 +114,9 @@ export async function POST(request: NextRequest) {
       },
     })
 
-    return NextResponse.json(response)
+    return NextResponse.json(response, {
+      headers: getRateLimitHeaders(rateLimitResult),
+    })
 
   } catch (error) {
     console.error('Response save error:', error)
@@ -136,39 +129,26 @@ export async function POST(request: NextRequest) {
 
 export async function GET(request: NextRequest) {
   try {
-    // TEMPORARY: Try session first, fall back to first panelist for testing
-    let session = await getSession()
-    let panelistId: string
+    // Require valid session
+    const session = await getSession()
 
     if (!session) {
-      // AUTH BYPASS: Use first available panelist for testing
-      const panelist = await prisma.panelist.findFirst()
-
-      if (!panelist) {
-        return NextResponse.json(
-          { error: 'No panelists found in database' },
-          { status: 404 }
-        )
-      }
-
-      panelistId = panelist.id
-      console.log('⚠️ AUTH BYPASSED: Using panelist', panelist.email)
-    } else {
-      panelistId = session.panelistId
+      return NextResponse.json(
+        { error: 'Unauthorized. Please log in to continue.' },
+        { status: 401 }
+      )
     }
+
+    const panelistId = session.panelistId
 
     const { searchParams } = new URL(request.url)
     const roundNumber = searchParams.get('round')
 
-    const responses = await prisma.response.findMany({
-      where: {
-        panelistId: panelistId,
-        ...(roundNumber ? { roundNumber: parseInt(roundNumber) } : {}),
-      },
-      include: {
-        indicator: true,
-      },
-    })
+    // Use repository to fetch responses
+    const responses = await repositories.response.findByPanelistAndRound(
+      panelistId,
+      roundNumber ? parseInt(roundNumber) : undefined
+    )
 
     return NextResponse.json(responses)
 

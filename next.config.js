@@ -1,7 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Remove 'standalone' for Netlify deployment
-  // Netlify uses its own Next.js runtime
+  // Enable standalone output for Docker deployment
+  output: 'standalone',
+
   experimental: {
     serverActions: {
       bodySizeLimit: '2mb',
