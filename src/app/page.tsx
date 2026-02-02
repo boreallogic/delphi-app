@@ -1,6 +1,3 @@
-import Link from 'next/link'
-import { redirect } from 'next/navigation'
-import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { prisma } from '@/lib/db'
 
@@ -20,9 +17,24 @@ export default async function HomePage() {
     },
   })
 
-  // If no study exists, redirect to admin to run seed
   if (!study) {
-    redirect('/admin')
+    return (
+      <main className="min-h-screen flex items-center justify-center p-4">
+        <div className="max-w-2xl w-full">
+          <Card>
+            <CardHeader className="text-center">
+              <CardTitle>No Study Found</CardTitle>
+              <CardDescription>
+                Please run the database seed to create a study
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="text-center text-sm text-gray-600">
+              <p>Run: npm run db:seed</p>
+            </CardContent>
+          </Card>
+        </div>
+      </main>
+    )
   }
 
   const statusColor = {
@@ -40,38 +52,34 @@ export default async function HomePage() {
             <CardTitle className="text-2xl">Yukon University + YSWC</CardTitle>
             <CardDescription className="text-base mt-2">
               GBV Indicators Framework Validation Study
-              <div className="text-xs mt-1 text-muted-foreground">Funded by SSHRC</div>
+              <div className="text-xs mt-1 text-gray-500">Funded by SSHRC</div>
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="p-4 border rounded-lg bg-muted/50">
+            <div className="p-4 border rounded-lg bg-gray-50">
               <div className="flex items-center justify-between mb-2">
                 <h3 className="font-medium">{study.name}</h3>
                 <span className={`px-2 py-1 rounded text-xs font-medium ${statusColor}`}>
                   {study.status}
                 </span>
               </div>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-gray-600">
                 {study._count.indicators} indicators • {study._count.panelists} panelists • Round {study.currentRound} of {study.totalRounds}
               </p>
             </div>
 
-            <div className="flex flex-col gap-3">
-              <Link href={`/study/${study.id}/intro`}>
-                <Button className="w-full" size="lg">
-                  Enter Assessment Panel
-                </Button>
-              </Link>
-              <Link href="/admin">
-                <Button className="w-full" size="lg" variant="outline">
-                  Facilitator Dashboard
-                </Button>
-              </Link>
+            <div className="p-4 border-2 border-blue-200 rounded-lg bg-blue-50">
+              <p className="text-center text-blue-900 font-medium">
+                🚧 Assessment Panel Coming Soon
+              </p>
+              <p className="text-center text-sm text-blue-700 mt-2">
+                The study interface is currently being developed
+              </p>
             </div>
           </CardContent>
         </Card>
 
-        <div className="text-center text-sm text-muted-foreground">
+        <div className="text-center text-sm text-gray-500">
           <p>Yukon University • Yukon Status of Women Council</p>
           <p className="text-xs mt-1">In partnership with Boreal Logic Inc.</p>
         </div>
