@@ -68,14 +68,17 @@ export default async function HomePage() {
               </p>
             </div>
 
-            <div className="p-4 border-2 border-blue-200 rounded-lg bg-blue-50">
-              <p className="text-center text-blue-900 font-medium">
-                🚧 Assessment Panel Coming Soon
+            <a
+              href="/study"
+              className="block p-4 border-2 border-blue-600 rounded-lg bg-blue-50 hover:bg-blue-100 transition-colors text-center"
+            >
+              <p className="text-blue-900 font-medium text-lg">
+                Enter Assessment Panel →
               </p>
-              <p className="text-center text-sm text-blue-700 mt-2">
-                The study interface is currently being developed
+              <p className="text-sm text-blue-700 mt-1">
+                Review and rate {study._count.indicators} GBV indicators
               </p>
-            </div>
+            </a>
           </CardContent>
         </Card>
 
