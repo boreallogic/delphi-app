@@ -4,26 +4,13 @@ import { getSession } from '@/lib/session'
 import { prisma } from '@/lib/db'
 import { IndicatorForm } from './form'
 
-// Domain names for breadcrumb
-const domainNames: Record<string, string> = {
-  'A': 'Safe Places to Stay',
-  'B': 'Safety & Justice',
-  'C': 'Health & Wellbeing',
-  'D': 'Economic Security',
-  'E': 'Support Services',
-  'F': 'Community Response',
-  'G': 'Prevention & Education',
-  'H': 'Data & Accountability',
-}
-
 export const dynamic = 'force-dynamic'
 
-interface IndicatorPageProps {
+export default async function IndicatorPage({
+  params,
+}: {
   params: Promise<{ id: string }>
-  searchParams: Promise<{ domain?: string }>
-}
-
-export default async function IndicatorPage({ params, searchParams }: IndicatorPageProps) {
+}) {
   const session = await getSession()
   if (!session) {
     redirect('/')
@@ -31,7 +18,6 @@ export default async function IndicatorPage({ params, searchParams }: IndicatorP
 
   const { panelist, study } = session
   const { id } = await params
-  const { domain } = await searchParams
 
   // Get indicator
   const indicator = await prisma.indicator.findUnique({
@@ -67,54 +53,26 @@ export default async function IndicatorPage({ params, searchParams }: IndicatorP
   }
 
   // Get adjacent indicators for navigation
-  // If domain is specified, only show indicators from that domain
-  const whereClause = domain
-    ? { studyId: study.id, domainCode: domain.toUpperCase() }
-    : { studyId: study.id }
-
   const allIndicators = await prisma.indicator.findMany({
-    where: whereClause,
+    where: { studyId: study.id },
     orderBy: [{ domainCode: 'asc' }, { externalId: 'asc' }],
-    select: { id: true, externalId: true, name: true, domainCode: true }
+    select: { id: true, externalId: true, name: true }
   })
 
   const currentIndex = allIndicators.findIndex(i => i.id === indicator.id)
   const prevIndicator = currentIndex > 0 ? allIndicators[currentIndex - 1] : null
   const nextIndicator = currentIndex < allIndicators.length - 1 ? allIndicators[currentIndex + 1] : null
 
-  // Determine back link
-  const backLink = domain ? `/study/domain/${domain.toUpperCase()}` : '/study'
-  const backText = domain ? `← Back to ${domainNames[domain.toUpperCase()]}` : '← Back to Domain Selection'
-
   return (
     <div className="max-w-4xl mx-auto p-6">
       {/* Navigation breadcrumb */}
       <div className="mb-6 flex items-center justify-between">
-        <div className="flex items-center gap-2 text-sm">
-          <Link href="/study" className="text-blue-600 hover:underline">
-            Domain Selection
-          </Link>
-          {domain && (
-            <>
-              <span className="text-gray-400">/</span>
-              <Link href={`/study/domain/${domain.toUpperCase()}`} className="text-blue-600 hover:underline">
-                {domainNames[domain.toUpperCase()]}
-              </Link>
-            </>
-          )}
-          <span className="text-gray-400">/</span>
-          <span className="text-gray-600">{indicator.externalId}</span>
-        </div>
+        <Link href="/study" className="text-blue-600 hover:underline flex items-center gap-1">
+          ← Back to overview
+        </Link>
         <span className="text-sm text-gray-500">
           {currentIndex + 1} of {allIndicators.length}
         </span>
-      </div>
-
-      {/* Back button */}
-      <div className="mb-6">
-        <Link href={backLink} className="text-blue-600 hover:underline flex items-center gap-1">
-          {backText}
-        </Link>
       </div>
 
       {/* Indicator header */}
@@ -233,7 +191,7 @@ export default async function IndicatorPage({ params, searchParams }: IndicatorP
       <div className="flex justify-between mt-8 pt-6 border-t">
         {prevIndicator ? (
           <Link
-            href={`/study/indicator/${prevIndicator.id}${domain ? `?domain=${domain}` : ''}`}
+            href={`/study/indicator/${prevIndicator.id}`}
             className="px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded text-sm font-medium"
           >
             ← {prevIndicator.externalId}
@@ -243,17 +201,14 @@ export default async function IndicatorPage({ params, searchParams }: IndicatorP
         )}
         {nextIndicator ? (
           <Link
-            href={`/study/indicator/${nextIndicator.id}${domain ? `?domain=${domain}` : ''}`}
+            href={`/study/indicator/${nextIndicator.id}`}
             className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded text-sm font-medium"
           >
             {nextIndicator.externalId} →
           </Link>
         ) : (
-          <Link
-            href={domain ? `/study/domain/${domain.toUpperCase()}` : '/study'}
-            className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded text-sm font-medium"
-          >
-            {domain ? `Complete ${domainNames[domain.toUpperCase()]} →` : 'Finish Review →'}
+          <Link href="/study" className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded text-sm font-medium">
+            Finish Review →
           </Link>
         )}
       </div>

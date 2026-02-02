@@ -3,49 +3,17 @@ import Link from 'next/link'
 import { prisma } from '@/lib/db'
 import { getSession } from '@/lib/session'
 
-// Domain metadata
-const domains = [
-  {
-    code: 'A',
-    name: 'Safe Places to Stay',
-    description: 'Emergency shelters, transitional housing, pet care services',
-  },
-  {
-    code: 'B',
-    name: 'Safety & Justice',
-    description: 'Victim services, legal aid, court access, police response',
-  },
-  {
-    code: 'C',
-    name: 'Health & Wellbeing',
-    description: 'SANE access, primary care, mental health, substance treatment',
-  },
-  {
-    code: 'D',
-    name: 'Economic Security',
-    description: 'Emergency funds, relocation support, childcare, financial services',
-  },
-  {
-    code: 'E',
-    name: 'Support Services',
-    description: 'GBV services, crisis lines, counseling, cultural safety',
-  },
-  {
-    code: 'F',
-    name: 'Community Response',
-    description: 'Service coordination, community readiness, informal supports',
-  },
-  {
-    code: 'G',
-    name: 'Prevention & Education',
-    description: 'Healthy relationships, bystander training, alcohol policy, perpetrator programs',
-  },
-  {
-    code: 'H',
-    name: 'Data & Accountability',
-    description: 'Data systems, feedback mechanisms, policy implementation',
-  },
-]
+// Domain display names
+const domainNames: Record<string, string> = {
+  'A': 'Safe Places to Stay',
+  'B': 'Safety & Justice',
+  'C': 'Health & Wellbeing',
+  'D': 'Economic Security',
+  'E': 'Support Services',
+  'F': 'Community Response',
+  'G': 'Prevention & Education',
+  'H': 'Data & Accountability',
+}
 
 export const dynamic = 'force-dynamic'
 
@@ -82,7 +50,6 @@ export default async function StudyPage() {
     return acc
   }, {} as Record<string, typeof indicators>)
 
-  // Calculate overall progress
   const totalIndicators = indicators.length
   const completedCount = completedIds.size
   const progress = totalIndicators > 0 ? Math.round((completedCount / totalIndicators) * 100) : 0
@@ -116,79 +83,72 @@ export default async function StudyPage() {
       {/* Instructions */}
       <div className="mb-8 p-4 bg-blue-50 border border-blue-200 rounded-lg">
         <h2 className="font-semibold text-blue-900 mb-2">Assessment Instructions</h2>
-        <p className="text-sm text-blue-800 mb-2">
-          Select a domain below to begin assessing indicators. Focus on one domain at a time to reduce cognitive load.
-        </p>
         <p className="text-sm text-blue-800">
-          You'll rate each indicator on three dimensions: <strong>Priority</strong>, <strong>Validity</strong>, and <strong>Feasibility</strong>.
+          Review each GBV indicator below and provide ratings on three dimensions:
         </p>
+        <ul className="text-sm text-blue-800 mt-2 ml-4 list-disc">
+          <li><strong>Priority:</strong> How critical is this indicator for measuring GBV risk?</li>
+          <li><strong>Validity:</strong> Does this measure what it claims to measure?</li>
+          <li><strong>Feasibility:</strong> Can this data be reliably collected?</li>
+        </ul>
       </div>
 
-      {/* Domain cards */}
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-2">
-        {domains.map((domain) => {
-          const domainIndicators = byDomain[domain.code] || []
-          const domainCompleted = domainIndicators.filter(i => completedIds.has(i.id)).length
-          const domainTotal = domainIndicators.length
-          const domainProgress = domainTotal > 0 ? Math.round((domainCompleted / domainTotal) * 100) : 0
-          const isComplete = domainCompleted === domainTotal && domainTotal > 0
+      {/* Domain sections */}
+      {Object.entries(byDomain).sort().map(([code, domainIndicators]) => (
+        <section key={code} className="mb-8">
+          <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
+            <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-blue-100 text-blue-700 font-bold text-sm">
+              {code}
+            </span>
+            {domainNames[code] || `Domain ${code}`}
+            <span className="text-sm font-normal text-gray-500">
+              ({domainIndicators.filter(i => completedIds.has(i.id)).length}/{domainIndicators.length})
+            </span>
+          </h2>
 
-          return (
-            <Link
-              key={domain.code}
-              href={`/study/domain/${domain.code}`}
-              className="block p-6 border-2 rounded-xl hover:border-blue-500 hover:shadow-lg transition-all bg-white"
-            >
-              {/* Domain header */}
-              <div className="flex items-start gap-4 mb-3">
-                <div className={`flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-lg ${
-                  isComplete ? 'bg-green-600' : 'bg-blue-600'
-                }`}>
-                  {domain.code}
-                </div>
-                <div className="flex-1 min-w-0">
-                  <h3 className="font-semibold text-lg text-gray-900 mb-1">
-                    {domain.name}
-                  </h3>
-                  <p className="text-sm text-gray-600 line-clamp-2">
-                    {domain.description}
+          <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
+            {domainIndicators.map((indicator) => {
+              const isComplete = completedIds.has(indicator.id)
+
+              return (
+                <Link
+                  key={indicator.id}
+                  href={`/study/indicator/${indicator.id}`}
+                  className="block p-4 border rounded-lg hover:border-blue-500 hover:shadow-md transition-all bg-white"
+                >
+                  <div className="flex items-start justify-between gap-3 mb-2">
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="text-xs font-mono text-gray-500">
+                          {indicator.externalId}
+                        </span>
+                        {indicator.tier === 1 ? (
+                          <span className="text-xs px-2 py-0.5 bg-amber-100 text-amber-700 rounded font-medium">
+                            Tier 1
+                          </span>
+                        ) : (
+                          <span className="text-xs px-2 py-0.5 bg-gray-100 text-gray-600 rounded">
+                            Tier 2
+                          </span>
+                        )}
+                      </div>
+                      <h3 className="font-medium text-gray-900 text-sm line-clamp-2">
+                        {indicator.name}
+                      </h3>
+                    </div>
+                    <div className={`text-xl flex-shrink-0 ${isComplete ? 'text-green-600' : 'text-gray-300'}`}>
+                      {isComplete ? '✓' : '○'}
+                    </div>
+                  </div>
+                  <p className="text-xs text-gray-600 line-clamp-2">
+                    {indicator.definitionSimple || indicator.definition}
                   </p>
-                </div>
-              </div>
-
-              {/* Progress */}
-              <div className="mt-4">
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm font-medium text-gray-700">
-                    {domainCompleted} of {domainTotal} indicators
-                  </span>
-                  <span className={`text-sm font-semibold ${
-                    isComplete ? 'text-green-600' : 'text-blue-600'
-                  }`}>
-                    {domainProgress}%
-                  </span>
-                </div>
-                <div className="bg-gray-100 rounded-full h-2">
-                  <div
-                    className={`h-2 rounded-full transition-all ${
-                      isComplete ? 'bg-green-600' : 'bg-blue-600'
-                    }`}
-                    style={{ width: `${domainProgress}%` }}
-                  />
-                </div>
-              </div>
-
-              {/* Status badge */}
-              {isComplete && (
-                <div className="mt-3 flex items-center gap-2 text-green-600">
-                  <span className="text-lg">✓</span>
-                  <span className="text-sm font-medium">Complete</span>
-                </div>
-              )}
-            </Link>
-          )
-        })}
-      </div>
+                </Link>
+              )
+            })}
+          </div>
+        </section>
+      ))}
 
       {/* Logout */}
       <div className="mt-12 pt-6 border-t text-center">
