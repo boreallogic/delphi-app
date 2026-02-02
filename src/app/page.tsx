@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { prisma } from '@/lib/db'
 
@@ -68,7 +69,7 @@ export default async function HomePage() {
               </p>
             </div>
 
-            <a
+            <Link
               href="/study"
               className="block p-4 border-2 border-blue-600 rounded-lg bg-blue-50 hover:bg-blue-100 transition-colors text-center"
             >
@@ -78,7 +79,7 @@ export default async function HomePage() {
               <p className="text-sm text-blue-700 mt-1">
                 Review and rate {study._count.indicators} GBV indicators
               </p>
-            </a>
+            </Link>
           </CardContent>
         </Card>
 
