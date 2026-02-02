@@ -20,7 +20,19 @@ export const dynamic = 'force-dynamic'
 export default async function StudyPage() {
   const session = await getSession()
   if (!session) {
-    redirect('/')
+    return (
+      <div className="max-w-2xl mx-auto p-6 mt-12">
+        <div className="bg-red-50 border border-red-200 rounded-lg p-6">
+          <h1 className="text-xl font-bold text-red-900 mb-2">Session Error</h1>
+          <p className="text-red-800 mb-4">
+            Unable to load your session. This may be due to a database connection issue or you may need to log in.
+          </p>
+          <p className="text-sm text-red-700">
+            Please contact your study administrator if this problem persists.
+          </p>
+        </div>
+      </div>
+    )
   }
 
   const { panelist, study } = session
