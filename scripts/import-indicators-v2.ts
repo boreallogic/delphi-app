@@ -10,7 +10,7 @@
  * 4. Imports fresh indicator set
  */
 
-import { PrismaClient } from '@prisma/client'
+import { PrismaClient, Prisma } from '@prisma/client'
 import * as fs from 'fs'
 import * as path from 'path'
 
@@ -164,13 +164,13 @@ async function main() {
         dataReliability: indicator.data_reliability,
         mvp: indicator.mvp,
         baselineCategory: indicator.baseline_category,
-        thresholds: indicator.threshold,
+        thresholds: indicator.threshold === null ? Prisma.JsonNull : indicator.threshold,
 
         // Evidence
         evidenceSummary: indicator.evidence_summary,
-        riskFactors: indicator.risk_factors,
-        protectiveFactors: indicator.protective_factors,
-        keyCitations: indicator.key_citations,
+        riskFactors: indicator.risk_factors === null ? Prisma.JsonNull : indicator.risk_factors,
+        protectiveFactors: indicator.protective_factors === null ? Prisma.JsonNull : indicator.protective_factors,
+        keyCitations: indicator.key_citations === null ? Prisma.JsonNull : indicator.key_citations,
         dataQualityNotes: indicator.data_quality_notes,
         rrnRelevance: indicator.rrn_relevance,
       }

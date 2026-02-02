@@ -14,7 +14,7 @@
 import * as XLSX from 'xlsx'
 import * as fs from 'fs'
 import * as path from 'path'
-import { PrismaClient } from '@prisma/client'
+import { PrismaClient, Prisma } from '@prisma/client'
 
 const prisma = new PrismaClient()
 
@@ -205,10 +205,23 @@ async function importIndicators(studyId: string, dryRun: boolean) {
 
   let inserted = 0
   for (const indicator of indicators) {
+    // Handle JSON fields - convert null to Prisma.JsonNull
+    const {
+      riskFactors,
+      protectiveFactors,
+      keyCitations,
+      thresholds,
+      ...rest
+    } = indicator
+
     await prisma.indicator.create({
       data: {
-        ...indicator,
+        ...rest,
         studyId,
+        riskFactors: riskFactors === null ? Prisma.JsonNull : riskFactors,
+        protectiveFactors: protectiveFactors === null ? Prisma.JsonNull : protectiveFactors,
+        keyCitations: keyCitations === null ? Prisma.JsonNull : keyCitations,
+        thresholds: thresholds === null ? Prisma.JsonNull : thresholds,
       }
     })
     inserted++
