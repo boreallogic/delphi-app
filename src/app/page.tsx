@@ -52,7 +52,7 @@ export default async function HomePage() {
             <CardTitle className="text-2xl">Yukon University + YSWC</CardTitle>
             <CardDescription className="text-base mt-2">
               GBV Indicators Framework Validation Study
-              <div className="text-xs mt-1 text-gray-500">Funded by SSHRC</div>
+              <span className="block text-xs mt-1">Funded by SSHRC</span>
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
