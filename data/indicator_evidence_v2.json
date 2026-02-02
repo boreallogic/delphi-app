@@ -1,0 +1,2600 @@
+{
+  "metadata": {
+    "title": "YWC GBV Indicator Evidence Base",
+    "version": "2.0",
+    "source": "Open North Synthesis (Sept 2025) + Boreal Logic v2 Expansion (Jan 2026)",
+    "prepared_for": "Delphi Validation Study (Track A + Track B)",
+    "prepared_by": "Boreal Logic Inc.",
+    "indicator_count": 73,
+    "mvp_indicator_count": 29,
+    "last_updated": "2026-02-01"
+  },
+  "indicators": {
+    "CC01": {
+      "name": "Housing market pressure index",
+      "definition": "Impact of market trends (AirBnB, mining camps, speculation) on rental availability",
+      "definition_plain": "How much pressure is there on the housing market from things like AirBnB and mining?",
+      "tier": 2,
+      "tier_rationale": "MEDIUM priority - contextual",
+      "mvp": false,
+      "data_reliability": "MEDIUM",
+      "baseline_category": "community_specific",
+      "domain": "Safe Places to Stay",
+      "domain_question": "Can survivors access emergency and transitional housing?",
+      "threshold": {
+        "adequate": "Low pressure",
+        "partial": "Moderate pressure",
+        "major_gap": "High pressure",
+        "critical": "Crisis-level"
+      },
+      "unit_of_measure": "Composite",
+      "collection_frequency": "Annual",
+      "evidence_summary": "Market forces (AirBnB, mining camps, speculation) affect housing availability for survivors.",
+      "risk_factors": [
+        "Inflated housing costs due to resource development (Flynn, 2023)",
+        "Inflated housing due to gentrification, short-term rentals (Mantler, 2024)"
+      ],
+      "protective_factors": [
+        "Affordable housing availability"
+      ],
+      "key_citations": [
+        "Flynn (2023)",
+        "Mantler (2024)",
+        "CMHC",
+        "HART Dataset"
+      ],
+      "data_quality_notes": "MEDIUM reliability - composite from multiple sources.",
+      "rrn_relevance": "MEDIUM - Contextualizes housing barriers"
+    },
+    "CC02": {
+      "name": "RRN-specific cost burdens",
+      "definition": "Additional costs faced by survivors in RRN contexts",
+      "definition_plain": "How much extra does it cost survivors to live in a rural, remote or northern area (e.g., fuel, animal care, travel)?",
+      "tier": 1,
+      "tier_rationale": "PATHWAY-CRITICAL: Extreme RRN costs can make leaving economically impossible",
+      "mvp": false,
+      "data_reliability": "MEDIUM",
+      "baseline_category": "community_specific",
+      "domain": "Money and Independence",
+      "domain_question": "Can survivors access money and resources to leave?",
+      "threshold": {
+        "adequate": "<10% premium",
+        "partial": "10-25% premium",
+        "major_gap": "25-50% premium",
+        "critical": ">50% premium"
+      },
+      "unit_of_measure": "Dollar estimate",
+      "collection_frequency": "Annual",
+      "evidence_summary": "Higher costs of living in RRN contexts increase financial barriers to leaving abuse.",
+      "risk_factors": [
+        "Financial burdens unique to RRN communities (transportation, fuel, animal care) (Giesbrecht, 2022; Wuerch, 2021)"
+      ],
+      "protective_factors": [
+        "Financial support that accounts for RRN cost burdens"
+      ],
+      "key_citations": [
+        "Rural Canada Statistics",
+        "Market Basket Measure for Yukon"
+      ],
+      "data_quality_notes": "MEDIUM reliability - derived estimate from cost-of-living data.",
+      "rrn_relevance": "HIGH - Core contextual factor"
+    },
+    "CC03": {
+      "name": "Childcare availability and accessibility",
+      "definition": "Access to licensed childcare as economic independence enabler",
+      "definition_plain": "How available is childcare for parents trying to become independent?",
+      "tier": 1,
+      "tier_rationale": "PATHWAY-CRITICAL: No childcare = cannot work = cannot sustain independence",
+      "mvp": true,
+      "data_reliability": "HIGH",
+      "baseline_category": "community_specific",
+      "domain": "Money and Independence",
+      "domain_question": "Can survivors access money and resources to leave?",
+      "threshold": {
+        "adequate": ">25 spaces/100 kids",
+        "partial": "11-25",
+        "major_gap": "1-10",
+        "critical": "0"
+      },
+      "unit_of_measure": "Ratio + Count",
+      "collection_frequency": "Annual",
+      "evidence_summary": "Childcare access enables economic independence and workforce participation for survivors.",
+      "risk_factors": [
+        "Barriers to workforce participation - childcare (Faller, 2021)"
+      ],
+      "protective_factors": [
+        "Accessible childcare (Faller, 2021)"
+      ],
+      "key_citations": [
+        "Faller (2021)",
+        "Early Childhood Education Hub (Statistics Canada)"
+      ],
+      "data_quality_notes": "HIGH reliability - Yukon childcare registry data available.",
+      "rrn_relevance": "HIGH - Childcare limited outside Whitehorse"
+    },
+    "CC04": {
+      "name": "Geographic/social isolation index",
+      "definition": "Composite measure of community isolation",
+      "definition_plain": "How geographically and socially isolated is this community (considering distance to services, transport options, internet, and cell coverage)?",
+      "tier": 2,
+      "tier_rationale": "MEDIUM priority - contextual modifier",
+      "mvp": false,
+      "data_reliability": "HIGH",
+      "baseline_category": "community_specific",
+      "domain": "Community Conditions",
+      "domain_question": "How does the broader context affect survivor safety?",
+      "threshold": {
+        "adequate": "Low isolation",
+        "partial": "Moderate",
+        "major_gap": "High",
+        "critical": "Extreme isolation"
+      },
+      "unit_of_measure": "Index score",
+      "collection_frequency": "Static",
+      "evidence_summary": "Isolation is a fundamental risk multiplier documented across the literature.",
+      "risk_factors": [
+        "Geographical isolation (Burczycka, 2022; Faller, 2021; Farhall, 2020; Jeffrey, 2019; Kurbatfinski, 2024; Kardashevskaya, 2022; Maxwell, 2024; Hope et al., 2023; CREVAWC, 2021; Youngson, 2021)",
+        "Rurality (Farhall, 2020; Kurbatfinski, 2020; Youngson et al., 2021; Heggie et al., 2022)",
+        "Long emergency response times (CREVAWC, 2021)"
+      ],
+      "protective_factors": [
+        "Close geographic distance to neighbours (Giesbrecht, 2023)"
+      ],
+      "key_citations": [
+        "Statistics Canada Index of Remoteness",
+        "Jeffrey et al. (2019)"
+      ],
+      "data_quality_notes": "HIGH reliability - composite from infrastructure data.",
+      "rrn_relevance": "CRITICAL - Defines RRN context"
+    },
+    "CC05": {
+      "name": "Community road access type",
+      "definition": "Whether community has year-round road access or is fly-in/seasonal access only",
+      "definition_plain": "Can you drive to this community year-round, or is it fly-in or seasonal access only?",
+      "tier": 1,
+      "tier_rationale": "Pathway-critical modifier for all transport/distance indicators",
+      "mvp": true,
+      "data_reliability": "HIGH",
+      "baseline_category": "community_specific",
+      "domain": "Community Conditions",
+      "domain_question": "How does the broader context affect survivor safety?",
+      "threshold": {
+        "adequate": "Year-round multiple routes",
+        "partial": "Year-round but isolated",
+        "major_gap": "Seasonal road",
+        "critical": "Fly-in only"
+      },
+      "unit_of_measure": "Categorical",
+      "collection_frequency": "Static",
+      "evidence_summary": "Road access fundamentally shapes all service accessibility. Fly-in communities face categorical barriers to emergency response, evacuation, and service access that year-round road communities do not.",
+      "risk_factors": [
+        "Geographical isolation (Burczycka, 2022; Faller, 2021; Farhall, 2020; Jeffrey, 2019)",
+        "Lack of year-round roads, inconsistent road conditions (Jeffrey, 2019; Zorn, 2017)",
+        "Long emergency response times (CREVAWC, 2021)"
+      ],
+      "protective_factors": [
+        "Year-round road access enabling emergency evacuation",
+        "Multiple route options providing redundancy"
+      ],
+      "key_citations": [
+        "Statistics Canada Index of Remoteness",
+        "Yukon Highways data"
+      ],
+      "data_quality_notes": "NEW - Evidence populated from synthesis and research.",
+      "rrn_relevance": "CRITICAL - Old Crow is only fly-in community; defines baseline access"
+    },
+    "CC06": {
+      "name": "Extractive industry operations near community",
+      "definition": "Count and proximity of active extractive industry operations (mines, quarries, oil/gas) within 100km of community",
+      "definition_plain": "How many active mining or oil/gas operations are near this community?",
+      "tier": 1,
+      "tier_rationale": "RISK DRIVER: Extractive operations are documented risk amplifiers in RRN contexts",
+      "mvp": true,
+      "data_reliability": "HIGH",
+      "baseline_category": "community_specific",
+      "domain": "Community Conditions",
+      "domain_question": "How does the broader context affect survivor safety?",
+      "threshold": {
+        "adequate": "None",
+        "partial": "1 site",
+        "major_gap": "2-3 sites",
+        "critical": ">3 sites OR camp <10km"
+      },
+      "unit_of_measure": "Count + Categorical",
+      "collection_frequency": "Annual",
+      "evidence_summary": "Extractive industry presence is documented to amplify GBV risk through workforce gender imbalance, transience, and economic disruption.",
+      "risk_factors": [
+        "Living/working in resource extraction industry (Vector Research et al., 2022; Pauktutiit, 2021; CCSG Associates et al., 2021; Hoogeveen, 2020)",
+        "Inflated housing costs due to resource development (Flynn, 2023)",
+        "Transient workforce reducing community accountability"
+      ],
+      "protective_factors": [
+        "Absence of extractive operations",
+        "Strong workplace policies where operations exist (PL07)"
+      ],
+      "key_citations": [
+        "Never Until Now report",
+        "YESAB assessments",
+        "Vector Research (2022)"
+      ],
+      "data_quality_notes": "NEW - Evidence populated from synthesis and research.",
+      "rrn_relevance": "CRITICAL - Direct Yukon relevance with active mining operations"
+    },
+    "EC01": {
+      "name": "Availability of emergency financial aid for GBV survivors",
+      "definition": "Whether emergency funds specifically for GBV situations exist",
+      "definition_plain": "Is there emergency money available specifically for GBV survivors?",
+      "tier": 1,
+      "tier_rationale": "HIGH priority + MEDIUM reliability",
+      "mvp": true,
+      "data_reliability": "MEDIUM",
+      "baseline_category": "community_specific",
+      "domain": "Money and Independence",
+      "domain_question": "Can survivors access money and resources to leave?",
+      "threshold": {
+        "adequate": ">$500 available",
+        "partial": "$200-$500",
+        "major_gap": "<$200",
+        "critical": "None"
+      },
+      "unit_of_measure": "Binary + Dollar",
+      "collection_frequency": "Annual",
+      "evidence_summary": "Financial dependence is a major barrier to leaving. Emergency funds enable immediate safety actions.",
+      "risk_factors": [
+        "Poverty (Faller, 2021), economic dependence (Kardashevskaya, 2022; CREVAWC, 2021; Youngson et al., 2021)",
+        "Financial dependence, including farming as livelihood (Farhall, 2020)"
+      ],
+      "protective_factors": [
+        "Access to income support programs",
+        "Availability of financial independence programs tailored to victims/survivors in RRN communities"
+      ],
+      "key_citations": [
+        "Kardashevskaya (2022)",
+        "CREVAWC (2021)"
+      ],
+      "data_quality_notes": "MEDIUM reliability - varies by source (shelters, Victim Services, First Nations).",
+      "rrn_relevance": "HIGH - Higher costs in RRN contexts increase need"
+    },
+    "EC02": {
+      "name": "Availability of relocation funds",
+      "definition": "Whether financial support for relocation away from abuser exists",
+      "definition_plain": "Is there money to help survivors move away from their abuser?",
+      "tier": 1,
+      "tier_rationale": "HIGH priority + HIGH reliability",
+      "mvp": true,
+      "data_reliability": "HIGH",
+      "baseline_category": "community_specific",
+      "domain": "Money and Independence",
+      "domain_question": "Can survivors access money and resources to leave?",
+      "threshold": {
+        "adequate": ">$2000",
+        "partial": "$500-$2000",
+        "major_gap": "<$500",
+        "critical": "None"
+      },
+      "unit_of_measure": "Binary + Dollar",
+      "collection_frequency": "Annual",
+      "evidence_summary": "Relocation support is essential for survivors leaving abusive situations, particularly when moving away from shared community.",
+      "risk_factors": [
+        "Financial barriers to relocation",
+        "Social assistance not reflective of IPV realities (Weeks, 2016; Mantler, 2024)"
+      ],
+      "protective_factors": [
+        "Income-support reform to reflect needs/barriers unique to IPV (Kardashevskaya, 2022)",
+        "Financial support for moving, damage deposits, rent assistance"
+      ],
+      "key_citations": [
+        "Kardashevskaya (2022)",
+        "Yukon Housing Corporation"
+      ],
+      "data_quality_notes": "HIGH reliability - program availability from Housing Corporation is public.",
+      "rrn_relevance": "HIGH - Relocation often necessary in small communities"
+    },
+    "HC01": {
+      "name": "Access to Sexual Assault Nurse Examiner program",
+      "definition": "Type of Sexual Assault Nurse Examiner access available",
+      "definition_plain": "What kind of access do survivors have to Sexual Assault Nurse Examiners - nurses specially trained to do medical exams and collect evidence after sexual assault?",
+      "tier": 1,
+      "tier_rationale": "HIGH priority + HIGH reliability",
+      "mvp": true,
+      "data_reliability": "HIGH",
+      "baseline_category": "distance_modified",
+      "domain": "Health Care That Understands",
+      "domain_question": "Do healthcare providers recognize and respond to GBV?",
+      "threshold": {
+        "adequate": "Community-based SANE",
+        "partial": "Hospital-based \u2264200km",
+        "major_gap": "Hospital-based >200km",
+        "critical": "None within 500km"
+      },
+      "unit_of_measure": "Categorical",
+      "collection_frequency": "Annual",
+      "evidence_summary": "SANE access is critical for both immediate healthcare and justice outcomes following sexual violence.",
+      "risk_factors": [
+        "Lack of specialized sexual violence services (Heggie et al., 2022)"
+      ],
+      "protective_factors": [
+        "Access to hospital-based SANE program (DuMont, 2017)",
+        "Access to specialized SV services (Heggie et al., 2022)"
+      ],
+      "key_citations": [
+        "DuMont (2017)",
+        "Heggie et al. (2022)",
+        "Yukon Hospital Corporation SART"
+      ],
+      "data_quality_notes": "HIGH reliability - program details are public.",
+      "rrn_relevance": "CRITICAL - Currently only available in Whitehorse"
+    },
+    "HC02": {
+      "name": "Number of healthcare workers with IPV training",
+      "definition": "Count of healthcare providers with documented IPV/DV training",
+      "definition_plain": "How many healthcare workers have training on intimate partner violence?",
+      "tier": 2,
+      "tier_rationale": "MEDIUM priority + LOW reliability (confidential data)",
+      "mvp": false,
+      "data_reliability": "LOW",
+      "baseline_category": "territorial",
+      "domain": "Health Care That Understands",
+      "domain_question": "Do healthcare providers recognize and respond to GBV?",
+      "threshold": {
+        "adequate": ">50% trained",
+        "partial": "25-50%",
+        "major_gap": "<25%",
+        "critical": "No training program"
+      },
+      "unit_of_measure": "Integer",
+      "collection_frequency": "Annual",
+      "evidence_summary": "Healthcare workers are often first point of contact for survivors. Training improves recognition and appropriate response.",
+      "risk_factors": [
+        "Lack of specialized IPV training for healthcare workers (Rizkalla, 2020; Zorn, 2017; Montesanti, 2024; Mantler, 2022)",
+        "Use of biomedical rather than trauma and violence informed approaches (Montesanti, 2024)"
+      ],
+      "protective_factors": [
+        "Developing specialized IPV training for healthcare workers (Rizkalla, 2020; 2021)",
+        "Use of trauma and violence-informed care in health care settings (Mantler, 2022)"
+      ],
+      "key_citations": [
+        "Rizkalla (2020; 2021)",
+        "Montesanti (2024)",
+        "Mantler (2022)"
+      ],
+      "data_quality_notes": "LOW reliability - training records are confidential. Would require proxy from training program data.",
+      "rrn_relevance": "HIGH - Healthcare often only service available in remote areas"
+    },
+    "HC03": {
+      "name": "Access to primary healthcare provider",
+      "definition": "Whether community has resident or regular visiting primary care",
+      "definition_plain": "Does the community have regular access to a doctor or nurse practitioner?",
+      "tier": 1,
+      "tier_rationale": "HIGH priority + HIGH reliability",
+      "mvp": true,
+      "data_reliability": "HIGH",
+      "baseline_category": "community_specific",
+      "domain": "Health Care That Understands",
+      "domain_question": "Do healthcare providers recognize and respond to GBV?",
+      "threshold": {
+        "adequate": "Full-time resident provider",
+        "partial": "Part-time resident",
+        "major_gap": "Visiting only",
+        "critical": "None"
+      },
+      "unit_of_measure": "Categorical",
+      "collection_frequency": "Annual",
+      "evidence_summary": "Primary care access is fundamental to ongoing health support for survivors and may be the only local service available.",
+      "risk_factors": [
+        "Lack of primary health care provider (Mantler, 2022)",
+        "Lack of access to health care services, general (Mantler, 2022; Heggie et al., 2022)",
+        "Reliance on walk-in clinics (Mantler, 2022)"
+      ],
+      "protective_factors": [
+        "Access to primary health care provider",
+        "Visiting healthcare services in remote communities"
+      ],
+      "key_citations": [
+        "Mantler (2022)",
+        "National Ambulatory Care Reporting System (NACRS) - CIHI"
+      ],
+      "data_quality_notes": "HIGH reliability - CIHI data well documented, updated quarterly. NACRS submission mandated in Yukon.",
+      "rrn_relevance": "CRITICAL - Many remote communities rely on visiting providers only"
+    },
+    "HC04": {
+      "name": "Availability of trauma-informed mental health services",
+      "definition": "Whether mental health services with trauma specialization exist",
+      "definition_plain": "Are there mental health services available that specialize in trauma?",
+      "tier": 1,
+      "tier_rationale": "HIGH priority + MEDIUM reliability",
+      "mvp": false,
+      "data_reliability": "MEDIUM",
+      "baseline_category": "community_specific",
+      "domain": "Health Care That Understands",
+      "domain_question": "Do healthcare providers recognize and respond to GBV?",
+      "threshold": {
+        "adequate": "Trauma-specialized available",
+        "partial": "General MH with some training",
+        "major_gap": "General MH only",
+        "critical": "None"
+      },
+      "unit_of_measure": "Binary",
+      "collection_frequency": "Annual",
+      "evidence_summary": "Trauma-specialized mental health services are essential for recovery but often unavailable in RRN contexts.",
+      "risk_factors": [
+        "Lack of access to mental health supports (Zorn, 2017; Mantler, 2024)",
+        "Lack of options for formal support (Wuerch, 2020; Farhall, 2020; Kurbatfinski, 2024; Youngson et al., 2021; Heggie et al., 2022)"
+      ],
+      "protective_factors": [
+        "Availability of formal supports for victim/survivors of violence (Weeks, 2016; Saskatchewan, 2025)",
+        "Specialized training on violence and trauma-informed approaches (Kardashevskaya, 2022; CREVAWC, 2021)"
+      ],
+      "key_citations": [
+        "Zorn (2017)",
+        "Mantler (2024)",
+        "Mental Wellness and Substance Use Services (Yukon)"
+      ],
+      "data_quality_notes": "MEDIUM reliability - service inventory from government is public, private practitioners require research compilation.",
+      "rrn_relevance": "HIGH - Often unavailable outside Whitehorse"
+    },
+    "INT01": {
+      "name": "2SLGBTQ+ inclusive GBV services",
+      "definition": "Whether GBV services have explicit 2SLGBTQ+ inclusive policies and trained staff",
+      "definition_plain": "Are GBV services safe and welcoming for 2SLGBTQ+ survivors?",
+      "tier": 1,
+      "tier_rationale": "PATHWAY-CRITICAL for 2SLGBTQ+ survivors; non-inclusive services may be inaccessible or harmful",
+      "mvp": true,
+      "data_reliability": "MEDIUM",
+      "baseline_category": "community_specific",
+      "domain": "Help When You Need It",
+      "domain_question": "Are crisis and counselling services available?",
+      "threshold": {
+        "adequate": "2SLGBTQ+-specific programming",
+        "partial": "Policy + trained staff",
+        "major_gap": "Policy exists",
+        "critical": "No explicit inclusion"
+      },
+      "unit_of_measure": "Categorical",
+      "collection_frequency": "Annual",
+      "evidence_summary": "2SLGBTQ+ survivors face unique barriers including fear of outing, heteronormative service assumptions, and lack of appropriate housing options.",
+      "risk_factors": [
+        "Heteronormative service assumptions excluding 2SLGBTQ+ survivors",
+        "Fear of outing preventing disclosure (Baker et al., 2021)",
+        "Lack of same-gender shelter options"
+      ],
+      "protective_factors": [
+        "Explicit 2SLGBTQ+ inclusive policies and training",
+        "2SLGBTQ+-specific programming and support groups",
+        "Staff trained in 2SLGBTQ+ competency"
+      ],
+      "key_citations": [
+        "Baker et al. (2021)",
+        "EGALE research",
+        "YSWC proposal commitment"
+      ],
+      "data_quality_notes": "NEW - Evidence populated from synthesis and research.",
+      "rrn_relevance": "HIGH - Small communities may lack any 2SLGBTQ+ affirming services"
+    },
+    "INT02": {
+      "name": "Indigenous-led GBV healing options",
+      "definition": "Availability of Indigenous-designed and -delivered healing supports for GBV survivors",
+      "definition_plain": "Can Indigenous survivors access healing support designed and led by Indigenous people?",
+      "tier": 1,
+      "tier_rationale": "PATHWAY-CRITICAL for Indigenous survivors; mainstream services may not be culturally safe",
+      "mvp": true,
+      "data_reliability": "MEDIUM",
+      "baseline_category": "community_specific",
+      "domain": "Help When You Need It",
+      "domain_question": "Are crisis and counselling services available?",
+      "threshold": {
+        "adequate": "Land-based/traditional healing",
+        "partial": "Indigenous-led programming",
+        "major_gap": "Cultural components only",
+        "critical": "None"
+      },
+      "unit_of_measure": "Categorical",
+      "collection_frequency": "Annual",
+      "evidence_summary": "Indigenous survivors often prefer culturally-grounded healing approaches over Western clinical models. Indigenous-led services address cultural safety concerns with mainstream systems.",
+      "risk_factors": [
+        "Distrust in mainstream services due to colonial history (DuMont, 2022; Giesbrecht, 2022)",
+        "Lack of specialized training in culturally-relevant responses (Rizkalla, 2020; Faller, 2021)",
+        "Mainstream services not reflecting Indigenous worldviews"
+      ],
+      "protective_factors": [
+        "Indigenous-designed and -delivered healing supports",
+        "Land-based and traditional healing options",
+        "Elder involvement in support services",
+        "Healthcare providers understanding unique needs of Indigenous survivors (DuMont, 2017)"
+      ],
+      "key_citations": [
+        "DuMont (2017)",
+        "Rizkalla (2021)",
+        "MMIWG Final Report",
+        "YSWC proposal"
+      ],
+      "data_quality_notes": "NEW - Evidence populated from synthesis and research.",
+      "rrn_relevance": "CRITICAL - Majority Indigenous population in many Yukon communities"
+    },
+    "INT03": {
+      "name": "Disability accessibility of GBV services",
+      "definition": "Physical, sensory, and cognitive accessibility of GBV services",
+      "definition_plain": "Can survivors with disabilities access GBV services?",
+      "tier": 1,
+      "tier_rationale": "PATHWAY-CRITICAL for survivors with disabilities; inaccessible services = no pathway",
+      "mvp": false,
+      "data_reliability": "MEDIUM",
+      "baseline_category": "community_specific",
+      "domain": "Help When You Need It",
+      "domain_question": "Are crisis and counselling services available?",
+      "threshold": {
+        "adequate": "Full accessibility",
+        "partial": "Partial accessibility",
+        "major_gap": "Limited",
+        "critical": "Not accessible"
+      },
+      "unit_of_measure": "Composite",
+      "collection_frequency": "Annual",
+      "evidence_summary": "Survivors with disabilities face compounded barriers including physical inaccessibility, communication barriers, and dependency on abusers for care.",
+      "risk_factors": [
+        "Physical barriers to accessing services",
+        "Dependency on abuser for personal care",
+        "Communication barriers in disclosure",
+        "Disability used as tool of coercive control"
+      ],
+      "protective_factors": [
+        "Physically accessible service locations",
+        "ASL/sensory accessibility options",
+        "Cognitive accessibility in information materials",
+        "Staff trained in disability-informed approaches"
+      ],
+      "key_citations": [
+        "DisAbled Women's Network Canada",
+        "Statistics Canada disability data"
+      ],
+      "data_quality_notes": "NEW - Evidence populated from synthesis and research.",
+      "rrn_relevance": "HIGH - Accessibility particularly limited in remote locations"
+    },
+    "INT04": {
+      "name": "Language access for temporary foreign workers",
+      "definition": "Whether GBV services are accessible to speakers of languages common among temporary foreign workers",
+      "definition_plain": "Can workers who don't speak English or French well access GBV services?",
+      "tier": 1,
+      "tier_rationale": "PATHWAY-CRITICAL for TFW populations; language barrier = no effective pathway",
+      "mvp": false,
+      "data_reliability": "MEDIUM",
+      "baseline_category": "community_specific",
+      "domain": "Help When You Need It",
+      "domain_question": "Are crisis and counselling services available?",
+      "threshold": {
+        "adequate": "Interpretation available",
+        "partial": "Phone interpretation",
+        "major_gap": "Limited",
+        "critical": "None"
+      },
+      "unit_of_measure": "Categorical",
+      "collection_frequency": "Annual",
+      "evidence_summary": "Temporary foreign workers in extractive industries face language barriers, immigration-linked dependency, and isolation from support systems.",
+      "risk_factors": [
+        "Language barriers when accessing services (Wrathall & Herron, 2021)",
+        "Immigration status tied to employer creating power imbalance",
+        "Isolation from family and cultural community",
+        "Fear of deportation preventing disclosure"
+      ],
+      "protective_factors": [
+        "Services available in languages common among TFWs (Filipino, Spanish, etc.)",
+        "Interpretation services readily available",
+        "Immigration-informed advocacy"
+      ],
+      "key_citations": [
+        "Wrathall & Herron (2021)",
+        "Temporary Foreign Worker Program data"
+      ],
+      "data_quality_notes": "NEW - Evidence populated from synthesis and research.",
+      "rrn_relevance": "HIGH - Relevant for YESAB assessments of projects using TFW labor"
+    },
+    "LJ01": {
+      "name": "Access to Victim Services",
+      "definition": "Whether Yukon Victim Services has presence/outreach in community",
+      "definition_plain": "How can survivors access Victim Services in this community?",
+      "tier": 1,
+      "tier_rationale": "HIGH priority + HIGH reliability",
+      "mvp": true,
+      "data_reliability": "HIGH",
+      "baseline_category": "distance_modified",
+      "domain": "Protection and Justice",
+      "domain_question": "Can survivors access legal protection and support?",
+      "threshold": {
+        "adequate": "Permanent office",
+        "partial": "Scheduled visits",
+        "major_gap": "Phone/virtual only",
+        "critical": "None"
+      },
+      "unit_of_measure": "Categorical",
+      "collection_frequency": "Annual",
+      "evidence_summary": "Victim Services provides critical support including accompaniment, information, and referrals. Access mode (in-person vs. virtual) affects service quality.",
+      "risk_factors": [
+        "Lack of access to legal support (CREVAWC, 2021)"
+      ],
+      "protective_factors": [
+        "Availability and access to Victim Services (Faller, 2021)",
+        "Expansion of DV courts and DV options in existing courts in rural/remote areas (Saskatchewan, 2025)"
+      ],
+      "key_citations": [
+        "Faller (2021)",
+        "Saskatchewan DVDR (2025)",
+        "Yukon Victim Services"
+      ],
+      "data_quality_notes": "HIGH reliability - office locations and outreach schedules are public.",
+      "rrn_relevance": "HIGH - Service presence varies significantly by community"
+    },
+    "LJ02": {
+      "name": "Legal aid accessibility",
+      "definition": "Legal aid accessibility for family and protection matters accounting for waitlist",
+      "definition_plain": "Can survivors access legal aid for family and protection matters within a reasonable timeframe?",
+      "tier": 1,
+      "tier_rationale": "HIGH priority + HIGH reliability",
+      "mvp": true,
+      "data_reliability": "HIGH",
+      "baseline_category": "territorial",
+      "domain": "Protection and Justice",
+      "domain_question": "Can survivors access legal protection and support?",
+      "threshold": {
+        "adequate": "Waitlist <1 month",
+        "partial": "Waitlist 1-6 months",
+        "major_gap": "Waitlist >6 months",
+        "critical": "No allocation"
+      },
+      "unit_of_measure": "Categorical (0-3)",
+      "collection_frequency": "Annual",
+      "evidence_summary": "Legal aid is essential for survivors navigating family court, protection orders, and custody matters.",
+      "risk_factors": [
+        "Lack of access to legal support (CREVAWC, 2021)"
+      ],
+      "protective_factors": [
+        "Availability of legal aid / legal aid reform (Kardashevskaya, 2022; CREVAWC, 2021)"
+      ],
+      "key_citations": [
+        "Kardashevskaya (2022)",
+        "CREVAWC (2021)",
+        "Yukon Legal Services Society"
+      ],
+      "data_quality_notes": "HIGH reliability - allocations available from Yukon Legal Services Society (semi-public).",
+      "rrn_relevance": "HIGH - Essential for protection orders and custody matters"
+    },
+    "LJ03": {
+      "name": "Presence of DV-specialized court",
+      "definition": "Whether Domestic Violence Treatment Option Court serves community",
+      "definition_plain": "Is there a specialized domestic violence court (like the Domestic Violence Treatment Option Court, or Domestic Violence Treatment Option Court (DVTO)) that serves this community?",
+      "tier": 1,
+      "tier_rationale": "MEDIUM priority + HIGH reliability",
+      "mvp": true,
+      "data_reliability": "HIGH",
+      "baseline_category": "territorial",
+      "domain": "Protection and Justice",
+      "domain_question": "Can survivors access legal protection and support?",
+      "threshold": {
+        "adequate": "Permanent DV court",
+        "partial": "Circuit + virtual",
+        "major_gap": "Circuit only",
+        "critical": "None"
+      },
+      "unit_of_measure": "Binary",
+      "collection_frequency": "Annual",
+      "evidence_summary": "Specialized DV courts improve outcomes by providing appropriate expertise and treatment options.",
+      "risk_factors": [
+        "Standard court processes may not address DV dynamics"
+      ],
+      "protective_factors": [
+        "Expansion of DV courts and DV options in existing courts in rural/remote areas (Saskatchewan, 2025)"
+      ],
+      "key_citations": [
+        "Saskatchewan DVDR (2025)",
+        "Yukon Courts"
+      ],
+      "data_quality_notes": "HIGH reliability - DVTO court schedule and circuit court coverage are public.",
+      "rrn_relevance": "MEDIUM - Whitehorse has DVTO; check circuit coverage for other communities"
+    },
+    "LJ04": {
+      "name": "Access to alternative justice measures",
+      "definition": "Availability of restorative/Indigenous justice options for GBV",
+      "definition_plain": "Are there restorative or Indigenous justice options available for GBV cases?",
+      "tier": 1,
+      "tier_rationale": "MEDIUM priority + critical for Indigenous communities",
+      "mvp": false,
+      "data_reliability": "MEDIUM",
+      "baseline_category": "community_specific",
+      "domain": "Protection and Justice",
+      "domain_question": "Can survivors access legal protection and support?",
+      "threshold": {
+        "adequate": "Multiple options",
+        "partial": "One option",
+        "major_gap": "Whitehorse only",
+        "critical": "None"
+      },
+      "unit_of_measure": "Categorical",
+      "collection_frequency": "Annual",
+      "evidence_summary": "Restorative and Indigenous justice options are critical for culturally appropriate responses, particularly in Indigenous communities.",
+      "risk_factors": [
+        "Distrust in RCMP, police (Faller, 2021; DuMont, 2022; Giesbrecht, 2022; Mantler, 2024; Rizkalla, 2021; Kardashevskaya, 2022)"
+      ],
+      "protective_factors": [
+        "Access to restorative justice measures (Ross, 2019)"
+      ],
+      "key_citations": [
+        "Ross (2019)",
+        "Community Justice Program (Yukon)",
+        "First Nations justice programs"
+      ],
+      "data_quality_notes": "MEDIUM reliability - varies by First Nation. Territorial program data is public.",
+      "rrn_relevance": "CRITICAL - Essential for Indigenous communities"
+    },
+    "PA01": {
+      "name": "Batterer intervention program availability",
+      "definition": "Whether evidence-based batterer intervention programs are accessible",
+      "definition_plain": "Are there programs to address the behavior of people who commit violence?",
+      "tier": 1,
+      "tier_rationale": "PATHWAY-CRITICAL for community safety; absence means no perpetrator intervention",
+      "mvp": true,
+      "data_reliability": "HIGH",
+      "baseline_category": "community_specific",
+      "domain": "Community Conditions",
+      "domain_question": "How does the broader context affect survivor safety?",
+      "threshold": {
+        "adequate": "Local program",
+        "partial": "Virtual available",
+        "major_gap": "Whitehorse only",
+        "critical": "None"
+      },
+      "unit_of_measure": "Categorical",
+      "collection_frequency": "Annual",
+      "evidence_summary": "Batterer intervention programs are essential for accountability and recurrence prevention. Without them, perpetrators cycle through the system without behavior change.",
+      "risk_factors": [
+        "No accountability mechanisms for perpetrators",
+        "Perpetrators returning to community without intervention",
+        "Lack of evidence-based programming"
+      ],
+      "protective_factors": [
+        "Evidence-based batterer intervention programming (Caring Dads, etc.)",
+        "Court-mandated treatment options",
+        "Local access reducing barriers to completion"
+      ],
+      "key_citations": [
+        "Saskatchewan DVDR (2025)",
+        "Caring Dads program evaluation"
+      ],
+      "data_quality_notes": "NEW - Evidence populated from synthesis and research.",
+      "rrn_relevance": "CRITICAL - Currently only available in Whitehorse"
+    },
+    "PA02": {
+      "name": "Perpetrator housing alternatives",
+      "definition": "Whether housing options exist for perpetrators removed from shared residence",
+      "definition_plain": "If the person causing harm has to leave the home, is there somewhere for them to go?",
+      "tier": 2,
+      "tier_rationale": "Affects pathway quality; creates pressure on survivor",
+      "mvp": false,
+      "data_reliability": "MEDIUM",
+      "baseline_category": "community_specific",
+      "domain": "Safe Places to Stay",
+      "domain_question": "Can survivors access emergency and transitional housing?",
+      "threshold": {
+        "adequate": "Designated housing",
+        "partial": "Emergency options",
+        "major_gap": "General shelter only",
+        "critical": "None"
+      },
+      "unit_of_measure": "Categorical",
+      "collection_frequency": "Annual",
+      "evidence_summary": "When perpetrators lack housing alternatives, pressure falls on survivors to leave or reconcile. Perpetrator housing options enable survivors to safely remain in their homes.",
+      "risk_factors": [
+        "Perpetrator homelessness increasing contact risk",
+        "Pressure on survivor to leave shared residence",
+        "Reconciliation driven by housing scarcity not choice"
+      ],
+      "protective_factors": [
+        "Designated housing for removed perpetrators",
+        "Emergency shelter options for perpetrators",
+        "Clear separation enabling safety"
+      ],
+      "key_citations": [
+        "Saskatchewan DVDR (2025)",
+        "Housing-first approaches"
+      ],
+      "data_quality_notes": "NEW - Evidence populated from synthesis and research.",
+      "rrn_relevance": "HIGH - Housing scarcity in RRN compounds this gap"
+    },
+    "PA03": {
+      "name": "Lethality assessment protocol implementation",
+      "definition": "Whether Danger Assessment or similar lethality screening is implemented in GBV response",
+      "definition_plain": "Do service providers use formal tools to assess whether someone is at risk of being killed?",
+      "tier": 1,
+      "tier_rationale": "PATHWAY-CRITICAL: Highest-risk survivors may not receive appropriate response without assessment",
+      "mvp": false,
+      "data_reliability": "MEDIUM",
+      "baseline_category": "community_specific",
+      "domain": "How Systems Work Together",
+      "domain_question": "Do organizations have policies that protect survivors?",
+      "threshold": {
+        "adequate": "Implemented + trained",
+        "partial": "Tool available",
+        "major_gap": "Informal assessment",
+        "critical": "None"
+      },
+      "unit_of_measure": "Categorical",
+      "collection_frequency": "Annual",
+      "evidence_summary": "Lethality assessment tools (e.g., Danger Assessment) identify highest-risk situations enabling prioritized response. Without them, lethal risk cases may not receive appropriate urgency.",
+      "risk_factors": [
+        "Failure to identify high-lethality situations",
+        "Under-response to escalating danger",
+        "Prior threats to kill victim not flagged (Saskatchewan DVDR, 2025)"
+      ],
+      "protective_factors": [
+        "Danger Assessment or equivalent implemented",
+        "Staff trained in lethality screening",
+        "Protocol for high-risk case coordination"
+      ],
+      "key_citations": [
+        "Giesbrecht (2023)",
+        "Campbell Danger Assessment",
+        "Saskatchewan DVDR (2025)"
+      ],
+      "data_quality_notes": "NEW - Evidence populated from synthesis and research.",
+      "rrn_relevance": "CRITICAL - Rural isolation amplifies lethality risk"
+    },
+    "PA04": {
+      "name": "Firearms removal during protection orders",
+      "definition": "Whether protocols exist and are implemented to remove firearms when protection orders are issued",
+      "definition_plain": "When a protection order is issued, are firearms actually removed from the person causing harm?",
+      "tier": 1,
+      "tier_rationale": "PATHWAY-CRITICAL for survival; firearms presence is primary lethality factor",
+      "mvp": false,
+      "data_reliability": "LOW",
+      "baseline_category": "community_specific",
+      "domain": "Protection and Justice",
+      "domain_question": "Can survivors access legal protection and support?",
+      "threshold": {
+        "adequate": "Protocol + enforcement",
+        "partial": "Protocol exists",
+        "major_gap": "Case-by-case",
+        "critical": "No protocol"
+      },
+      "unit_of_measure": "Categorical",
+      "collection_frequency": "Annual",
+      "evidence_summary": "Firearm presence is the primary lethality risk factor. Protocols to remove firearms during protection orders are essential but often not implemented.",
+      "risk_factors": [
+        "Access to / possession of firearms (Saskatchewan DVDR, 2025)",
+        "Prior threats with weapon",
+        "Rural gun ownership normalizing access"
+      ],
+      "protective_factors": [
+        "Firearms removal protocols during EPOs",
+        "Enforcement of removal orders",
+        "Safe storage requirements"
+      ],
+      "key_citations": [
+        "Saskatchewan DVDR (2025)",
+        "Giesbrecht (2022)",
+        "RCMP data"
+      ],
+      "data_quality_notes": "NEW - Evidence populated from synthesis and research.",
+      "rrn_relevance": "CRITICAL - High firearm ownership in rural Yukon"
+    },
+    "PE01": {
+      "name": "Community education campaign presence",
+      "definition": "Whether active GBV prevention/education programs operate in community",
+      "definition_plain": "Are there programs in the community to educate people about GBV prevention?",
+      "tier": 2,
+      "tier_rationale": "MEDIUM priority - primary prevention per proposal",
+      "mvp": false,
+      "data_reliability": "MEDIUM",
+      "baseline_category": "community_specific",
+      "domain": "Community Conditions",
+      "domain_question": "How does the broader context affect survivor safety?",
+      "threshold": {
+        "adequate": "Active programs",
+        "partial": "Periodic programs",
+        "major_gap": "Whitehorse only",
+        "critical": "None"
+      },
+      "unit_of_measure": "Categorical",
+      "collection_frequency": "Annual",
+      "evidence_summary": "Primary prevention through education addresses root causes and community attitudes.",
+      "risk_factors": [
+        "Lack of awareness about available resources (Wuerch, 2020; Farhall, 2020; Heggie et al., 2022)",
+        "Attitudes and beliefs that condone and/or minimize IPV (Kardashevskaya, 2022; Rizkalla, 2021; Letourneau, 2023; Ross, 2019; Mantler, 2018)"
+      ],
+      "protective_factors": [
+        "Community education campaigns about GBV (CREVAWC, 2023; Mantler, 2018; Weeks, 2016; Mantler, 2017; Saskatchewan, 2025; Kardashevskaya, 2022; Youngson et al., 2021; Wrathall & Herron, 2021)"
+      ],
+      "key_citations": [
+        "CREVAWC (2023)",
+        "Federal Gender-based Violence Strategy Annual Reports"
+      ],
+      "data_quality_notes": "MEDIUM reliability - requires inventory of initiatives.",
+      "rrn_relevance": "MEDIUM - Important for prevention"
+    },
+    "PE02": {
+      "name": "Men and boys engagement programs",
+      "definition": "Availability of programs engaging men/boys in GBV prevention",
+      "definition_plain": "Are there programs that engage men and boys in preventing GBV?",
+      "tier": 2,
+      "tier_rationale": "MEDIUM priority - primary prevention per proposal",
+      "mvp": false,
+      "data_reliability": "LOW",
+      "baseline_category": "community_specific",
+      "domain": "Community Conditions",
+      "domain_question": "How does the broader context affect survivor safety?",
+      "threshold": {
+        "adequate": "Local program",
+        "partial": "Virtual available",
+        "major_gap": "Whitehorse only",
+        "critical": "None"
+      },
+      "unit_of_measure": "Binary",
+      "collection_frequency": "Annual",
+      "evidence_summary": "Engaging men and boys in prevention addresses perpetration and bystander intervention.",
+      "risk_factors": [
+        "Traditional views about gender roles (Flynn, 2023; Faller, 2021; Farhall, 2020; Jeffrey, 2019)",
+        "Misogynistic attitudes (perpetrator factor)"
+      ],
+      "protective_factors": [
+        "Programming that engages men and boys (Ross, 2019; Wrathall & Herron, 2021)"
+      ],
+      "key_citations": [
+        "Ross (2019)",
+        "Wrathall & Herron (2021)",
+        "PMC study on engaging men in gender equality (2023)"
+      ],
+      "data_quality_notes": "LOW reliability - relatively rare programs; small sample in existing research.",
+      "rrn_relevance": "MEDIUM - Important for long-term prevention"
+    },
+    "PL01": {
+      "name": "Policies addressing confidentiality in RRN context",
+      "definition": "Whether GBV service providers have explicit policies for small-community confidentiality challenges",
+      "definition_plain": "Do service providers have policies for keeping things confidential in rural, remote and northern (RRN) communities where everyone knows each other?",
+      "tier": 1,
+      "tier_rationale": "MEDIUM priority but core to RRN measurement justice",
+      "mvp": false,
+      "data_reliability": "MEDIUM",
+      "baseline_category": "community_specific",
+      "domain": "How Systems Work Together",
+      "domain_question": "Do organizations have policies that protect survivors?",
+      "threshold": {
+        "adequate": "Explicit written policy",
+        "partial": "Informal practices",
+        "major_gap": "Awareness only",
+        "critical": "No consideration"
+      },
+      "unit_of_measure": "Binary + Quality",
+      "collection_frequency": "Annual",
+      "evidence_summary": "Small community dynamics create unique confidentiality challenges - 'everyone knows everyone' affects disclosure and service access.",
+      "risk_factors": [
+        "Sense of community surveillance and judgement (Flynn, 2023; Farhall, 2020; CREVAWC, 2021)",
+        "Difficulty in keeping shelters private (Zorn, 2017)",
+        "Compromised anonymity when disclosing or accessing support (Farhall, 2020; Youngson et al., 2021; Heggie et al., 2022)"
+      ],
+      "protective_factors": [
+        "Conflict of interest policies unique to IPV / RRN (CREVAWC, 2021)"
+      ],
+      "key_citations": [
+        "CREVAWC (2021)",
+        "Space for Action Scale (Farhall, Harris, & Woodlock, 2020)"
+      ],
+      "data_quality_notes": "MEDIUM reliability - requires policy audit. Framework is qualitative.",
+      "rrn_relevance": "CRITICAL - Core measurement justice concern for RRN"
+    },
+    "PL02": {
+      "name": "Policies addressing multiple-role relationships",
+      "definition": "Protocols for when service provider has pre-existing relationship with victim or perpetrator",
+      "definition_plain": "Do service providers have policies for when they already know the survivor or abuser personally?",
+      "tier": 2,
+      "tier_rationale": "MEDIUM priority + MEDIUM reliability",
+      "mvp": false,
+      "data_reliability": "MEDIUM",
+      "baseline_category": "community_specific",
+      "domain": "How Systems Work Together",
+      "domain_question": "Do organizations have policies that protect survivors?",
+      "threshold": {
+        "adequate": "Explicit protocol",
+        "partial": "Case-by-case process",
+        "major_gap": "Informal only",
+        "critical": "No protocol"
+      },
+      "unit_of_measure": "Binary",
+      "collection_frequency": "Annual",
+      "evidence_summary": "Dual relationships are inevitable in small communities where providers may know both victim and perpetrator personally.",
+      "risk_factors": [
+        "Multiple-role / confidentiality dilemmas due to small community (Rizkalla, 2020; Zorn, 2017; Montesanti, 2024)",
+        "Dual relationships (Kardashevskaya, 2022)"
+      ],
+      "protective_factors": [
+        "Policies to address multiple-role relationships"
+      ],
+      "key_citations": [
+        "Rizkalla (2020)",
+        "Kardashevskaya (2022)"
+      ],
+      "data_quality_notes": "MEDIUM reliability - requires organizational policy audit.",
+      "rrn_relevance": "CRITICAL - Unavoidable in small communities"
+    },
+    "PL03": {
+      "name": "GBV-specific policies in non-GBV settings",
+      "definition": "Whether major employers, schools, health facilities have GBV workplace policies",
+      "definition_plain": "Do major employers and schools have policies about GBV?",
+      "tier": 2,
+      "tier_rationale": "MEDIUM priority + LOW reliability (requires employer survey)",
+      "mvp": false,
+      "data_reliability": "LOW",
+      "baseline_category": "community_specific",
+      "domain": "How Systems Work Together",
+      "domain_question": "Do organizations have policies that protect survivors?",
+      "threshold": {
+        "adequate": ">75% have policies",
+        "partial": "50-75%",
+        "major_gap": "25-50%",
+        "critical": "<25%"
+      },
+      "unit_of_measure": "Percentage",
+      "collection_frequency": "Biennial",
+      "evidence_summary": "Workplace and institutional policies extend protection beyond specialized services.",
+      "risk_factors": [
+        "Lack of formal policies outlining specialized care for IPV victims (Mantler, 2020; Rizkalla, 2020)"
+      ],
+      "protective_factors": [
+        "Formalized policies to guide intersectoral collaboration (Mantler, 2022; Carter-Snell et al., 2020)"
+      ],
+      "key_citations": [
+        "Mantler (2022)",
+        "Carter-Snell et al. (2020)"
+      ],
+      "data_quality_notes": "LOW reliability - requires employer survey.",
+      "rrn_relevance": "MEDIUM - Important for comprehensive response"
+    },
+    "PL04": {
+      "name": "Level of interagency collaboration",
+      "definition": "Existence and activity level of formal coordination mechanisms",
+      "definition_plain": "How well do different agencies work together on GBV?",
+      "tier": 2,
+      "tier_rationale": "MEDIUM priority + MEDIUM reliability",
+      "mvp": false,
+      "data_reliability": "MEDIUM",
+      "baseline_category": "community_specific",
+      "domain": "How Systems Work Together",
+      "domain_question": "Do organizations have policies that protect survivors?",
+      "threshold": {
+        "adequate": "Active formal coordination",
+        "partial": "Formal but inactive",
+        "major_gap": "Informal only",
+        "critical": "None"
+      },
+      "unit_of_measure": "Categorical",
+      "collection_frequency": "Annual",
+      "evidence_summary": "Strong collaboration improves survivor outcomes and prevents gaps in service.",
+      "risk_factors": [
+        "Lack of interagency collaboration (Mantler, 2020; Rizkalla, 2020)"
+      ],
+      "protective_factors": [
+        "Strong interagency collaboration (Faller, 2021; Jeffrey, 2019; Mantler, 2018; Mantler, 2022; Wuerch, 2021; Wuerch, 2020; Mantler, 2017; Kardashevskaya, 2022; CREVAWC, 2021; Youngson et al., 2021; Carter-Snell et al., 2020)"
+      ],
+      "key_citations": [
+        "Multiple sources - most comprehensive evidence base",
+        "Evaluating Multisectoral Partnerships (Canada.ca)"
+      ],
+      "data_quality_notes": "MEDIUM reliability - requires assessment of MOUs and committee participation.",
+      "rrn_relevance": "HIGH - Essential where services are limited"
+    },
+    "PL05": {
+      "name": "Evidence of formal referral pathways",
+      "definition": "Whether documented referral protocols exist between key services",
+      "definition_plain": "Are there clear documented pathways for referring survivors between services?",
+      "tier": 2,
+      "tier_rationale": "MEDIUM priority + MEDIUM reliability",
+      "mvp": false,
+      "data_reliability": "MEDIUM",
+      "baseline_category": "community_specific",
+      "domain": "How Systems Work Together",
+      "domain_question": "Do organizations have policies that protect survivors?",
+      "threshold": {
+        "adequate": "Documented pathways",
+        "partial": "Verbal agreements",
+        "major_gap": "Ad hoc only",
+        "critical": "None"
+      },
+      "unit_of_measure": "Count",
+      "collection_frequency": "Annual",
+      "evidence_summary": "Clear referral protocols reduce navigation burden on survivors and improve service coordination.",
+      "risk_factors": [
+        "Poor or non-existent referral network (Rizkalla, 2020)"
+      ],
+      "protective_factors": [
+        "Creating effective referral pathways (Rizkalla, 2020; Mantler, 2018; Mantler, 2017; Heggie et al., 2022)"
+      ],
+      "key_citations": [
+        "Rizkalla (2020)",
+        "Mantler (2017; 2018)"
+      ],
+      "data_quality_notes": "MEDIUM reliability - requires protocol document audit.",
+      "rrn_relevance": "MEDIUM - Important for service integration"
+    },
+    "PL06": {
+      "name": "Disaster/emergency preparedness in GBV organizations",
+      "definition": "Whether GBV service providers have business continuity plans",
+      "definition_plain": "Do GBV organizations have plans to keep operating during emergencies?",
+      "tier": 2,
+      "tier_rationale": "LOW priority",
+      "mvp": false,
+      "data_reliability": "LOW",
+      "baseline_category": "community_specific",
+      "domain": "How Systems Work Together",
+      "domain_question": "Do organizations have policies that protect survivors?",
+      "threshold": {
+        "adequate": "Written plan + tested",
+        "partial": "Written plan only",
+        "major_gap": "Informal plan",
+        "critical": "None"
+      },
+      "unit_of_measure": "Binary",
+      "collection_frequency": "Annual",
+      "evidence_summary": "COVID-19 highlighted vulnerability of GBV services to disruption. Climate emergencies increasingly relevant in north.",
+      "risk_factors": [
+        "Pandemic (Moffitt, 2022; Hope et al., 2021; CREVAWC, 2021)",
+        "Natural disasters (CREVAWC, 2021)",
+        "Emergency guidelines not translated into local language (Moffitt, 2022)"
+      ],
+      "protective_factors": [
+        "Business continuity planning for GBV services"
+      ],
+      "key_citations": [
+        "CREVAWC (2021)",
+        "Moffitt (2022)"
+      ],
+      "data_quality_notes": "LOW reliability - requires organizational audit.",
+      "rrn_relevance": "MEDIUM - Relevant post-COVID and with increasing wildfires"
+    },
+    "PL07": {
+      "name": "Workplace GBV policies in extractive industry",
+      "definition": "Whether active mine sites have documented GBV/harassment policies",
+      "definition_plain": "Do mining companies have policies about GBV and harassment?",
+      "tier": 1,
+      "tier_rationale": "HIGH priority + HIGH reliability (YESAB)",
+      "mvp": true,
+      "data_reliability": "HIGH",
+      "baseline_category": "community_specific",
+      "domain": "How Systems Work Together",
+      "domain_question": "Do organizations have policies that protect survivors?",
+      "threshold": {
+        "adequate": ">90% compliance",
+        "partial": "51-90%",
+        "major_gap": "1-50%",
+        "critical": "0%"
+      },
+      "unit_of_measure": "Percentage",
+      "collection_frequency": "Annual",
+      "evidence_summary": "Strong evidence links resource extraction to increased GBV risk. Workplace policies are essential preventive measure.",
+      "risk_factors": [
+        "Living / working in resource extraction industry (Vector Research et al., 2022; Paukuutit, 2021; CCSG Associates et al, 2021; Hoogeveen, 2020)",
+        "Prevalence/normalization of workplace sexual violence, harassment (Vector Research et al., 2022; Paukuutit, 2021)",
+        "Lack of clear policies and reporting mechanisms (Vector Research et al., 2022; Paukuutit, 2021; CCSG Associates et al, 2021)"
+      ],
+      "protective_factors": [
+        "Clear policies and guidelines on reporting sexual violence/harassment in workplace (Vector Research et al., 2022; Paukuutit, CCSG Associates et al, 2021)",
+        "Public education about workplace sexual harassment (Pauktutiit, 2021; Vector et al., 2022)"
+      ],
+      "key_citations": [
+        "Vector Research et al. (2022)",
+        "Pauktutiit (2021)",
+        "CCSG Associates et al. (2021)",
+        "Hoogeveen (2020)",
+        "YESAB"
+      ],
+      "data_quality_notes": "HIGH reliability - YESAB registry provides access to policy assessments.",
+      "rrn_relevance": "CRITICAL - Direct Yukon relevance with active mining operations"
+    },
+    "PL08": {
+      "name": "Data-sharing agreements between agencies",
+      "definition": "Existence of formal agreements enabling coordinated data collection",
+      "definition_plain": "Do agencies have agreements to share data with each other?",
+      "tier": 2,
+      "tier_rationale": "MEDIUM priority + infrastructure for measurement",
+      "mvp": false,
+      "data_reliability": "MEDIUM",
+      "baseline_category": "community_specific",
+      "domain": "How Systems Work Together",
+      "domain_question": "Do organizations have policies that protect survivors?",
+      "threshold": {
+        "adequate": "Formal agreements active",
+        "partial": "Agreements in development",
+        "major_gap": "Discussion only",
+        "critical": "None"
+      },
+      "unit_of_measure": "Count",
+      "collection_frequency": "Annual",
+      "evidence_summary": "Data sharing enables coordinated response and system-level analysis while respecting privacy.",
+      "risk_factors": [
+        "Data gaps and/or failure to collect key information (Giesbrecht, 2023)",
+        "Poor or limited data collection methods (Giesbrecht, 2023)"
+      ],
+      "protective_factors": [
+        "Standardized methods of front-line agency data collection (Giesbrecht, 2023)",
+        "Legislation that allows collection of relevant risk assessment data (Saskatchewan, 2025)"
+      ],
+      "key_citations": [
+        "Giesbrecht (2023)",
+        "Saskatchewan DVDR (2025)"
+      ],
+      "data_quality_notes": "MEDIUM reliability - foundational for future measurement.",
+      "rrn_relevance": "MEDIUM - Infrastructure for measurement"
+    },
+    "PRV01": {
+      "name": "Healthy relationships education in schools",
+      "definition": "Whether K-12 schools implement evidence-based healthy relationships curriculum",
+      "definition_plain": "Do schools teach students about healthy relationships and consent?",
+      "tier": 2,
+      "tier_rationale": "Primary prevention - shapes norms long-term",
+      "mvp": false,
+      "data_reliability": "HIGH",
+      "baseline_category": "community_specific",
+      "domain": "Community Conditions",
+      "domain_question": "How does the broader context affect survivor safety?",
+      "threshold": {
+        "adequate": "Implemented K-12",
+        "partial": "Some grades",
+        "major_gap": "High school only",
+        "critical": "None"
+      },
+      "unit_of_measure": "Categorical",
+      "collection_frequency": "Annual",
+      "evidence_summary": "School-based healthy relationships education is evidence-based primary prevention addressing attitudes and norms before violence occurs.",
+      "risk_factors": [
+        "Attitudes and beliefs that condone and/or minimize IPV (Kardashevskaya, 2022; Rizkalla, 2021; Letourneau, 2023)",
+        "Traditional views about gender roles (Flynn, 2023; Faller, 2021)"
+      ],
+      "protective_factors": [
+        "K-12 healthy relationships curriculum implementation",
+        "Consent education in schools",
+        "Programs addressing gender norms early"
+      ],
+      "key_citations": [
+        "Fourth R program evaluation",
+        "Public Health Agency of Canada"
+      ],
+      "data_quality_notes": "NEW - Evidence populated from synthesis and research.",
+      "rrn_relevance": "MEDIUM - Prevention infrastructure for long-term change"
+    },
+    "PRV02": {
+      "name": "Bystander intervention training availability",
+      "definition": "Whether bystander intervention training programs are accessible in community",
+      "definition_plain": "Can community members learn how to safely intervene when they see warning signs of GBV?",
+      "tier": 2,
+      "tier_rationale": "Secondary prevention - early intervention",
+      "mvp": false,
+      "data_reliability": "MEDIUM",
+      "baseline_category": "community_specific",
+      "domain": "Community Conditions",
+      "domain_question": "How does the broader context affect survivor safety?",
+      "threshold": {
+        "adequate": "Local program",
+        "partial": "Virtual available",
+        "major_gap": "Whitehorse only",
+        "critical": "None"
+      },
+      "unit_of_measure": "Categorical",
+      "collection_frequency": "Annual",
+      "evidence_summary": "Bystander intervention training enables community members to recognize warning signs and safely intervene before violence escalates.",
+      "risk_factors": [
+        "Lack of awareness about warning signs",
+        "Community members uncertain how to intervene",
+        "Sense that violence is private matter"
+      ],
+      "protective_factors": [
+        "Bystander intervention training accessible",
+        "Community education about warning signs",
+        "Culture shift toward collective responsibility"
+      ],
+      "key_citations": [
+        "Green Dot program",
+        "Bringing in the Bystander"
+      ],
+      "data_quality_notes": "NEW - Evidence populated from synthesis and research.",
+      "rrn_relevance": "MEDIUM - Particularly relevant for workplace settings (mining)"
+    },
+    "PRV03": {
+      "name": "Alcohol policy environment",
+      "definition": "Regulatory environment for alcohol access in community",
+      "definition_plain": "How is alcohol access regulated in this community?",
+      "tier": 2,
+      "tier_rationale": "Risk driver with evidence base",
+      "mvp": true,
+      "data_reliability": "HIGH",
+      "baseline_category": "community_specific",
+      "domain": "Community Conditions",
+      "domain_question": "How does the broader context affect survivor safety?",
+      "threshold": {
+        "adequate": "Dry/damp OR strong controls",
+        "partial": "Community controls",
+        "major_gap": "Some restrictions",
+        "critical": "No restrictions + high density"
+      },
+      "unit_of_measure": "Composite",
+      "collection_frequency": "Annual",
+      "evidence_summary": "Alcohol is a documented risk driver for IPV severity and lethality. Community-level alcohol policy environment shapes population-level risk.",
+      "risk_factors": [
+        "Excessive alcohol and/or drug use (Saskatchewan DVDR, 2025)",
+        "High alcohol outlet density",
+        "No restrictions on alcohol access"
+      ],
+      "protective_factors": [
+        "Community alcohol controls (dry/damp community bylaws)",
+        "Low outlet density",
+        "Strong pricing and access restrictions"
+      ],
+      "key_citations": [
+        "Saskatchewan DVDR (2025)",
+        "Public health alcohol policy research",
+        "Yukon Liquor Board"
+      ],
+      "data_quality_notes": "NEW - Evidence populated from synthesis and research.",
+      "rrn_relevance": "HIGH - Several Yukon communities have alcohol restrictions"
+    },
+    "PRV04": {
+      "name": "Substance use treatment access",
+      "definition": "Availability of detox/treatment/harm reduction services",
+      "definition_plain": "Can people access treatment for alcohol or drug problems in or near this community?",
+      "tier": 1,
+      "tier_rationale": "Addresses major co-occurring risk driver",
+      "mvp": true,
+      "data_reliability": "HIGH",
+      "baseline_category": "community_specific",
+      "domain": "Health Care That Understands",
+      "domain_question": "Do healthcare providers recognize and respond to GBV?",
+      "threshold": {
+        "adequate": "Multiple options",
+        "partial": "Residential available",
+        "major_gap": "Outpatient only",
+        "critical": "None within 200km"
+      },
+      "unit_of_measure": "Categorical",
+      "collection_frequency": "Annual",
+      "evidence_summary": "Substance use treatment access addresses a major co-occurring factor. Lack of treatment options perpetuates cycles of violence.",
+      "risk_factors": [
+        "Excessive alcohol and/or drug use (Saskatchewan DVDR, 2025)",
+        "No local treatment options",
+        "Long waitlists for residential treatment"
+      ],
+      "protective_factors": [
+        "Local detox and treatment options",
+        "Harm reduction services available",
+        "Short wait times for treatment"
+      ],
+      "key_citations": [
+        "Mental Wellness and Substance Use Services (Yukon)",
+        "HSS data"
+      ],
+      "data_quality_notes": "NEW - Evidence populated from synthesis and research.",
+      "rrn_relevance": "HIGH - Treatment access limited outside Whitehorse"
+    },
+    "PRV05": {
+      "name": "RCMP detachment turnover rate",
+      "definition": "Annual turnover rate of RCMP officers at community detachment",
+      "definition_plain": "How often do RCMP officers in this community get replaced?",
+      "tier": 2,
+      "tier_rationale": "Affects pathway quality via trust",
+      "mvp": false,
+      "data_reliability": "LOW",
+      "baseline_category": "community_specific",
+      "domain": "Protection and Justice",
+      "domain_question": "Can survivors access legal protection and support?",
+      "threshold": {
+        "adequate": "<20% annual",
+        "partial": "20-40%",
+        "major_gap": "40-60%",
+        "critical": ">60%"
+      },
+      "unit_of_measure": "Percentage",
+      "collection_frequency": "Annual",
+      "evidence_summary": "RCMP turnover affects community trust and investigative continuity. High turnover means officers leave before building relationships or seeing cases through.",
+      "risk_factors": [
+        "Distrust in RCMP, police (Faller, 2021; DuMont, 2022; Giesbrecht, 2022; Mantler, 2024)",
+        "Officers unfamiliar with community context",
+        "Case file discontinuity"
+      ],
+      "protective_factors": [
+        "Officer stability and community familiarity",
+        "Relationship-based policing",
+        "Continuity in case handling"
+      ],
+      "key_citations": [
+        "YSWC proposal commitment",
+        "RCMP detachment data"
+      ],
+      "data_quality_notes": "NEW - Evidence populated from synthesis and research.",
+      "rrn_relevance": "HIGH - Named in original proposal as priority"
+    },
+    "PX01": {
+      "name": "Gas prices relative to territorial average",
+      "definition": "Ratio of local fuel prices to Whitehorse baseline",
+      "definition_plain": "How much more expensive is gas in this community compared to Whitehorse?",
+      "tier": 2,
+      "tier_rationale": "CANDIDATE - requires validation",
+      "mvp": false,
+      "data_reliability": "MEDIUM",
+      "baseline_category": "community_specific",
+      "domain": "Getting Where You Need to Go",
+      "domain_question": "Can survivors travel to services safely?",
+      "threshold": {
+        "adequate": "<5% above Whitehorse",
+        "partial": "5-15%",
+        "major_gap": "15-30%",
+        "critical": ">30%"
+      },
+      "unit_of_measure": "Ratio",
+      "collection_frequency": "Quarterly",
+      "evidence_summary": "Fuel prices directly impact travel costs, which compound barriers to service access in RRN contexts.",
+      "risk_factors": [
+        "Financial barriers to accessing distant services",
+        "Requirement to travel long distance (Flynn, 2023; Farhall, 2020)",
+        "High transportation costs"
+      ],
+      "protective_factors": [
+        "Affordable fuel costs",
+        "Travel subsidies available (TR04)"
+      ],
+      "key_citations": [
+        "Yukon fuel price surveys",
+        "Yukon Bureau of Statistics"
+      ],
+      "data_quality_notes": "NEW - Evidence populated from synthesis and research.",
+      "rrn_relevance": "HIGH - Proxy for travel cost barriers"
+    },
+    "PX02": {
+      "name": "Median household income by community",
+      "definition": "Community-level median income relative to territorial median",
+      "definition_plain": "What is the median household income in this community?",
+      "tier": 2,
+      "tier_rationale": "CANDIDATE - requires validation",
+      "mvp": false,
+      "data_reliability": "HIGH",
+      "baseline_category": "community_specific",
+      "domain": "Money and Independence",
+      "domain_question": "Can survivors access money and resources to leave?",
+      "threshold": {
+        "adequate": ">territorial median",
+        "partial": "80-100% of median",
+        "major_gap": "60-80%",
+        "critical": "<60%"
+      },
+      "unit_of_measure": "Dollar + Ratio",
+      "collection_frequency": "Census cycle",
+      "evidence_summary": "Community income levels contextualize economic capacity for survivors to access services, secure housing, and achieve independence.",
+      "risk_factors": [
+        "Poverty (Faller, 2021)",
+        "Economic dependence (Kardashevskaya, 2022; CREVAWC, 2021)",
+        "Limited employment options in community"
+      ],
+      "protective_factors": [
+        "Higher community income levels",
+        "Employment opportunities available"
+      ],
+      "key_citations": [
+        "Census data",
+        "Yukon Bureau of Statistics"
+      ],
+      "data_quality_notes": "NEW - Evidence populated from synthesis and research.",
+      "rrn_relevance": "MEDIUM - Economic context indicator"
+    },
+    "PX03": {
+      "name": "Financial services presence",
+      "definition": "Whether community has bank or credit union physical presence",
+      "definition_plain": "Is there a bank or credit union in this community?",
+      "tier": 1,
+      "tier_rationale": "CANDIDATE - pathway-critical for financial independence",
+      "mvp": true,
+      "data_reliability": "HIGH",
+      "baseline_category": "community_specific",
+      "domain": "Money and Independence",
+      "domain_question": "Can survivors access money and resources to leave?",
+      "threshold": {
+        "adequate": "Full-service branch",
+        "partial": "Limited hours",
+        "major_gap": "Mobile/agent only",
+        "critical": "None"
+      },
+      "unit_of_measure": "Binary",
+      "collection_frequency": "Annual",
+      "evidence_summary": "Banking access is essential for financial safety planning\u2014opening accounts without abuser knowledge, accessing funds, building independence.",
+      "risk_factors": [
+        "No local banking access",
+        "Financial control by abuser enabled by limited options",
+        "Cannot access funds without traveling"
+      ],
+      "protective_factors": [
+        "Full-service banking in community",
+        "Private access to financial services"
+      ],
+      "key_citations": [
+        "Direct audit methodology"
+      ],
+      "data_quality_notes": "NEW - Evidence populated from synthesis and research.",
+      "rrn_relevance": "HIGH - Many communities lack any banking presence"
+    },
+    "PX04": {
+      "name": "Health centre operational status",
+      "definition": "Whether community health centre is currently operational or has recent closures",
+      "definition_plain": "Is the health centre in this community currently open and staffed?",
+      "tier": 1,
+      "tier_rationale": "CANDIDATE - pathway-critical",
+      "mvp": false,
+      "data_reliability": "MEDIUM",
+      "baseline_category": "community_specific",
+      "domain": "Health Care That Understands",
+      "domain_question": "Do healthcare providers recognize and respond to GBV?",
+      "threshold": {
+        "adequate": "Fully operational",
+        "partial": "Reduced hours",
+        "major_gap": "Intermittent closures",
+        "critical": "Closed"
+      },
+      "unit_of_measure": "Categorical",
+      "collection_frequency": "Quarterly",
+      "evidence_summary": "Health centre closures or reduced hours directly impact emergency response and ongoing healthcare access.",
+      "risk_factors": [
+        "Intermittent / inconsistent services due to partial staffing (Zorn, 2017)",
+        "Health centre closures",
+        "Reduced operating hours"
+      ],
+      "protective_factors": [
+        "Fully operational health centre",
+        "Consistent staffing"
+      ],
+      "key_citations": [
+        "HSS data",
+        "YG health app"
+      ],
+      "data_quality_notes": "NEW - Evidence populated from synthesis and research.",
+      "rrn_relevance": "HIGH - Real-time access measure"
+    },
+    "PX05": {
+      "name": "Emergency department wait times (WGH)",
+      "definition": "Average wait time at Whitehorse General Hospital emergency department",
+      "definition_plain": "How long are emergency wait times at WGH?",
+      "tier": 2,
+      "tier_rationale": "CANDIDATE - territorial context",
+      "mvp": false,
+      "data_reliability": "HIGH",
+      "baseline_category": "community_specific",
+      "domain": "Health Care That Understands",
+      "domain_question": "Do healthcare providers recognize and respond to GBV?",
+      "threshold": {
+        "adequate": "<2 hours",
+        "partial": "2-4 hours",
+        "major_gap": "4-8 hours",
+        "critical": ">8 hours"
+      },
+      "unit_of_measure": "Hours",
+      "collection_frequency": "Real-time",
+      "evidence_summary": "Whitehorse General Hospital wait times contextualize emergency healthcare access for communities that must travel there.",
+      "risk_factors": [
+        "Long emergency wait times",
+        "Evidence collection window passing (SANE)",
+        "Delayed treatment of injuries"
+      ],
+      "protective_factors": [
+        "Short emergency wait times",
+        "Timely access to care"
+      ],
+      "key_citations": [
+        "YG health dashboard",
+        "WGH data"
+      ],
+      "data_quality_notes": "NEW - Evidence populated from synthesis and research.",
+      "rrn_relevance": "MEDIUM - Territorial context indicator"
+    },
+    "SH01": {
+      "name": "Number of emergency shelters in community",
+      "definition": "Count of facilities providing emergency overnight accommodation for GBV survivors",
+      "definition_plain": "How many emergency shelters can survivors go to in this community?",
+      "tier": 1,
+      "tier_rationale": "HIGH priority + HIGH reliability",
+      "mvp": true,
+      "data_reliability": "HIGH",
+      "baseline_category": "community_specific",
+      "domain": "Safe Places to Stay",
+      "domain_question": "Can survivors access emergency and transitional housing?",
+      "threshold": {
+        "adequate": "1 within 50km or 2+",
+        "partial": "1 within 200km",
+        "major_gap": "1 but >200km",
+        "critical": "0"
+      },
+      "unit_of_measure": "Integer (0+)",
+      "collection_frequency": "Annual",
+      "evidence_summary": "Access to emergency shelter is consistently identified as a critical protective factor across the literature. Lack of shelter access is associated with women remaining in or returning to violent situations.",
+      "risk_factors": [
+        "Long waitlists to access services (Mantler, 2024; Heggie et al., 2022)",
+        "Shelters do not reflect unique needs of rural women (Weeks, 2016)",
+        "Difficulty in keeping shelters private, hidden in RRN contexts (Zorn, 2017)",
+        "Lack of emergency housing (Moffitt, 2022; Zorn, 2017; Farhall, 2020)"
+      ],
+      "protective_factors": [
+        "Access to shelters / safe houses (CREVAWC, 2021; Faller, 2021; Hope et al., 2023; Jeffrey, 2019; Kardashevskaya, 2022)",
+        "Access to specialized GBV-specific services (Carter-Snell et al., 2020)"
+      ],
+      "key_citations": [
+        "CREVAWC (2021)",
+        "Faller (2021)",
+        "Hope et al. (2023)",
+        "Jeffrey (2019)",
+        "Women's Shelters Canada surveys"
+      ],
+      "data_quality_notes": "Previous surveys by Women's Shelters Canada and ESVA are well documented but primarily in PDF format. Timeliness is challenging as survey data can be one-off or funding-dependent.",
+      "rrn_relevance": "HIGH - Critical infrastructure gap in northern/remote communities"
+    },
+    "SH02": {
+      "name": "Number of GBV-designated second-stage housing units",
+      "definition": "Count of transitional housing units with GBV-specific mandates or formal survivor allocation agreements",
+      "definition_plain": "How many transitional housing units are specifically designated for GBV survivors in this community?",
+      "tier": 1,
+      "tier_rationale": "HIGH priority + HIGH reliability",
+      "mvp": true,
+      "data_reliability": "HIGH",
+      "baseline_category": "community_specific",
+      "domain": "Safe Places to Stay",
+      "domain_question": "Can survivors access emergency and transitional housing?",
+      "threshold": {
+        "adequate": "6+ GBV-designated",
+        "partial": "3-5 designated",
+        "major_gap": "1-2 designated",
+        "critical": "0 designated"
+      },
+      "unit_of_measure": "Integer (0+)",
+      "collection_frequency": "Annual",
+      "evidence_summary": "Transitional housing is essential for survivors moving from emergency shelter to independent living. Literature identifies housing stability as a key factor in preventing returns to abusive situations.",
+      "risk_factors": [
+        "Lack of affordable housing (CCSG Associates et al., 2021; Flynn, 2023; Hope et al., 2023; Maxwell, 2024; Moffitt, 2022)",
+        "Inflated housing costs due to resource development (Flynn, 2023)",
+        "Housing market pressure from short-term rentals and gentrification (Mantler, 2024)"
+      ],
+      "protective_factors": [
+        "Availability of safe, affordable housing options",
+        "Access to transitional housing post-shelter"
+      ],
+      "key_citations": [
+        "HART Dataset (Housing Assessment Resource Tool)",
+        "Yukon Housing Corporation",
+        "CMHC data"
+      ],
+      "data_quality_notes": "HART dataset from UBC is well-maintained with good methodology. Last update 2021; next release expected 2026. Pre-pandemic data raises some reliability concerns.",
+      "rrn_relevance": "HIGH - Limited housing stock in northern communities"
+    },
+    "SH03": {
+      "name": "Shelter access barriers",
+      "definition": "Shelter access barriers measured via capacity utilization and wait time data",
+      "definition_plain": "How often are survivors unable to access shelter when they need it, and how long do they wait?",
+      "tier": 1,
+      "tier_rationale": "HIGH priority + MEDIUM reliability",
+      "mvp": true,
+      "data_reliability": "MEDIUM",
+      "baseline_category": "community_specific",
+      "domain": "Safe Places to Stay",
+      "domain_question": "Can survivors access emergency and transitional housing?",
+      "threshold": {
+        "adequate": "At capacity <25% of days",
+        "partial": "At capacity 25-50%",
+        "major_gap": "At capacity 50-80%",
+        "critical": "At capacity >80%"
+      },
+      "unit_of_measure": "Percentage + Days",
+      "collection_frequency": "Quarterly",
+      "evidence_summary": "Service accessibility timing is critical during crisis. Long waitlists are documented as a barrier to safety.",
+      "risk_factors": [
+        "Long waitlists to access services (Mantler, 2024; Heggie et al., 2022)",
+        "Intermittent / inconsistent services due to partial staffing (Zorn, 2017)"
+      ],
+      "protective_factors": [
+        "Immediate access to emergency accommodation"
+      ],
+      "key_citations": [
+        "Mantler (2024)",
+        "Heggie et al. (2022)",
+        "ESVA Waitlist Survey"
+      ],
+      "data_quality_notes": "Requires shelter intake data. Aggregate-only access due to confidentiality. ESVA Waitlist Survey may serve as proxy.",
+      "rrn_relevance": "HIGH - Extended wait times exacerbated by limited options"
+    },
+    "SH04": {
+      "name": "Pet care options for survivors",
+      "definition": "Whether survivors can avoid abandoning companion animals when leaving, including shelter pet accommodation, foster networks, and temporary care arrangements",
+      "definition_plain": "Can survivors keep their pets safe when they leave? This includes shelters that accept pets, foster programs for pets, or other arrangements so survivors do not have to abandon their animals.",
+      "tier": 1,
+      "tier_rationale": "MEDIUM priority but critical northern context",
+      "mvp": true,
+      "data_reliability": "HIGH",
+      "baseline_category": "community_specific",
+      "domain": "Safe Places to Stay",
+      "domain_question": "Can survivors access emergency and transitional housing?",
+      "threshold": {
+        "adequate": "Multiple formal options",
+        "partial": "Shelter + informal",
+        "major_gap": "Shelter-only",
+        "critical": "None"
+      },
+      "unit_of_measure": "Binary + Integer",
+      "collection_frequency": "Annual",
+      "evidence_summary": "Strong evidence that concern for animal welfare prevents women from leaving abusive situations. Pet ownership is particularly common in rural/northern contexts.",
+      "risk_factors": [
+        "Dealing with or needing to house larger animals/livestock (Wuerch 2020; 2021)",
+        "Financial barriers related to caring for livestock (Giesbrecht, 2022; Wuerch, 2021)",
+        "Challenges in animal safekeeping with confidentiality concerns (Wuerch, 2021)"
+      ],
+      "protective_factors": [
+        "Access to pet-friendly DV shelters (Giesbrecht, 2022; Wuerch, 2021; Wuerch, 2020)",
+        "Safety planning that includes animal care (Giesbrecht, 2022)",
+        "Funding to support animal safekeeping (Wuerch, 2021)",
+        "Ability of family/friends to board animals (Wuerch, 2021)"
+      ],
+      "key_citations": [
+        "Giesbrecht (2022)",
+        "Wuerch (2020)",
+        "Wuerch (2021)",
+        "Partner's Treatment of Animals Scale (PTSAS)"
+      ],
+      "data_quality_notes": "Low quality indicator nationally - no current survey collects this specific to Yukon. Academic surveys indicate 10-20% of those experiencing homelessness have pets.",
+      "rrn_relevance": "CRITICAL - Animals/livestock common in rural/northern contexts; major barrier to leaving"
+    },
+    "SH05": {
+      "name": "Distance to nearest shelter from community centre",
+      "definition": "Kilometres from community's main intersection/centre to nearest GBV shelter",
+      "definition_plain": "How far do survivors have to travel to reach the nearest shelter?",
+      "tier": 1,
+      "tier_rationale": "HIGH priority + HIGH reliability",
+      "mvp": true,
+      "data_reliability": "HIGH",
+      "baseline_category": "community_specific",
+      "domain": "Safe Places to Stay",
+      "domain_question": "Can survivors access emergency and transitional housing?",
+      "threshold": {
+        "adequate": "\u226450km",
+        "partial": "51-200km",
+        "major_gap": "201-500km",
+        "critical": ">500km"
+      },
+      "unit_of_measure": "Kilometres",
+      "collection_frequency": "Static (update on new shelter)",
+      "evidence_summary": "Geographic isolation is consistently identified as a risk factor. Distance to services compounds barriers for survivors in remote communities.",
+      "risk_factors": [
+        "Geographical isolation (Burczycka, 2022; Faller, 2021; Farhall, 2020; Jeffrey, 2019; Kurbatfinski, 2024)",
+        "Requirement to travel long distance to access support (Flynn, 2023; Farhall, 2020)",
+        "Long emergency response times (CREVAWC, 2021)"
+      ],
+      "protective_factors": [
+        "Availability of travel funds to support access to services (Faller, 2021)",
+        "Close geographic distance to neighbours (Giesbrecht, 2023)"
+      ],
+      "key_citations": [
+        "Statistics Canada Index of Remoteness",
+        "Jeffrey et al. (2019) - Domestic Violence and Homicide in RRN Communities"
+      ],
+      "data_quality_notes": "HIGH reliability - calculable via GIS/Google Maps. Static indicator updated only when new shelters open.",
+      "rrn_relevance": "CRITICAL - Defines the RRN challenge"
+    },
+    "SH06": {
+      "name": "Availability of pet-friendly rental housing",
+      "definition": "Proportion of rental housing stock that permits pets",
+      "definition_plain": "What percentage of rental housing allows pets?",
+      "tier": 2,
+      "tier_rationale": "MEDIUM priority + MEDIUM reliability",
+      "mvp": false,
+      "data_reliability": "MEDIUM",
+      "baseline_category": "community_specific",
+      "domain": "Safe Places to Stay",
+      "domain_question": "Can survivors access emergency and transitional housing?",
+      "threshold": {
+        "adequate": ">50% pet-friendly",
+        "partial": "25-50%",
+        "major_gap": "10-25%",
+        "critical": "<10%"
+      },
+      "unit_of_measure": "Percentage",
+      "collection_frequency": "Annual",
+      "evidence_summary": "Housing options for survivors with animals are limited, creating barriers to permanent relocation away from abusers.",
+      "risk_factors": [
+        "Lack of pet-friendly rental housing (Giesbrecht, 2022)"
+      ],
+      "protective_factors": [
+        "Availability of pet-friendly rental housing (Giesbrecht, 2022)"
+      ],
+      "key_citations": [
+        "Giesbrecht (2022)",
+        "CMHC Rental Market Survey",
+        "Yukon Housing Corporation"
+      ],
+      "data_quality_notes": "MEDIUM reliability - estimates available from CMHC and housing authority data.",
+      "rrn_relevance": "MEDIUM - Relevant where animal ownership is common"
+    },
+    "SQ01": {
+      "name": "Trauma-informed mental health services (quality)",
+      "definition": "Degree to which available MH services meet trauma-informed standards",
+      "definition_plain": "How well do mental health services actually meet trauma-informed standards?",
+      "tier": 2,
+      "tier_rationale": "MEDIUM priority - extends HC04",
+      "mvp": false,
+      "data_reliability": "MEDIUM",
+      "baseline_category": "community_specific",
+      "domain": "Health Care That Understands",
+      "domain_question": "Do healthcare providers recognize and respond to GBV?",
+      "threshold": {
+        "adequate": "Fully trauma-informed",
+        "partial": "Partially implemented",
+        "major_gap": "Minimal",
+        "critical": "Not trauma-informed"
+      },
+      "unit_of_measure": "Categorical",
+      "collection_frequency": "Annual",
+      "evidence_summary": "Quality assessment goes beyond availability to actual trauma-informed practice.",
+      "risk_factors": [
+        "Use of biomedical rather than trauma and violence informed approaches (Montesanti, 2024)"
+      ],
+      "protective_factors": [
+        "Use of trauma and violence-informed care (Mantler, 2022)",
+        "Use of victim-centred approaches (Saskatchewan, 2025)"
+      ],
+      "key_citations": [
+        "Mantler (2022)",
+        "Saskatchewan DVDR (2025)"
+      ],
+      "data_quality_notes": "MEDIUM reliability - requires training/certification assessment.",
+      "rrn_relevance": "HIGH - Quality matters as much as availability"
+    },
+    "SQ02": {
+      "name": "GBV information in rural-appropriate formats",
+      "definition": "Whether GBV service information distributed via formats accessible without internet",
+      "definition_plain": "In this community, can survivors learn about services without needing internet access (e.g., through print, radio, posters)?",
+      "tier": 1,
+      "tier_rationale": "MEDIUM priority but core to RRN accessibility",
+      "mvp": true,
+      "data_reliability": "HIGH",
+      "baseline_category": "community_specific",
+      "domain": "Help When You Need It",
+      "domain_question": "Are crisis and counselling services available?",
+      "threshold": {
+        "adequate": "Multiple formats",
+        "partial": "Print + radio",
+        "major_gap": "Print only",
+        "critical": "Web-only"
+      },
+      "unit_of_measure": "Categorical",
+      "collection_frequency": "Annual",
+      "evidence_summary": "Information accessibility without internet is essential in RRN contexts where connectivity is unreliable.",
+      "risk_factors": [
+        "Lack of awareness about available resources (Wuerch, 2020; Farhall, 2020; Heggie et al., 2022)",
+        "Poor quality internet service (Mantler, 2024)"
+      ],
+      "protective_factors": [
+        "Community education about GBV services (Mantler, 2018; Weeks, 2016)"
+      ],
+      "key_citations": [
+        "Mantler (2018)",
+        "Wuerch (2020)"
+      ],
+      "data_quality_notes": "HIGH reliability - distribution methods can be audited directly.",
+      "rrn_relevance": "CRITICAL - Internet unreliable in many Yukon communities"
+    },
+    "SQ03": {
+      "name": "Services available in Indigenous languages",
+      "definition": "Whether GBV services available in local First Nation languages",
+      "definition_plain": "Can survivors access services in their First Nation language?",
+      "tier": 1,
+      "tier_rationale": "MEDIUM priority but core to Indigenous access",
+      "mvp": false,
+      "data_reliability": "MEDIUM",
+      "baseline_category": "community_specific",
+      "domain": "Help When You Need It",
+      "domain_question": "Are crisis and counselling services available?",
+      "threshold": {
+        "adequate": "Local FN language available",
+        "partial": "Interpretation available",
+        "major_gap": "Limited access",
+        "critical": "None"
+      },
+      "unit_of_measure": "Categorical",
+      "collection_frequency": "Annual",
+      "evidence_summary": "Language access is fundamental to culturally appropriate service delivery.",
+      "risk_factors": [
+        "Language barriers when accessing services (Wrathall & Herron, 2021)",
+        "Language/cultural barriers (Victim factors)"
+      ],
+      "protective_factors": [
+        "Availability of services in language of choice"
+      ],
+      "key_citations": [
+        "Wrathall & Herron (2021)"
+      ],
+      "data_quality_notes": "MEDIUM reliability - requires service provider inquiry.",
+      "rrn_relevance": "HIGH - 8 First Nation language families in Yukon"
+    },
+    "SQ04": {
+      "name": "Level of service integration",
+      "definition": "Degree to which services are co-located or require multiple separate contacts",
+      "definition_plain": "How many different places do survivors have to go to get help?",
+      "tier": 1,
+      "tier_rationale": "PATHWAY-CRITICAL: Fragmentation causes re-traumatization dropout",
+      "mvp": false,
+      "data_reliability": "MEDIUM",
+      "baseline_category": "community_specific",
+      "domain": "Help When You Need It",
+      "domain_question": "Are crisis and counselling services available?",
+      "threshold": {
+        "adequate": "Co-located/single contact",
+        "partial": "2-3 contacts",
+        "major_gap": "4+ contacts",
+        "critical": "Highly fragmented"
+      },
+      "unit_of_measure": "Categorical",
+      "collection_frequency": "Annual",
+      "evidence_summary": "Integrated services reduce navigation burden on survivors who are already in crisis.",
+      "risk_factors": [
+        "Multiple contacts required to access support"
+      ],
+      "protective_factors": [
+        "Integration of health/social services within shelter - HUB model (Jeffrey, 2019; Mantler, 2018; Mantler, 2022)",
+        "Level of service integration"
+      ],
+      "key_citations": [
+        "Jeffrey (2019)",
+        "Mantler (2018; 2022)"
+      ],
+      "data_quality_notes": "MEDIUM reliability - requires key informant assessment.",
+      "rrn_relevance": "MEDIUM - Whitehorse more integrated than rural"
+    },
+    "SQ05": {
+      "name": "Effectiveness of Emergency Protection Orders",
+      "definition": "Rate at which EPOs are granted and enforced",
+      "definition_plain": "Do Emergency Protection Orders actually get granted and enforced?",
+      "tier": 2,
+      "tier_rationale": "MEDIUM priority + LOW reliability (RCMP data via ATIP)",
+      "mvp": false,
+      "data_reliability": "LOW",
+      "baseline_category": "community_specific",
+      "domain": "Protection and Justice",
+      "domain_question": "Can survivors access legal protection and support?",
+      "threshold": {
+        "adequate": ">80% granted/enforced",
+        "partial": "50-80%",
+        "major_gap": "<50%",
+        "critical": "Rarely enforced"
+      },
+      "unit_of_measure": "Percentage",
+      "collection_frequency": "Annual",
+      "evidence_summary": "Legal protection only works if orders are granted and enforced.",
+      "risk_factors": [
+        "Legal protections not enforced"
+      ],
+      "protective_factors": [
+        "Availability of Emergency Protection Orders (Faller, 2021)",
+        "EPOs that reflect understanding of unique needs (Giesbrecht, 2022)",
+        "EPOs that contain explicit descriptions of stalking behaviours (Kurbatfinski, 2024)"
+      ],
+      "key_citations": [
+        "Faller (2021)",
+        "Giesbrecht (2022)",
+        "Kurbatfinski (2024)"
+      ],
+      "data_quality_notes": "LOW reliability - RCMP enforcement data requires ATIP request.",
+      "rrn_relevance": "HIGH - Enforcement challenging in remote communities"
+    },
+    "SQ06": {
+      "name": "Community readiness for new GBV programs",
+      "definition": "Assessment of implementation feasibility for new interventions",
+      "definition_plain": "Is the community ready to support new GBV programs?",
+      "tier": 2,
+      "tier_rationale": "MEDIUM priority - shapes infrastructure utilization",
+      "mvp": false,
+      "data_reliability": "MEDIUM",
+      "baseline_category": "community_specific",
+      "domain": "Community Conditions",
+      "domain_question": "How does the broader context affect survivor safety?",
+      "threshold": {
+        "adequate": "High readiness",
+        "partial": "Moderate readiness",
+        "major_gap": "Low readiness",
+        "critical": "Not ready"
+      },
+      "unit_of_measure": "Scale",
+      "collection_frequency": "Project-specific",
+      "evidence_summary": "Implementation success depends on community capacity and readiness.",
+      "risk_factors": [
+        "Program implementation without community readiness assessment"
+      ],
+      "protective_factors": [
+        "Community readiness assessment before program implementation"
+      ],
+      "key_citations": [
+        "Community Readiness Model"
+      ],
+      "data_quality_notes": "MEDIUM reliability - requires primary research (key informant interviews).",
+      "rrn_relevance": "MEDIUM - Useful for recommendations"
+    },
+    "SS01": {
+      "name": "Number of GBV-specific services in community",
+      "definition": "Count of organizations with explicit GBV service mandate",
+      "definition_plain": "How many organizations in this community specifically help GBV survivors?",
+      "tier": 1,
+      "tier_rationale": "HIGH priority + HIGH reliability",
+      "mvp": true,
+      "data_reliability": "HIGH",
+      "baseline_category": "community_specific",
+      "domain": "Help When You Need It",
+      "domain_question": "Are crisis and counselling services available?",
+      "threshold": {
+        "adequate": "3+",
+        "partial": "2",
+        "major_gap": "1",
+        "critical": "0"
+      },
+      "unit_of_measure": "Integer",
+      "collection_frequency": "Annual",
+      "evidence_summary": "Service availability is foundational to survivor support. Multiple services provide options and specialized support.",
+      "risk_factors": [
+        "Poor or non-existent referral network due to lack of services (Rizkalla, 2020)",
+        "Lack of options for formal support (Wuerch, 2020; Farhall, 2020)"
+      ],
+      "protective_factors": [
+        "Access to specialized GBV-specific services (Carter-Snell et al., 2020)"
+      ],
+      "key_citations": [
+        "211 Yukon",
+        "Yukon Status of Women Council service directory"
+      ],
+      "data_quality_notes": "HIGH reliability - service directories are public and maintained.",
+      "rrn_relevance": "HIGH - Most communities have few or no GBV-specific services"
+    },
+    "SS02": {
+      "name": "Availability of virtual service options",
+      "definition": "Whether GBV services can be accessed remotely",
+      "definition_plain": "Can survivors access GBV services by phone or video?",
+      "tier": 1,
+      "tier_rationale": "HIGH priority + HIGH reliability",
+      "mvp": true,
+      "data_reliability": "HIGH",
+      "baseline_category": "community_specific",
+      "domain": "Help When You Need It",
+      "domain_question": "Are crisis and counselling services available?",
+      "threshold": {
+        "adequate": "Multiple modalities",
+        "partial": "Phone + video",
+        "major_gap": "Phone only",
+        "critical": "None"
+      },
+      "unit_of_measure": "Binary",
+      "collection_frequency": "Annual",
+      "evidence_summary": "Virtual services can bridge geographic gaps but require technology infrastructure.",
+      "risk_factors": [
+        "Poor quality internet service (Mantler, 2024)",
+        "Geographic isolation limiting in-person access"
+      ],
+      "protective_factors": [
+        "Using technology to bridge service gaps created by geography (Mantler, 2018; Mantler, 2024)"
+      ],
+      "key_citations": [
+        "Mantler (2018; 2024)"
+      ],
+      "data_quality_notes": "HIGH reliability - service modality can be audited directly.",
+      "rrn_relevance": "CRITICAL - Essential for isolated communities"
+    },
+    "SS03": {
+      "name": "Wait time for counselling services",
+      "definition": "Average days from referral to first counselling appointment",
+      "definition_plain": "How long do survivors wait to see a counsellor?",
+      "tier": 1,
+      "tier_rationale": "HIGH priority + MEDIUM reliability",
+      "mvp": false,
+      "data_reliability": "MEDIUM",
+      "baseline_category": "community_specific",
+      "domain": "Help When You Need It",
+      "domain_question": "Are crisis and counselling services available?",
+      "threshold": {
+        "adequate": "<2 weeks",
+        "partial": "2-4 weeks",
+        "major_gap": "1-3 months",
+        "critical": ">3 months"
+      },
+      "unit_of_measure": "Days",
+      "collection_frequency": "Quarterly",
+      "evidence_summary": "Timely access to counselling is critical for recovery. Long wait times can exacerbate trauma.",
+      "risk_factors": [
+        "Long waitlists to access services (Mantler, 2024; Heggie et al., 2022)"
+      ],
+      "protective_factors": [
+        "Timely access to mental health support"
+      ],
+      "key_citations": [
+        "Mantler (2024)",
+        "Heggie et al. (2022)"
+      ],
+      "data_quality_notes": "MEDIUM reliability - requires provider survey data. Confidential aggregate only.",
+      "rrn_relevance": "HIGH - Limited providers means longer waits"
+    },
+    "SS04": {
+      "name": "24/7 crisis line access",
+      "definition": "Whether 24/7 crisis support is accessible from community",
+      "definition_plain": "Can survivors call a crisis line any time day or night?",
+      "tier": 1,
+      "tier_rationale": "HIGH priority + HIGH reliability",
+      "mvp": true,
+      "data_reliability": "HIGH",
+      "baseline_category": "territorial",
+      "domain": "Help When You Need It",
+      "domain_question": "Are crisis and counselling services available?",
+      "threshold": {
+        "adequate": "Full toll-free access",
+        "partial": "Toll-free but cell issues",
+        "major_gap": "Long distance charges",
+        "critical": "No 24/7 line"
+      },
+      "unit_of_measure": "Binary",
+      "collection_frequency": "Annual",
+      "evidence_summary": "Round-the-clock crisis support is essential as crises don't follow business hours.",
+      "risk_factors": [
+        "Lack of emergency or crisis supports"
+      ],
+      "protective_factors": [
+        "Availability of 24/7 crisis support"
+      ],
+      "key_citations": [
+        "VictimLink BC",
+        "Yukon crisis lines"
+      ],
+      "data_quality_notes": "HIGH reliability - coverage and hours are public information.",
+      "rrn_relevance": "HIGH - Note if long-distance charges apply from remote areas"
+    },
+    "TR01": {
+      "name": "Level of public transit service",
+      "definition": "Level of public transit service availability in community",
+      "definition_plain": "How much public transit is available in this community?",
+      "tier": 1,
+      "tier_rationale": "HIGH priority + HIGH reliability",
+      "mvp": true,
+      "data_reliability": "HIGH",
+      "baseline_category": "community_specific",
+      "domain": "Getting Where You Need to Go",
+      "domain_question": "Can survivors travel to services safely?",
+      "threshold": {
+        "adequate": "Regular (multiple routes, frequent)",
+        "partial": "Limited (2-3 routes OR daily)",
+        "major_gap": "Minimal (\u22641 route, \u22642x daily)",
+        "critical": "None"
+      },
+      "unit_of_measure": "Categorical (0-3)",
+      "collection_frequency": "Annual",
+      "evidence_summary": "Transportation access is fundamental to service access. Lack of public transit in rural/remote areas severely limits options for survivors.",
+      "risk_factors": [
+        "Lack of affordable and accessible transportation (Moffitt, 2022; Faller, 2021; Zorn, 2017; Farhall, 2020; CREVAWC, 2021; Pauktutiit, 2021; Youngson et al., 2021; Heggie et al., 2022)",
+        "Reliance on 'unsafe' alternative transportation methods like hitchhiking (Winnicki, 2024)",
+        "Cancellation of public transportation (Winnicki, 2024)"
+      ],
+      "protective_factors": [
+        "Affordable and accessible public transportation (CCSG Associates et al., 2021; Hanson, 2021; Hope et al., 2023; Jeffrey, 2019; Winnicki, 2024; Kardashevskaya, 2022)"
+      ],
+      "key_citations": [
+        "Yukon Anti-poverty Coalition data",
+        "Housing and Transportation Cost Index (HTCI)",
+        "Winnicki (2024)"
+      ],
+      "data_quality_notes": "Living wage report published yearly. Hard to apply outside Whitehorse. Community-driven research methodology.",
+      "rrn_relevance": "CRITICAL - Most RRN communities lack public transit"
+    },
+    "TR02": {
+      "name": "Existence of emergency transportation options",
+      "definition": "Availability of crisis transportation (not requiring personal vehicle)",
+      "definition_plain": "Can survivors get emergency transportation without needing their own car?",
+      "tier": 1,
+      "tier_rationale": "HIGH priority + HIGH reliability",
+      "mvp": true,
+      "data_reliability": "HIGH",
+      "baseline_category": "community_specific",
+      "domain": "Getting Where You Need to Go",
+      "domain_question": "Can survivors travel to services safely?",
+      "threshold": {
+        "adequate": "Multiple options",
+        "partial": "One crisis option",
+        "major_gap": "Taxi only",
+        "critical": "None"
+      },
+      "unit_of_measure": "Categorical",
+      "collection_frequency": "Annual",
+      "evidence_summary": "Crisis transportation that doesn't require personal vehicle ownership is essential for survivors in urgent situations.",
+      "risk_factors": [
+        "Lack of year-round roads, inconsistent road conditions (Jeffrey, 2019; Zorn, 2017)"
+      ],
+      "protective_factors": [
+        "Local, municipal, province-led or grassroots initiatives to provide transportation (Winnicki, 2024; Saskatchewan, 2025)",
+        "Transportation policy integrating intersectional, transportation justice framework (Hanson et al., 2021; Winnicki, 2024)"
+      ],
+      "key_citations": [
+        "Winnicki (2024)",
+        "Saskatchewan DVDR (2025)",
+        "Yukon Victim Services protocols"
+      ],
+      "data_quality_notes": "Semi-public data from Victim Services and shelters. Requires direct inquiry.",
+      "rrn_relevance": "HIGH - Essential where personal vehicles may not be accessible"
+    },
+    "TR03": {
+      "name": "Distance to nearest hospital with Sexual Assault Nurse Examiner",
+      "definition": "Kilometres to nearest Sexual Assault Nurse Examiner program",
+      "definition_plain": "How far is the nearest hospital with a Sexual Assault Nurse Examiner - a nurse specially trained to do medical exams and collect evidence after sexual assault?",
+      "tier": 1,
+      "tier_rationale": "HIGH priority + HIGH reliability",
+      "mvp": true,
+      "data_reliability": "HIGH",
+      "baseline_category": "distance_modified",
+      "domain": "Getting Where You Need to Go",
+      "domain_question": "Can survivors travel to services safely?",
+      "threshold": {
+        "adequate": "\u226450km",
+        "partial": "51-200km",
+        "major_gap": "201-500km",
+        "critical": ">500km or fly-in"
+      },
+      "unit_of_measure": "Kilometres",
+      "collection_frequency": "Static (update on program change)",
+      "evidence_summary": "Access to Sexual Assault Nurse Examiners is critical for forensic evidence collection within the 72-120 hour window post-assault.",
+      "risk_factors": [
+        "Lack of specialized sexual violence services (Heggie et al., 2022)",
+        "Requirement to travel long distance to access support (Flynn, 2023)"
+      ],
+      "protective_factors": [
+        "Access to hospital-based SANE program (DuMont, 2017)",
+        "Access to community-based SANE program",
+        "Outreach to Indigenous communities on hospital-based SANE programs (DuMont, 2017)"
+      ],
+      "key_citations": [
+        "DuMont (2017)",
+        "Yukon Hospital Corporation",
+        "Sexual Assault Response Team (SART)"
+      ],
+      "data_quality_notes": "HIGH reliability - SANE program locations are public knowledge. Currently only Whitehorse General Hospital in Yukon.",
+      "rrn_relevance": "CRITICAL - Most Yukon communities require significant travel"
+    },
+    "TR04": {
+      "name": "Availability of travel funds for GBV services",
+      "definition": "Whether dedicated travel subsidy exists for GBV service access",
+      "definition_plain": "Is there money available to help survivors pay for travel to get services?",
+      "tier": 1,
+      "tier_rationale": "HIGH priority + MEDIUM reliability",
+      "mvp": false,
+      "data_reliability": "MEDIUM",
+      "baseline_category": "community_specific",
+      "domain": "Getting Where You Need to Go",
+      "domain_question": "Can survivors travel to services safely?",
+      "threshold": {
+        "adequate": "Dedicated fund exists",
+        "partial": "Case-by-case available",
+        "major_gap": "Limited eligibility",
+        "critical": "None"
+      },
+      "unit_of_measure": "Binary + Dollar",
+      "collection_frequency": "Annual",
+      "evidence_summary": "Financial support for travel is essential in contexts where services are geographically distant.",
+      "risk_factors": [
+        "Financial barriers to accessing distant services",
+        "Economic burden of accessing private services (Heggie et al., 2022)"
+      ],
+      "protective_factors": [
+        "Availability of travel funds to support access to services (Faller, 2021)"
+      ],
+      "key_citations": [
+        "Faller (2021)",
+        "Yukon Victim Services",
+        "First Nations emergency travel policies"
+      ],
+      "data_quality_notes": "MEDIUM reliability - varies by Nation for First Nations travel support. Semi-public from Victim Services.",
+      "rrn_relevance": "HIGH - Essential for service access from remote communities"
+    },
+    "TR05": {
+      "name": "Number of transportation options for crisis situations",
+      "definition": "Count of distinct crisis transportation mechanisms available",
+      "definition_plain": "How many different ways can survivors get emergency transportation?",
+      "tier": 2,
+      "tier_rationale": "MEDIUM priority + MEDIUM reliability",
+      "mvp": false,
+      "data_reliability": "MEDIUM",
+      "baseline_category": "community_specific",
+      "domain": "Getting Where You Need to Go",
+      "domain_question": "Can survivors travel to services safely?",
+      "threshold": {
+        "adequate": "3+ options",
+        "partial": "2 options",
+        "major_gap": "1 option",
+        "critical": "None"
+      },
+      "unit_of_measure": "Integer",
+      "collection_frequency": "Annual",
+      "evidence_summary": "Multiple transportation options increase accessibility and provide backup when primary options unavailable.",
+      "risk_factors": [
+        "Limited transportation options compound isolation"
+      ],
+      "protective_factors": [
+        "Grassroots and local transportation options (Winnicki, 2024)"
+      ],
+      "key_citations": [
+        "Winnicki (2024)",
+        "Research team compilation"
+      ],
+      "data_quality_notes": "MEDIUM reliability - requires compilation from multiple sources.",
+      "rrn_relevance": "MEDIUM - Redundancy important in RRN contexts"
+    },
+    "WF01": {
+      "name": "Staff turnover in GBV sector",
+      "definition": "Annual turnover rate in frontline GBV positions",
+      "definition_plain": "How often do staff leave GBV organizations?",
+      "tier": 2,
+      "tier_rationale": "MEDIUM priority + LOW reliability (confidential)",
+      "mvp": false,
+      "data_reliability": "LOW",
+      "baseline_category": "community_specific",
+      "domain": "How Systems Work Together",
+      "domain_question": "Do organizations have policies that protect survivors?",
+      "threshold": {
+        "adequate": "<10% annual",
+        "partial": "10-25%",
+        "major_gap": "25-50%",
+        "critical": ">50%"
+      },
+      "unit_of_measure": "Percentage",
+      "collection_frequency": "Annual",
+      "evidence_summary": "High turnover undermines service quality and survivor trust. Workforce stability is a capacity indicator.",
+      "risk_factors": [
+        "Intermittent / inconsistent services due to partial staffing, seasonal staffing (Zorn, 2017)",
+        "Staffing challenges - retention, burnout (Montesanti, 2024)"
+      ],
+      "protective_factors": [
+        "Resourceful leaders in GBV sector (Mantler, 2018)"
+      ],
+      "key_citations": [
+        "Zorn (2017)",
+        "Montesanti (2024)",
+        "Statistics Canada Labour Force data"
+      ],
+      "data_quality_notes": "LOW reliability - requires confidential workforce survey.",
+      "rrn_relevance": "HIGH - Turnover particularly problematic in remote postings"
+    },
+    "WF02": {
+      "name": "Workforce health indicators",
+      "definition": "Vacancy rates and burnout indicators in GBV sector",
+      "definition_plain": "Are GBV organizations fully staffed and are workers burning out?",
+      "tier": 2,
+      "tier_rationale": "MEDIUM priority + LOW reliability (requires survey)",
+      "mvp": false,
+      "data_reliability": "LOW",
+      "baseline_category": "community_specific",
+      "domain": "How Systems Work Together",
+      "domain_question": "Do organizations have policies that protect survivors?",
+      "threshold": {
+        "adequate": "<10% vacancy, low burnout",
+        "partial": "10-20% vacancy",
+        "major_gap": ">20% vacancy",
+        "critical": "Critical shortages"
+      },
+      "unit_of_measure": "Composite",
+      "collection_frequency": "Annual",
+      "evidence_summary": "Burnout and vacancies predict service availability. Workforce wellbeing affects service quality.",
+      "risk_factors": [
+        "Staffing challenges - retention, burnout (Montesanti, 2024)"
+      ],
+      "protective_factors": [
+        "Workforce stability and wellbeing"
+      ],
+      "key_citations": [
+        "Montesanti (2024)"
+      ],
+      "data_quality_notes": "LOW reliability - requires anonymous workforce survey.",
+      "rrn_relevance": "HIGH - Burnout common in under-resourced northern services"
+    },
+    "WF03": {
+      "name": "Access to specialized GBV training",
+      "definition": "Whether local/accessible GBV training opportunities exist for workforce",
+      "definition_plain": "Can workers access specialized GBV training locally?",
+      "tier": 2,
+      "tier_rationale": "MEDIUM priority + MEDIUM reliability",
+      "mvp": false,
+      "data_reliability": "MEDIUM",
+      "baseline_category": "community_specific",
+      "domain": "How Systems Work Together",
+      "domain_question": "Do organizations have policies that protect survivors?",
+      "threshold": {
+        "adequate": "Local + online options",
+        "partial": "Online only",
+        "major_gap": "Whitehorse only",
+        "critical": "None accessible"
+      },
+      "unit_of_measure": "Categorical",
+      "collection_frequency": "Annual",
+      "evidence_summary": "Ongoing professional development maintains service quality and prevents secondary trauma.",
+      "risk_factors": [
+        "Lack of specialized training (Rizkalla, 2020; Kardashevskaya, 2022)"
+      ],
+      "protective_factors": [
+        "Training on risk factors for IP/DH (Giesbrecht, 2023; Youngson et. al, 2021)",
+        "Other professional development opportunities (Carter-Snell et al., 2020)"
+      ],
+      "key_citations": [
+        "Giesbrecht (2023)",
+        "Carter-Snell et al. (2020)"
+      ],
+      "data_quality_notes": "MEDIUM reliability - training calendars available from HSS.",
+      "rrn_relevance": "MEDIUM - Training access often requires travel"
+    },
+    "WF04": {
+      "name": "Clinical debriefing opportunities",
+      "definition": "Whether structured debriefing/supervision exists for GBV workers",
+      "definition_plain": "Do GBV workers have access to professional debriefing and supervision?",
+      "tier": 2,
+      "tier_rationale": "LOW priority",
+      "mvp": false,
+      "data_reliability": "LOW",
+      "baseline_category": "community_specific",
+      "domain": "How Systems Work Together",
+      "domain_question": "Do organizations have policies that protect survivors?",
+      "threshold": {
+        "adequate": "Regular structured supervision",
+        "partial": "Periodic debriefing",
+        "major_gap": "Ad hoc only",
+        "critical": "None"
+      },
+      "unit_of_measure": "Binary",
+      "collection_frequency": "Annual",
+      "evidence_summary": "Structured supervision mitigates vicarious trauma in GBV workers.",
+      "risk_factors": [
+        "Vicarious trauma without support structures"
+      ],
+      "protective_factors": [
+        "Opportunities for clinical debriefing related to GBV cases"
+      ],
+      "key_citations": [
+        "Professional practice standards"
+      ],
+      "data_quality_notes": "LOW reliability - requires policy audit.",
+      "rrn_relevance": "MEDIUM - Important for workforce retention"
+    },
+    "WF05": {
+      "name": "Indigenous cultural safety training in healthcare",
+      "definition": "Whether healthcare workers have completed Indigenous cultural safety training",
+      "definition_plain": "Have healthcare workers completed Indigenous cultural safety training?",
+      "tier": 2,
+      "tier_rationale": "MEDIUM priority + LOW reliability (confidential)",
+      "mvp": false,
+      "data_reliability": "LOW",
+      "baseline_category": "territorial",
+      "domain": "Health Care That Understands",
+      "domain_question": "Do healthcare providers recognize and respond to GBV?",
+      "threshold": {
+        "adequate": ">80% completed",
+        "partial": "50-80%",
+        "major_gap": "<50%",
+        "critical": "No program"
+      },
+      "unit_of_measure": "Percentage",
+      "collection_frequency": "Annual",
+      "evidence_summary": "Cultural safety training is essential for appropriate service delivery to Indigenous survivors.",
+      "risk_factors": [
+        "Lack of specialized training in cultural safety and culturally-relevant responses to IPV (Rizkalla, 2020; Faller, 2021; Zorn, 2017; Montesanti, 2024)"
+      ],
+      "protective_factors": [
+        "Healthcare providers understanding unique needs of Indigenous survivors (DuMont, 2017; Rizkalla, 2021)",
+        "Specialized training on sexual violence, Indigenous survivors in health care settings (DuMont, 2017)"
+      ],
+      "key_citations": [
+        "DuMont (2017)",
+        "Rizkalla (2021)",
+        "San'yas training"
+      ],
+      "data_quality_notes": "LOW reliability - training completions are confidential.",
+      "rrn_relevance": "CRITICAL - Yukon Indigenous population requires culturally safe services"
+    },
+    "YRA01": {
+      "name": "Projected workforce gender ratio change",
+      "definition": "Projected change in community/regional gender ratio due to project workforce",
+      "definition_plain": "How much will this project change the ratio of men to women in the area?",
+      "tier": 1,
+      "tier_rationale": "RISK DRIVER: Gender ratio imbalance directly associated with GBV prevalence",
+      "mvp": false,
+      "data_reliability": "MEDIUM",
+      "baseline_category": "project_specific",
+      "domain": "Community Conditions",
+      "domain_question": "How does the broader context affect survivor safety?",
+      "threshold": {
+        "adequate": "<5% change",
+        "partial": "5-10%",
+        "major_gap": "10-20%",
+        "critical": ">20% change"
+      },
+      "unit_of_measure": "Ratio",
+      "collection_frequency": "Project-specific",
+      "evidence_summary": "Workforce gender imbalance is a documented driver of increased GBV risk. Projects bringing predominantly male workforces into communities shift local gender ratios.",
+      "risk_factors": [
+        "Presence of predominantly male workforce (Pauktutiit, 2021; CCSG Associates, 2021)",
+        "Shift in community gender ratio",
+        "Resource extraction workforce dynamics"
+      ],
+      "protective_factors": [
+        "Gender-balanced workforce",
+        "Local hiring policies"
+      ],
+      "key_citations": [
+        "Never Until Now",
+        "Vector Research (2022)",
+        "YESAB submissions"
+      ],
+      "data_quality_notes": "NEW - Evidence populated from synthesis and research.",
+      "rrn_relevance": "CRITICAL - Primary YESAB risk assessment indicator"
+    },
+    "YRA02": {
+      "name": "Rotational workforce proportion",
+      "definition": "Proportion of project workforce on rotational (FIFO/DIDO) schedules",
+      "definition_plain": "What proportion of workers will be temporary or rotational rather than community residents?",
+      "tier": 2,
+      "tier_rationale": "Risk amplifier; transience reduces social accountability",
+      "mvp": false,
+      "data_reliability": "MEDIUM",
+      "baseline_category": "project_specific",
+      "domain": "Community Conditions",
+      "domain_question": "How does the broader context affect survivor safety?",
+      "threshold": {
+        "adequate": "<25% rotational",
+        "partial": "25-50%",
+        "major_gap": "50-75%",
+        "critical": ">75%"
+      },
+      "unit_of_measure": "Percentage",
+      "collection_frequency": "Project-specific",
+      "evidence_summary": "Rotational workforces (fly-in/fly-out, drive-in/drive-out) create transience that reduces community accountability and integration.",
+      "risk_factors": [
+        "Transient workforce not integrated into community",
+        "Reduced accountability for behavior",
+        "Economic relationships without social accountability"
+      ],
+      "protective_factors": [
+        "Residential workforce",
+        "Community integration requirements"
+      ],
+      "key_citations": [
+        "Vector Research (2022)",
+        "FIFO literature"
+      ],
+      "data_quality_notes": "NEW - Evidence populated from synthesis and research.",
+      "rrn_relevance": "HIGH - Common in Yukon mining operations"
+    },
+    "YRA03": {
+      "name": "Historical GBV pattern in comparable projects",
+      "definition": "Evidence from comparable extractive projects regarding GBV pattern changes",
+      "definition_plain": "What happened to GBV indicators in other communities when similar projects arrived?",
+      "tier": 1,
+      "tier_rationale": "Direct evidence of risk amplification pattern",
+      "mvp": false,
+      "data_reliability": "LOW",
+      "baseline_category": "project_specific",
+      "domain": "Community Conditions",
+      "domain_question": "How does the broader context affect survivor safety?",
+      "threshold": {
+        "adequate": "No pattern increase",
+        "partial": "Minor increase",
+        "major_gap": "Moderate increase",
+        "critical": "Significant increase"
+      },
+      "unit_of_measure": "Qualitative",
+      "collection_frequency": "Project-specific",
+      "evidence_summary": "Historical evidence from comparable extractive projects provides empirical basis for risk projection.",
+      "risk_factors": [
+        "Documented GBV increases in comparable projects",
+        "Pattern of extractive industry impacts"
+      ],
+      "protective_factors": [
+        "Projects with demonstrated no-harm track record",
+        "Strong mitigation measures implemented"
+      ],
+      "key_citations": [
+        "Minto Mine data",
+        "Eagle Gold data",
+        "Never Until Now",
+        "YESAB historical assessments"
+      ],
+      "data_quality_notes": "NEW - Evidence populated from synthesis and research.",
+      "rrn_relevance": "CRITICAL - Evidence base for YESAB arguments"
+    }
+  }
+}

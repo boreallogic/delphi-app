@@ -2,7 +2,8 @@
 // Boreal Logic Inc. / Yukon Women's Coalition
 
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-3.0.x"]
 }
 
 datasource db {
@@ -69,10 +70,13 @@ model Indicator {
   domainName          String   @default("")   // Plain language: "Safe Places to Stay"
   domainQuestion      String?  @db.Text       // Guiding question for panelists
 
-  // === TIERING ===
+  // === TIERING & MVP ===
   tier                Int      @default(1)    // 1 = Core (rate), 2 = Extended (comment only)
   tierRationale       String?  @db.Text       // Why this tier assignment
   dataReliability     String   @default("MEDIUM")  // HIGH, MEDIUM, LOW
+  mvp                 Boolean  @default(false)     // MVP indicator for initial focus
+  baselineCategory    String?                      // community_specific, territorial, distance_modified
+  thresholds          Json?                        // { adequate, partial, major_gap, critical }
 
   // === EVIDENCE BASE ===
   evidenceSummary     String?  @db.Text       // Brief summary of research backing
@@ -95,6 +99,7 @@ model Indicator {
   @@unique([studyId, externalId])
   @@index([studyId, tier])
   @@index([studyId, domainCode])
+  @@index([studyId, mvp])
   @@map("indicators")
 }
 
